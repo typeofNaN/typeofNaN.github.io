@@ -1,173 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>数组去重</title>
-    <url>/2018/10/19/array-remove-repetition/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>此文介绍数组去重方法。</p>
+    <title>CSS样式常用属性及书写顺序规范</title>
+    <url>/2018/04/11/css-style-ruler/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文是我创建的第一篇博客，整理一下前端开发三大工具之一——CSS的常用属性及书写顺序规范</p>
+<h1 id="快速记忆"><a href="#快速记忆" class="headerlink" title="快速记忆"></a>快速记忆</h1><h2 id="口诀"><a href="#口诀" class="headerlink" title="口诀"></a>口诀</h2><p>状定形边字背其，上右下左顺时针。</p>
 <a id="more"></a>
-<h1 id="一、利用ES6-Set去重（ES6中最常用）"><a href="#一、利用ES6-Set去重（ES6中最常用）" class="headerlink" title="一、利用ES6 Set去重（ES6中最常用）"></a>一、利用ES6 Set去重（ES6中最常用）</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span> (<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Set</span>(arr));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"> <span class="comment">// [1, "true", true, 15, false, undefined, null, NaN, "NaN", 0, "a", &#123;&#125;, &#123;&#125;]</span></span><br><span class="line"> <span class="comment">// 不考虑兼容性，这种去重的方法代码最少。这种方法还无法去掉“&#123;&#125;”空对象，后面的高阶方法会添加去掉重复“&#123;&#125;”的方法。</span></span><br></pre></td></tr></table></figure>
-<h1 id="二、利用for嵌套for，然后splice去重（ES5中最常用）"><a href="#二、利用for嵌套for，然后splice去重（ES5中最常用）" class="headerlink" title="二、利用for嵌套for，然后splice去重（ES5中最常用）"></a>二、利用for嵌套for，然后splice去重（ES5中最常用）</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> j = i + <span class="number">1</span>; j &lt; arr.length; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span>(arr[i] == arr[j]) &#123;    <span class="comment">// 第一个等同于第二个，splice方法删除第二个</span></span><br><span class="line">        arr.splice(j, <span class="number">1</span>);</span><br><span class="line">        j--;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "true", 15, false, undefined, NaN, NaN, "NaN", "a", &#123;…&#125;, &#123;…&#125;]</span></span><br><span class="line"><span class="comment">// NaN和&#123;&#125;没有去重，两个null直接消失了</span></span><br><span class="line"><span class="comment">// 双层循环，外层循环元素，内层循环时比较值。值相同时，则删去这个值。</span></span><br></pre></td></tr></table></figure>
-<h1 id="三、利用indexOf去重"><a href="#三、利用indexOf去重" class="headerlink" title="三、利用indexOf去重"></a>三、利用indexOf去重</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(arr)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'type error!'</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> array = [];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (array.indexOf(arr[i]) === <span class="number">-1</span>) &#123;</span><br><span class="line">      array.push(arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> array;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "true", true, 15, false, undefined, null, NaN, NaN, "NaN", 0, "a", &#123;…&#125;, &#123;…&#125;]</span></span><br><span class="line"><span class="comment">// NaN、&#123;&#125;没有去重</span></span><br><span class="line"><span class="comment">// 新建一个空的结果数组，for 循环原数组，判断结果数组是否存在当前元素，如果有相同的值则跳过，不相同则push进数组。</span></span><br></pre></td></tr></table></figure>
-<h1 id="四、利用sort"><a href="#四、利用sort" class="headerlink" title="四、利用sort()"></a>四、利用sort()</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(arr)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'type error!'</span>)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  arr = arr.sort()</span><br><span class="line">  <span class="keyword">var</span> arrry = [arr[<span class="number">0</span>]];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr[i] !== arr[i<span class="number">-1</span>]) &#123;</span><br><span class="line">      arrry.push(arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> arrry;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [0, 1, 15, "NaN", NaN, NaN, &#123;…&#125;, &#123;…&#125;, "a", false, null, true, "true", undefined]</span></span><br><span class="line"><span class="comment">// NaN、&#123;&#125;没有去重</span></span><br><span class="line"><span class="comment">// 利用sort()排序方法，然后根据排序后的结果进行遍历及相邻元素比对。</span></span><br></pre></td></tr></table></figure>
-<h1 id="五、利用对象的属性不能相同的特点进行去重（这种数组去重的方法有问题，不建议用，有待改进）"><a href="#五、利用对象的属性不能相同的特点进行去重（这种数组去重的方法有问题，不建议用，有待改进）" class="headerlink" title="五、利用对象的属性不能相同的特点进行去重（这种数组去重的方法有问题，不建议用，有待改进）"></a>五、利用对象的属性不能相同的特点进行去重（这种数组去重的方法有问题，不建议用，有待改进）</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(arr)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'type error!'</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> arrry = [];</span><br><span class="line">  <span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!obj[arr[i]]) &#123;</span><br><span class="line">      arrry.push(arr[i])</span><br><span class="line">      obj[arr[i]] = <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      obj[arr[i]]++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> arrry;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "true", 15, false, undefined, null, NaN, 0, "a", &#123;…&#125;]</span></span><br><span class="line"><span class="comment">// 两个true直接去掉了，NaN和&#123;&#125;去重</span></span><br></pre></td></tr></table></figure>
-<h1 id="六、利用includes"><a href="#六、利用includes" class="headerlink" title="六、利用includes"></a>六、利用includes</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(arr)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'type error!'</span>)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> array =[];</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span>( !array.includes( arr[i]) ) &#123;    <span class="comment">// includes 检测数组是否有某个值</span></span><br><span class="line">      array.push(arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> array;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "true", true, 15, false, undefined, null, NaN, "NaN", 0, "a", &#123;…&#125;, &#123;…&#125;]</span></span><br><span class="line"><span class="comment">// &#123;&#125;没有去重</span></span><br></pre></td></tr></table></figure>
-<h1 id="七、利用hasOwnProperty"><a href="#七、利用hasOwnProperty" class="headerlink" title="七、利用hasOwnProperty"></a>七、利用hasOwnProperty</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line">  <span class="keyword">return</span> arr.filter(<span class="function"><span class="keyword">function</span>(<span class="params">item, index, arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> obj.hasOwnProperty(<span class="keyword">typeof</span> item + item) ? <span class="literal">false</span> : (obj[<span class="keyword">typeof</span> item + item] = <span class="literal">true</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "true", true, 15, false, undefined, null, NaN, "NaN", 0, "a", &#123;…&#125;]</span></span><br><span class="line"><span class="comment">// 所有的都去重了</span></span><br><span class="line"><span class="comment">// 利用hasOwnProperty 判断是否存在对象属性</span></span><br></pre></td></tr></table></figure>
-<h1 id="八、利用filter"><a href="#八、利用filter" class="headerlink" title="八、利用filter"></a>八、利用filter</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> arr.filter(<span class="function"><span class="keyword">function</span>(<span class="params">item, index, arr</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 当前元素，在原始数组中的第一个索引 == 当前索引值，否则返回当前元素</span></span><br><span class="line">    <span class="keyword">return</span> arr.indexOf(item, <span class="number">0</span>) === index;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "true", true, 15, false, undefined, null, "NaN", 0, "a", &#123;…&#125;, &#123;…&#125;]</span></span><br></pre></td></tr></table></figure>
-<h1 id="九、利用递归去重"><a href="#九、利用递归去重" class="headerlink" title="九、利用递归去重"></a>九、利用递归去重</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> array = arr;</span><br><span class="line">  <span class="keyword">var</span> len = array.length;</span><br><span class="line">  array.sort(<span class="function"><span class="keyword">function</span>(<span class="params">a,b</span>) </span>&#123;    <span class="comment">// 排序后更加方便去重</span></span><br><span class="line">    <span class="keyword">return</span> a - b;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">loop</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(index &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span>(array[index] === array[index<span class="number">-1</span>]) &#123;</span><br><span class="line">        array.splice(index,<span class="number">1</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      loop(index - <span class="number">1</span>);    <span class="comment">// 递归loop，然后数组去重</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  loop(len<span class="number">-1</span>);</span><br><span class="line">  <span class="keyword">return</span> array;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "a", "true", true, 15, false, 1, &#123;…&#125;, null, NaN, NaN, "NaN", 0, "a", &#123;…&#125;, undefined]</span></span><br></pre></td></tr></table></figure>
-<h1 id="十、利用Map数据结构去重"><a href="#十、利用Map数据结构去重" class="headerlink" title="十、利用Map数据结构去重"></a>十、利用Map数据结构去重</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayNonRepeatfy</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">  <span class="keyword">let</span> array = <span class="keyword">new</span> <span class="built_in">Array</span>();    <span class="comment">// 数组用于返回结果</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(map.has(arr[i])) &#123;    <span class="comment">// 如果有该key值</span></span><br><span class="line">      map.set(arr[i], <span class="literal">true</span>); </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">      map.set(arr[i], <span class="literal">false</span>);    <span class="comment">// 如果没有该key值</span></span><br><span class="line">      array.push(arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="keyword">return</span> array ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "a", "true", true, 15, false, 1, &#123;…&#125;, null, NaN, NaN, "NaN", 0, "a", &#123;…&#125;, undefined]</span></span><br><span class="line"><span class="comment">// 创建一个空Map数据结构，遍历需要去重的数组，把数组的每一个元素作为key存到Map中。由于Map中不会出现相同的key值，所以最终得到的就是去重后的结果。</span></span><br></pre></td></tr></table></figure>
-<h1 id="十一、利用reduce-includes"><a href="#十一、利用reduce-includes" class="headerlink" title="十一、利用reduce+includes"></a>十一、利用reduce+includes</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> arr.reduce(<span class="function">(<span class="params">prev,cur</span>) =&gt;</span> prev.includes(cur) ? prev : [...prev,cur],[]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "true", true, 15, false, undefined, null, NaN, "NaN", 0, "a", &#123;…&#125;, &#123;…&#125;]</span></span><br></pre></td></tr></table></figure>
-<h1 id="十二、-…new-Set-arr"><a href="#十二、-…new-Set-arr" class="headerlink" title="十二、[…new Set(arr)]"></a>十二、[…new Set(arr)]</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[...new <span class="built_in">Set</span>(arr)] </span><br><span class="line"><span class="comment">//代码就是这么少----（其实，严格来说并不算是一种，相对于第一种方法来说只是简化了代码）</span></span><br></pre></td></tr></table></figure>
-<p>方法多种多样！</p>
-]]></content>
-      <categories>
-        <category>技术文章</category>
-      </categories>
-      <tags>
-        <tag>js</tag>
-        <tag>array</tag>
-        <tag>repetition</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何利用hexo搭建一个属于自己的博客网站</title>
-    <url>/2018/04/21/build-hexo-blog/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>因为作者准备往前端方向发展，便想搭建一个属于自己的博客网站，用来发布一些文章以及交流学习。发现利用hexo来搭建个人博客挺方便的，于是便自己试着搭建了一个。特写下此文，一防忘记，二供大家参考。</p>
-<a id="more"></a>
-<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><ol>
-<li>安装Git</li>
-<li>安装NodeJs</li>
-<li>安装hexo</li>
-<li>生成SSH并添加到github</li>
-<li>部署项目</li>
-<li>上传到github</li>
-<li>绑定个人域名</li>
-<li>修改及配置主题</li>
-<li>添加RSS</li>
-<li>添加评论</li>
-<li>写博客文章</li>
-<li>站点管理文件</li>
-</ol>
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h2><ul>
-<li>Git:<a href="https://gitforwindows.org/" target="_blank" rel="noopener">下载地址</a></li>
-<li>参考文章:<a href="https://www.w3cschool.cn/git/git-install-setup.html" target="_blank" rel="noopener">《W3Cschool上Git教程之Git安装配置》</a></li>
-</ul>
-<h2 id="安装NodeJs"><a href="#安装NodeJs" class="headerlink" title="安装NodeJs"></a>安装NodeJs</h2><p>Hexo是基于nodeJS环境的静态博客，里面的npm工具很有用啊，所以还是老老实实把这玩意儿装了吧！</p>
-<p>安装步骤：反正下载好msi文件后，双击打开安装，也是一路next，不过在Custom Setup这一步记得选 Add to PATH ,这样你就不用自己去配置电脑上环境变量了，装完在按 win + r 快捷键调出运行，然后输入cmd确定，在cmd中输入path可以看到你的node是否配置在里面（环境变量），没有的话你就自由发挥吧！</p>
 <ul>
-<li>NodeJs<a href="https://nodejs.org/en/" target="_blank" rel="noopener">下载地址</a>(说明：LTS为长期支持版，Current为当前最新版)</li>
-<li>参考文章:<a href="https://www.w3cschool.cn/nodejs/nodejs-install-setup.html" target="_blank" rel="noopener">《W3Cschool上Node.js教程之Node.js安装配置》</a></li>
+<li>状（状态）</li>
+<li>定（定位）</li>
+<li>形（形状）</li>
+<li>边（边框）</li>
+<li>字（字体）</li>
+<li>背（背景)</li>
+<li>其（其他）</li>
 </ul>
-<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>先创建一个文件夹（用来存放所有blog的东西），然后cd到该文件夹下。</p>
-<p>安装hexo命令：（在新建的文件夹里右键Git Bash Here）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm i -g hexo</span><br></pre></td></tr></table></figure>
-<p>接着初始化命令：hexo init ：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo init</span><br></pre></td></tr></table></figure>
-<p>初始化完成之后打开所在的文件夹可以看到以下文件：</p>
-<img src="/2018/04/21/build-hexo-blog/b1.png" title="生成的文件">
-<p>解释一下：</p>
-<ul>
-<li>node_modules：是依赖包</li>
-<li>public：存放的是生成的页面</li>
-<li>scaffolds：命令生成文章等的模板</li>
-<li>source：用命令创建的各种文章</li>
-<li>themes：主题</li>
-<li>_config.yml：整个博客的配置</li>
-<li>db.json：source解析所得到的</li>
-<li>package.json：项目所需模块项目的配置信息</li>
-</ul>
-<p>做好这些前置工作之后接下来的就是各种配置了。</p>
-<h1 id="配置工作"><a href="#配置工作" class="headerlink" title="配置工作"></a>配置工作</h1><h2 id="生成SSH并添加到github"><a href="#生成SSH并添加到github" class="headerlink" title="生成SSH并添加到github"></a>生成SSH并添加到github</h2><p>没账号的先创建一个github账号，有账号的看下面。<a href="https://github.com">注册传送门</a></p>
-<p>创建一个repo，名称为yourname.github.io, 其中yourname是你的github名称，按照这个规则创建才有用，如下：</p>
-<img src="/2018/04/21/build-hexo-blog/b2.jpg" title="创建仓库">
-<img src="/2018/04/21/build-hexo-blog/b3.jpg" title="为仓库取名">
-<p>回到gitbash中，配置github账户信息（YourName和YourEail都替换成你自己的）：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git config global user.name &quot;YourName&quot;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git config global user.email &quot;YourEail&quot;</span><br></pre></td></tr></table></figure>
-<p>配置ssh，Git bash中输入命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;youremail@example.com</span><br></pre></td></tr></table></figure>
-<p>一路回车，就能在你的电脑中产生ssh，ssh文件默认在:C:User/Administrator/.ssh文件夹下，打开.ssh文件夹下的id_rsa.pub文件，将里面的内容复制；再打开github的setting：</p>
-<img src="/2018/04/21/build-hexo-blog/b4.png" title="打开setting">
-<p>将.ssh文件夹下的id_rsa.pub文件里一经复制好了的内容添加到ssh keys:</p>
-<img src="/2018/04/21/build-hexo-blog/b5.png" title="创建key">
-<p>添加一个 New SSH key ，title随便取，key就填刚刚复制好了的那一段。</p>
-<p>在Git bash中验证是否添加成功：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-<p>完成下一步你就成功了！</p>
-<h2 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h2><p>用编辑器打开你的blog项目，修改_config.yml文件的一些配置：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">    type: git</span><br><span class="line">    repo: https://github.com/yourgithubname/yourgithubname.github.io.git</span><br><span class="line">    branch: master</span><br></pre></td></tr></table></figure>
-<p>在Git bash中，依次输入以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
-<p>注：hexo 3.0把服务器独立成个别模块，需要单独安装：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm i hexo-server</span><br></pre></td></tr></table></figure>
-<p>打开浏览器输入：<a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a></p>
-<p>你就可以看到你的项目在本地能够预览了。</p>
-<h2 id="部署到github上"><a href="#部署到github上" class="headerlink" title="部署到github上"></a>部署到github上</h2><p>先安装一波，这样才能将你写好的文章部署到github服务器上并让别人浏览到,输入命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-<p>再依次执行以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
-<p>注意deploy的过程中(即hexo d)可能要输入你的github上的username及passward</p>
-<p>一切都ok之后，在浏览器中输入<a href="#">http://yourgithubname.github.io</a>就可以看到你的个人博客，飞起来！！！</p>
-<h2 id="绑定个人域名"><a href="#绑定个人域名" class="headerlink" title="绑定个人域名"></a>绑定个人域名</h2><p>虽然，使用<a href="#">http://yourgithubname.github.io</a>也可以让别人看到你写的博客。</p>
-<p>但是，写博客写博客，还是要有点装逼的嘛。搭配一个属于自己的域名显然会让自己的博客变得高大上起来。</p>
-<p>可以去各大域名销售平台买自己喜欢的域名。（不想绑定的可以跳过这一个环节直接看下一节）</p>
-<p>第一步购买域名：随便在哪个网站买一个就行；</p>
-<p>第二步添加CNAME：在项目的source文件夹下新建一个名为CNAME的文件，在里面添加你购买的域名：</p>
-<img src="/2018/04/21/build-hexo-blog/b6.png" title="配置域名">
-<p>其中ip地址为你的github的地址，可在cmd中ping一下就能看到(ping yourname.github.io)：</p>
-<img src="/2018/04/21/build-hexo-blog/b7.png" title="ping">
-<p>接着再次部署（hexo d）一下，用你购买的域名打开，就可以看到你的博客了了了了了！！！</p>
-<h2 id="修改及配置主题"><a href="#修改及配置主题" class="headerlink" title="修改及配置主题"></a>修改及配置主题</h2><p>hexo初始化之后默认的主题是landscape , 然后你可以去<a href="https://hexo.io/themes/" target="_blank" rel="noopener">这个地址</a>里面找到你想要的主题。在github中搜索你要的主题名称，里面都会有该主题的如何使用的介绍，按着来就好了。本人采用的是raytaylorism主题，集体配置方法，看<a href="https://github.com/DM2N/DM2N.github.io/blob/hexo/themes/raytaylorism/README.md">这里</a>。</p>
-<h2 id="添加RSS"><a href="#添加RSS" class="headerlink" title="添加RSS"></a>添加RSS</h2><p>先安装rss相关插件，Git bash命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm i hexo-generator-feed</span><br></pre></td></tr></table></figure>
-<p>在你的项目的_config.yml配置文件下找到Extensions添加如下内容：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Extensions  #插件和主题</span><br><span class="line">## Plugins: https://hexo.io/plugins/</span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line"># RSS订阅</span><br><span class="line">plugin:</span><br><span class="line">- hexo-generator-feed</span><br><span class="line">#Feed Atom</span><br><span class="line">feed:</span><br><span class="line">  type: atom</span><br><span class="line">  path: atom.xml</span><br><span class="line">  limit: 20</span><br></pre></td></tr></table></figure>
-<p>进入到你的主题的配置文件下，找到你的放rss的位置，添加/atom.xml即可。重新部署再打开就能看到效果了。</p>
-<h2 id="添加评论"><a href="#添加评论" class="headerlink" title="添加评论"></a>添加评论</h2><p>评论功能为第三方评论系统，但，多说、网易云跟帖等都已关闭服务。来必力等也能用，所以，骚年，翻墙吧，具体做法，聪明的你肯定是知道百度的。</p>
-<h2 id="写博客文章"><a href="#写博客文章" class="headerlink" title="写博客文章"></a>写博客文章</h2><p>新建文章，输入命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo new &apos;文章名&apos;</span><br></pre></td></tr></table></figure>
-<p>然后你就可以在source/_posts路径下看到你创建的文章，编辑完成之后按照前面说的方式部署，在浏览器刷新就能看到你的文章了。</p>
-<p>博客文章采用markdown格式编写，至于markdown，骚年，学习吧！！！–&gt;<a href="https://www.appinn.com/markdown/index.html" target="_blank" rel="noopener">前往教室</a></p>
-<h2 id="站点管理文件"><a href="#站点管理文件" class="headerlink" title="站点管理文件"></a>站点管理文件</h2><p>如果本地站点文件丢失了或换了电脑怎么办？为解决这个问题，我们利用了Github的多分支来管理站点文件：</p>
+<p>属性越前则优先级越高。</p>
+<h1 id="规范书写顺序原因"><a href="#规范书写顺序原因" class="headerlink" title="规范书写顺序原因"></a>规范书写顺序原因</h1><h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>减少浏览器reflow（回流），提升浏览器渲染dom的性能。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>浏览器的渲染流程为——</p>
 <ol>
-<li>用master分支来管理发布的文件，即public文件夹下的文件；</li>
-<li>用hexo分支来管理主站点文件，即除public下和.gitignore忽视的其他文件；</li>
-<li>将hexo设为默认分支。</li>
+<li>解析html构建dom树，解析css构建css树：将html解析成树形的数据结构，将css解析成树形的数据结构；</li>
+<li>构建render树：DOM树和CSS树合并之后形成的render树；</li>
+<li>布局render树：有了render树，浏览器已经知道那些网页中有哪些节点，各个节点的css定义和以及它们的从属关系，从而计算出每个节点在屏幕中的位置；</li>
+<li>绘制render树：按照计算出来的规则，通过显卡把内容画在屏幕上。</li>
 </ol>
-<p>为此，我们要：</p>
-<h3 id="建立远程仓库"><a href="#建立远程仓库" class="headerlink" title="建立远程仓库"></a>建立远程仓库</h3><p>先将远程仓库关联到本地。进入站点文件夹，输入命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git init</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git remote add origin git@github.com:username/username.github.io.git #使用站点仓库地址关联</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git pull</span><br></pre></td></tr></table></figure>
-<h3 id="创建hexo分支"><a href="#创建hexo分支" class="headerlink" title="创建hexo分支"></a>创建hexo分支</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git checkout -b hexo  #创建并切换到hexo分支</span><br></pre></td></tr></table></figure>
-<h3 id="将hexo设为默认分支"><a href="#将hexo设为默认分支" class="headerlink" title="将hexo设为默认分支"></a>将hexo设为默认分支</h3><p>在Github上的站点仓库上，点击Settings=&gt;Branches，将Default branch切换成hexo，然后点击Update即可。</p>
-<img src="/2018/04/21/build-hexo-blog/b8.png" title="change-branch">
-<h3 id="将主站点文件push到hexo分支"><a href="#将主站点文件push到hexo分支" class="headerlink" title="将主站点文件push到hexo分支"></a>将主站点文件push到hexo分支</h3><p>在hexo分支（使用git branch命令查看当前所在分支）下，输入命令：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git add .</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git commit -m &quot;提交记录&quot;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git push -u origin hexo  #初次push要加-u，此后可省</span><br></pre></td></tr></table></figure>
-<h3 id="本地站点恢复"><a href="#本地站点恢复" class="headerlink" title="本地站点恢复"></a>本地站点恢复</h3><ol>
-<li>使用git clone命令克隆站点仓库（默认分支为hexo）：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git clone git@github.com:username/username.github.io.git</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>在本地新拷贝的username.github.io文件夹下依次执行命令：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
-<p>注意，此时不需要执行hexo init这条命令。</p>
-<p>到此，便完成了对站点的一些简单管理。</p>
+<p>css样式解析到显示至浏览器屏幕上就发生在②③④步骤，可见浏览器并不是一获取到css样式就立马开始解析而是根据css样式的书写顺序将之按照dom树的结构分布render样式，完成第②步，然后开始遍历每个树结点的css样式进行解析，此时的css样式的遍历顺序完全是按照之前的书写顺序。在解析过程中，一旦浏览器发现某个元素的定位变化影响布局，则需要倒回去重新渲染正如按照这样的书写书序：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">width</span>: 100<span class="selector-tag">px</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">height</span>: 100<span class="selector-tag">px</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">background-color</span>: <span class="selector-tag">red</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">position</span>: <span class="selector-tag">absolute</span>;</span><br></pre></td></tr></table></figure>
+<p>当浏览器解析到position的时候突然发现该元素是绝对定位元素需要脱离文档流，而之前却是按照普通元素进行解析的，所以不得不重新渲染，解除该元素在文档中所占位置，然而由于该元素的占位发生变化，其他元素也可能会受到它回流的影响而重新排位。最终导致③步骤花费的时间太久而影响到④步骤的显示，影响了用户体验。</p>
+<p>所以规范的的css书写顺序对于文档渲染来说一定是事半功倍的！</p>
+<h1 id="详细解析"><a href="#详细解析" class="headerlink" title="详细解析"></a>详细解析</h1><h2 id="状态类"><a href="#状态类" class="headerlink" title="状态类"></a>状态类</h2><ul>
+<li>display: block | none | inline | compact | marker | inline-table | list-item | run-in | table | table-caption | table-cell | table-column | table-column-group | table-footer-group | table-header-group | table-row | table-row-grou</li>
+<li>visibility: inherit | visible | collapse | hidden  </li>
+<li>float: none | left | right  </li>
+<li>clear: none | left | right | both</li>
+<li>overflow: visible | auto | hidden | scroll</li>
+</ul>
+<h2 id="定位类"><a href="#定位类" class="headerlink" title="定位类"></a>定位类</h2><ul>
+<li>position: static | absolute | fixed | relative  </li>
+<li>top：auto | length  </li>
+<li>right: auto | length  </li>
+<li>bottom: auto | length</li>
+<li>left: auto | length  </li>
+<li>z-index: auto | number</li>
+</ul>
+<h2 id="形状类"><a href="#形状类" class="headerlink" title="形状类"></a>形状类</h2><h3 id="宽"><a href="#宽" class="headerlink" title="宽"></a>宽</h3><ul>
+<li>width: visible | auto | hidden | scroll</li>
+<li>min-width: visible | auto | hidden | scroll</li>
+<li>max-width: visible | auto | hidden | scroll</li>
+</ul>
+<h3 id="高"><a href="#高" class="headerlink" title="高"></a>高</h3><ul>
+<li>height: auto | length</li>
+<li>min-height: auto | length</li>
+<li>max-height: auto | length</li>
+</ul>
+<h2 id="边框类"><a href="#边框类" class="headerlink" title="边框类"></a>边框类</h2><h3 id="maigin"><a href="#maigin" class="headerlink" title="maigin"></a>maigin</h3><ul>
+<li>margin: auto | length</li>
+<li>margin-top: auto | length</li>
+<li>margin-right: auto | length</li>
+<li>margin-bottom: auto | length</li>
+<li>margin-left: auto | length</li>
+</ul>
+<h3 id="padding"><a href="#padding" class="headerlink" title="padding"></a>padding</h3><ul>
+<li>padding: auto | length</li>
+<li>padding-top: auto | length</li>
+<li>padding-right: auto | length</li>
+<li>padding-bottom: auto | length</li>
+<li>padding-left: auto | length</li>
+</ul>
+<h3 id="border"><a href="#border" class="headerlink" title="border"></a>border</h3><h4 id="四边"><a href="#四边" class="headerlink" title="四边"></a>四边</h4><ul>
+<li>border: border-width || border-style || border-color</li>
+<li>border-top: border-width || border-style || border-color</li>
+<li>border-right: border-width || border-style || border-color</li>
+<li>border-bottom: border-width || border-style || border-color</li>
+<li>border-left: border-width || border-style || border-color</li>
+</ul>
+<h4 id="边宽"><a href="#边宽" class="headerlink" title="边宽"></a>边宽</h4><ul>
+<li>border-width: none | hidden | dotted | dashed | solid | double | groove | ridge | inset | outset</li>
+<li>border-top-width: medium | thin | thick | length</li>
+<li>border-right-width: medium | thin | thick | length</li>
+<li>border-bottom-width: medium | thin | thick | length</li>
+<li>border-left-width: medium | thin | thick | length</li>
+</ul>
+<h4 id="边样式"><a href="#边样式" class="headerlink" title="边样式"></a>边样式</h4><ul>
+<li>border-style: none | hidden | dotted | dashed | solid | double | groove | ridge | inset | outset</li>
+<li>border-top-style: border-width || border-style || border-color</li>
+<li>border-right-style: border-width || border-style || border-color</li>
+<li>border-bottom-style: border-width || border-style || border-color</li>
+<li>border-left-style: border-width || border-style || border-color</li>
+</ul>
+<h4 id="边颜色"><a href="#边颜色" class="headerlink" title="边颜色"></a>边颜色</h4><ul>
+<li>border-color: color</li>
+<li>border-top-color: color</li>
+<li>border-right-color: color</li>
+<li>border-bottom-color: color</li>
+<li>border-left-color: color</li>
+</ul>
+<h4 id="边圆角"><a href="#边圆角" class="headerlink" title="边圆角"></a>边圆角</h4><ul>
+<li>border-radius: length</li>
+</ul>
+<h4 id="外边线"><a href="#外边线" class="headerlink" title="外边线"></a>外边线</h4><ul>
+<li>outline: outline-color || outline-style || outline-width</li>
+<li>list-style: list-style-image || list-style-position || list-style-type</li>
+</ul>
+<h4 id="其他边"><a href="#其他边" class="headerlink" title="其他边"></a>其他边</h4><ul>
+<li>table-layout: auto | fixed</li>
+<li>caption-side: top | right | bottom | left</li>
+<li>border-collapse: separate | collapse</li>
+<li>border-spacing: length</li>
+<li>empty-cells: show | hide</li>
+</ul>
+<h2 id="字体类"><a href="#字体类" class="headerlink" title="字体类"></a>字体类</h2><ul>
+<li>font: caption | icon | menu | message-box | small-caption | status-bar</li>
+<li>font-family: ncursive | fantasy | monospace | serif | sans-serif</li>
+<li>font-size: xx-small | x-small | small | medium | large | x-large | xx-large | larger | smaller | length</li>
+<li>line-height: normal | length</li>
+<li>font-weight: normal | bold | bolder | lighter | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900  </li>
+<li>text-align: left | right | center | justify</li>
+<li>text-indent: length</li>
+<li>text-transform: none | capitalize | uppercase | lowercase</li>
+<li>text-decoration: none || underline || blink || overline || line-through</li>
+<li>letter-spacing: normal | length</li>
+<li>word-spacing: normal | length</li>
+<li>white-space: normal | pre | nowrap</li>
+<li>vertical-align: auto | baseline | sub | super | top | text-top | middle | bottom | text-bottom | length</li>
+<li>color: color</li>
+</ul>
+<h2 id="背景类"><a href="#背景类" class="headerlink" title="背景类"></a>背景类</h2><ul>
+<li>background: background-color || background-image || background-repeat || background-attachment || background-position</li>
+<li>background-color: transparent | color</li>
+<li>background-image: none | url ( url )</li>
+<li>background-repeat: repeat | no-repeat | repeat-x | repeat-y</li>
+<li>background-position: length || length || position</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>opacity：0-1</li>
+<li>cursor: auto | all-scroll | col-resize| crosshair | default | hand | move | help | no-drop | not-allowed | pointer | progress | row-resize | text | vertical-text | wait | *-resize | url ( url )</li>
+<li>content: attr(alt) | counter(name) | counter(name , list-style-type) | counters(name , string) | counters(name , string , list-style-type) | no-close-quote | no-open-quote | close-quote | open-quote | string | url(url)</li>
+<li>quotes: none | string</li>
+</ul>
 ]]></content>
       <categories>
         <category>技术文章</category>
       </categories>
       <tags>
-        <tag>hexo</tag>
-        <tag>blog</tag>
-        <tag>raytaylorism</tag>
+        <tag>CSS</tag>
+        <tag>web前端</tag>
       </tags>
   </entry>
   <entry>
@@ -662,150 +639,173 @@
       </tags>
   </entry>
   <entry>
-    <title>CSS样式常用属性及书写顺序规范</title>
-    <url>/2018/04/11/css-style/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本文是我创建的第一篇博客，整理一下前端开发三大工具之一——CSS的常用属性及书写顺序规范</p>
-<h1 id="快速记忆"><a href="#快速记忆" class="headerlink" title="快速记忆"></a>快速记忆</h1><h2 id="口诀"><a href="#口诀" class="headerlink" title="口诀"></a>口诀</h2><p>状定形边字背其，上右下左顺时针。</p>
+    <title>数组去重</title>
+    <url>/2018/10/19/array-remove-repetition/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>此文介绍数组去重方法。</p>
 <a id="more"></a>
-<ul>
-<li>状（状态）</li>
-<li>定（定位）</li>
-<li>形（形状）</li>
-<li>边（边框）</li>
-<li>字（字体）</li>
-<li>背（背景)</li>
-<li>其（其他）</li>
-</ul>
-<p>属性越前则优先级越高。</p>
-<h1 id="规范书写顺序原因"><a href="#规范书写顺序原因" class="headerlink" title="规范书写顺序原因"></a>规范书写顺序原因</h1><h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>减少浏览器reflow（回流），提升浏览器渲染dom的性能。</p>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>浏览器的渲染流程为——</p>
-<ol>
-<li>解析html构建dom树，解析css构建css树：将html解析成树形的数据结构，将css解析成树形的数据结构；</li>
-<li>构建render树：DOM树和CSS树合并之后形成的render树；</li>
-<li>布局render树：有了render树，浏览器已经知道那些网页中有哪些节点，各个节点的css定义和以及它们的从属关系，从而计算出每个节点在屏幕中的位置；</li>
-<li>绘制render树：按照计算出来的规则，通过显卡把内容画在屏幕上。</li>
-</ol>
-<p>css样式解析到显示至浏览器屏幕上就发生在②③④步骤，可见浏览器并不是一获取到css样式就立马开始解析而是根据css样式的书写顺序将之按照dom树的结构分布render样式，完成第②步，然后开始遍历每个树结点的css样式进行解析，此时的css样式的遍历顺序完全是按照之前的书写顺序。在解析过程中，一旦浏览器发现某个元素的定位变化影响布局，则需要倒回去重新渲染正如按照这样的书写书序：</p>
-<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">width</span>: 100<span class="selector-tag">px</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">height</span>: 100<span class="selector-tag">px</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">background-color</span>: <span class="selector-tag">red</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">position</span>: <span class="selector-tag">absolute</span>;</span><br></pre></td></tr></table></figure>
-<p>当浏览器解析到position的时候突然发现该元素是绝对定位元素需要脱离文档流，而之前却是按照普通元素进行解析的，所以不得不重新渲染，解除该元素在文档中所占位置，然而由于该元素的占位发生变化，其他元素也可能会受到它回流的影响而重新排位。最终导致③步骤花费的时间太久而影响到④步骤的显示，影响了用户体验。</p>
-<p>所以规范的的css书写顺序对于文档渲染来说一定是事半功倍的！</p>
-<h1 id="详细解析"><a href="#详细解析" class="headerlink" title="详细解析"></a>详细解析</h1><h2 id="状态类"><a href="#状态类" class="headerlink" title="状态类"></a>状态类</h2><ul>
-<li>display: block | none | inline | compact | marker | inline-table | list-item | run-in | table | table-caption | table-cell | table-column | table-column-group | table-footer-group | table-header-group | table-row | table-row-grou</li>
-<li>visibility: inherit | visible | collapse | hidden  </li>
-<li>float: none | left | right  </li>
-<li>clear: none | left | right | both</li>
-<li>overflow: visible | auto | hidden | scroll</li>
-</ul>
-<h2 id="定位类"><a href="#定位类" class="headerlink" title="定位类"></a>定位类</h2><ul>
-<li>position: static | absolute | fixed | relative  </li>
-<li>top：auto | length  </li>
-<li>right: auto | length  </li>
-<li>bottom: auto | length</li>
-<li>left: auto | length  </li>
-<li>z-index: auto | number</li>
-</ul>
-<h2 id="形状类"><a href="#形状类" class="headerlink" title="形状类"></a>形状类</h2><h3 id="宽"><a href="#宽" class="headerlink" title="宽"></a>宽</h3><ul>
-<li>width: visible | auto | hidden | scroll</li>
-<li>min-width: visible | auto | hidden | scroll</li>
-<li>max-width: visible | auto | hidden | scroll</li>
-</ul>
-<h3 id="高"><a href="#高" class="headerlink" title="高"></a>高</h3><ul>
-<li>height: auto | length</li>
-<li>min-height: auto | length</li>
-<li>max-height: auto | length</li>
-</ul>
-<h2 id="边框类"><a href="#边框类" class="headerlink" title="边框类"></a>边框类</h2><h3 id="maigin"><a href="#maigin" class="headerlink" title="maigin"></a>maigin</h3><ul>
-<li>margin: auto | length</li>
-<li>margin-top: auto | length</li>
-<li>margin-right: auto | length</li>
-<li>margin-bottom: auto | length</li>
-<li>margin-left: auto | length</li>
-</ul>
-<h3 id="padding"><a href="#padding" class="headerlink" title="padding"></a>padding</h3><ul>
-<li>padding: auto | length</li>
-<li>padding-top: auto | length</li>
-<li>padding-right: auto | length</li>
-<li>padding-bottom: auto | length</li>
-<li>padding-left: auto | length</li>
-</ul>
-<h3 id="border"><a href="#border" class="headerlink" title="border"></a>border</h3><h4 id="四边"><a href="#四边" class="headerlink" title="四边"></a>四边</h4><ul>
-<li>border: border-width || border-style || border-color</li>
-<li>border-top: border-width || border-style || border-color</li>
-<li>border-right: border-width || border-style || border-color</li>
-<li>border-bottom: border-width || border-style || border-color</li>
-<li>border-left: border-width || border-style || border-color</li>
-</ul>
-<h4 id="边宽"><a href="#边宽" class="headerlink" title="边宽"></a>边宽</h4><ul>
-<li>border-width: none | hidden | dotted | dashed | solid | double | groove | ridge | inset | outset</li>
-<li>border-top-width: medium | thin | thick | length</li>
-<li>border-right-width: medium | thin | thick | length</li>
-<li>border-bottom-width: medium | thin | thick | length</li>
-<li>border-left-width: medium | thin | thick | length</li>
-</ul>
-<h4 id="边样式"><a href="#边样式" class="headerlink" title="边样式"></a>边样式</h4><ul>
-<li>border-style: none | hidden | dotted | dashed | solid | double | groove | ridge | inset | outset</li>
-<li>border-top-style: border-width || border-style || border-color</li>
-<li>border-right-style: border-width || border-style || border-color</li>
-<li>border-bottom-style: border-width || border-style || border-color</li>
-<li>border-left-style: border-width || border-style || border-color</li>
-</ul>
-<h4 id="边颜色"><a href="#边颜色" class="headerlink" title="边颜色"></a>边颜色</h4><ul>
-<li>border-color: color</li>
-<li>border-top-color: color</li>
-<li>border-right-color: color</li>
-<li>border-bottom-color: color</li>
-<li>border-left-color: color</li>
-</ul>
-<h4 id="边圆角"><a href="#边圆角" class="headerlink" title="边圆角"></a>边圆角</h4><ul>
-<li>border-radius: length</li>
-</ul>
-<h4 id="外边线"><a href="#外边线" class="headerlink" title="外边线"></a>外边线</h4><ul>
-<li>outline: outline-color || outline-style || outline-width</li>
-<li>list-style: list-style-image || list-style-position || list-style-type</li>
-</ul>
-<h4 id="其他边"><a href="#其他边" class="headerlink" title="其他边"></a>其他边</h4><ul>
-<li>table-layout: auto | fixed</li>
-<li>caption-side: top | right | bottom | left</li>
-<li>border-collapse: separate | collapse</li>
-<li>border-spacing: length</li>
-<li>empty-cells: show | hide</li>
-</ul>
-<h2 id="字体类"><a href="#字体类" class="headerlink" title="字体类"></a>字体类</h2><ul>
-<li>font: caption | icon | menu | message-box | small-caption | status-bar</li>
-<li>font-family: ncursive | fantasy | monospace | serif | sans-serif</li>
-<li>font-size: xx-small | x-small | small | medium | large | x-large | xx-large | larger | smaller | length</li>
-<li>line-height: normal | length</li>
-<li>font-weight: normal | bold | bolder | lighter | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900  </li>
-<li>text-align: left | right | center | justify</li>
-<li>text-indent: length</li>
-<li>text-transform: none | capitalize | uppercase | lowercase</li>
-<li>text-decoration: none || underline || blink || overline || line-through</li>
-<li>letter-spacing: normal | length</li>
-<li>word-spacing: normal | length</li>
-<li>white-space: normal | pre | nowrap</li>
-<li>vertical-align: auto | baseline | sub | super | top | text-top | middle | bottom | text-bottom | length</li>
-<li>color: color</li>
-</ul>
-<h2 id="背景类"><a href="#背景类" class="headerlink" title="背景类"></a>背景类</h2><ul>
-<li>background: background-color || background-image || background-repeat || background-attachment || background-position</li>
-<li>background-color: transparent | color</li>
-<li>background-image: none | url ( url )</li>
-<li>background-repeat: repeat | no-repeat | repeat-x | repeat-y</li>
-<li>background-position: length || length || position</li>
-</ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li>opacity：0-1</li>
-<li>cursor: auto | all-scroll | col-resize| crosshair | default | hand | move | help | no-drop | not-allowed | pointer | progress | row-resize | text | vertical-text | wait | *-resize | url ( url )</li>
-<li>content: attr(alt) | counter(name) | counter(name , list-style-type) | counters(name , string) | counters(name , string , list-style-type) | no-close-quote | no-open-quote | close-quote | open-quote | string | url(url)</li>
-<li>quotes: none | string</li>
-</ul>
+<h1 id="一、利用ES6-Set去重（ES6中最常用）"><a href="#一、利用ES6-Set去重（ES6中最常用）" class="headerlink" title="一、利用ES6 Set去重（ES6中最常用）"></a>一、利用ES6 Set去重（ES6中最常用）</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span> (<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Set</span>(arr));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"> <span class="comment">// [1, "true", true, 15, false, undefined, null, NaN, "NaN", 0, "a", &#123;&#125;, &#123;&#125;]</span></span><br><span class="line"> <span class="comment">// 不考虑兼容性，这种去重的方法代码最少。这种方法还无法去掉“&#123;&#125;”空对象，后面的高阶方法会添加去掉重复“&#123;&#125;”的方法。</span></span><br></pre></td></tr></table></figure>
+<h1 id="二、利用for嵌套for，然后splice去重（ES5中最常用）"><a href="#二、利用for嵌套for，然后splice去重（ES5中最常用）" class="headerlink" title="二、利用for嵌套for，然后splice去重（ES5中最常用）"></a>二、利用for嵌套for，然后splice去重（ES5中最常用）</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> j = i + <span class="number">1</span>; j &lt; arr.length; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span>(arr[i] == arr[j]) &#123;    <span class="comment">// 第一个等同于第二个，splice方法删除第二个</span></span><br><span class="line">        arr.splice(j, <span class="number">1</span>);</span><br><span class="line">        j--;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "true", 15, false, undefined, NaN, NaN, "NaN", "a", &#123;…&#125;, &#123;…&#125;]</span></span><br><span class="line"><span class="comment">// NaN和&#123;&#125;没有去重，两个null直接消失了</span></span><br><span class="line"><span class="comment">// 双层循环，外层循环元素，内层循环时比较值。值相同时，则删去这个值。</span></span><br></pre></td></tr></table></figure>
+<h1 id="三、利用indexOf去重"><a href="#三、利用indexOf去重" class="headerlink" title="三、利用indexOf去重"></a>三、利用indexOf去重</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(arr)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'type error!'</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> array = [];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (array.indexOf(arr[i]) === <span class="number">-1</span>) &#123;</span><br><span class="line">      array.push(arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> array;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "true", true, 15, false, undefined, null, NaN, NaN, "NaN", 0, "a", &#123;…&#125;, &#123;…&#125;]</span></span><br><span class="line"><span class="comment">// NaN、&#123;&#125;没有去重</span></span><br><span class="line"><span class="comment">// 新建一个空的结果数组，for 循环原数组，判断结果数组是否存在当前元素，如果有相同的值则跳过，不相同则push进数组。</span></span><br></pre></td></tr></table></figure>
+<h1 id="四、利用sort"><a href="#四、利用sort" class="headerlink" title="四、利用sort()"></a>四、利用sort()</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(arr)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'type error!'</span>)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  arr = arr.sort()</span><br><span class="line">  <span class="keyword">var</span> arrry = [arr[<span class="number">0</span>]];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr[i] !== arr[i<span class="number">-1</span>]) &#123;</span><br><span class="line">      arrry.push(arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> arrry;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [0, 1, 15, "NaN", NaN, NaN, &#123;…&#125;, &#123;…&#125;, "a", false, null, true, "true", undefined]</span></span><br><span class="line"><span class="comment">// NaN、&#123;&#125;没有去重</span></span><br><span class="line"><span class="comment">// 利用sort()排序方法，然后根据排序后的结果进行遍历及相邻元素比对。</span></span><br></pre></td></tr></table></figure>
+<h1 id="五、利用对象的属性不能相同的特点进行去重（这种数组去重的方法有问题，不建议用，有待改进）"><a href="#五、利用对象的属性不能相同的特点进行去重（这种数组去重的方法有问题，不建议用，有待改进）" class="headerlink" title="五、利用对象的属性不能相同的特点进行去重（这种数组去重的方法有问题，不建议用，有待改进）"></a>五、利用对象的属性不能相同的特点进行去重（这种数组去重的方法有问题，不建议用，有待改进）</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(arr)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'type error!'</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> arrry = [];</span><br><span class="line">  <span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!obj[arr[i]]) &#123;</span><br><span class="line">      arrry.push(arr[i])</span><br><span class="line">      obj[arr[i]] = <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      obj[arr[i]]++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> arrry;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "true", 15, false, undefined, null, NaN, 0, "a", &#123;…&#125;]</span></span><br><span class="line"><span class="comment">// 两个true直接去掉了，NaN和&#123;&#125;去重</span></span><br></pre></td></tr></table></figure>
+<h1 id="六、利用includes"><a href="#六、利用includes" class="headerlink" title="六、利用includes"></a>六、利用includes</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(arr)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'type error!'</span>)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> array =[];</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span>( !array.includes( arr[i]) ) &#123;    <span class="comment">// includes 检测数组是否有某个值</span></span><br><span class="line">      array.push(arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> array;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "true", true, 15, false, undefined, null, NaN, "NaN", 0, "a", &#123;…&#125;, &#123;…&#125;]</span></span><br><span class="line"><span class="comment">// &#123;&#125;没有去重</span></span><br></pre></td></tr></table></figure>
+<h1 id="七、利用hasOwnProperty"><a href="#七、利用hasOwnProperty" class="headerlink" title="七、利用hasOwnProperty"></a>七、利用hasOwnProperty</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line">  <span class="keyword">return</span> arr.filter(<span class="function"><span class="keyword">function</span>(<span class="params">item, index, arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> obj.hasOwnProperty(<span class="keyword">typeof</span> item + item) ? <span class="literal">false</span> : (obj[<span class="keyword">typeof</span> item + item] = <span class="literal">true</span>);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "true", true, 15, false, undefined, null, NaN, "NaN", 0, "a", &#123;…&#125;]</span></span><br><span class="line"><span class="comment">// 所有的都去重了</span></span><br><span class="line"><span class="comment">// 利用hasOwnProperty 判断是否存在对象属性</span></span><br></pre></td></tr></table></figure>
+<h1 id="八、利用filter"><a href="#八、利用filter" class="headerlink" title="八、利用filter"></a>八、利用filter</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> arr.filter(<span class="function"><span class="keyword">function</span>(<span class="params">item, index, arr</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 当前元素，在原始数组中的第一个索引 == 当前索引值，否则返回当前元素</span></span><br><span class="line">    <span class="keyword">return</span> arr.indexOf(item, <span class="number">0</span>) === index;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "true", true, 15, false, undefined, null, "NaN", 0, "a", &#123;…&#125;, &#123;…&#125;]</span></span><br></pre></td></tr></table></figure>
+<h1 id="九、利用递归去重"><a href="#九、利用递归去重" class="headerlink" title="九、利用递归去重"></a>九、利用递归去重</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> array = arr;</span><br><span class="line">  <span class="keyword">var</span> len = array.length;</span><br><span class="line">  array.sort(<span class="function"><span class="keyword">function</span>(<span class="params">a,b</span>) </span>&#123;    <span class="comment">// 排序后更加方便去重</span></span><br><span class="line">    <span class="keyword">return</span> a - b;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">loop</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(index &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span>(array[index] === array[index<span class="number">-1</span>]) &#123;</span><br><span class="line">        array.splice(index,<span class="number">1</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      loop(index - <span class="number">1</span>);    <span class="comment">// 递归loop，然后数组去重</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  loop(len<span class="number">-1</span>);</span><br><span class="line">  <span class="keyword">return</span> array;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "a", "true", true, 15, false, 1, &#123;…&#125;, null, NaN, NaN, "NaN", 0, "a", &#123;…&#125;, undefined]</span></span><br></pre></td></tr></table></figure>
+<h1 id="十、利用Map数据结构去重"><a href="#十、利用Map数据结构去重" class="headerlink" title="十、利用Map数据结构去重"></a>十、利用Map数据结构去重</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">arrayNonRepeatfy</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line">  <span class="keyword">let</span> array = <span class="keyword">new</span> <span class="built_in">Array</span>();    <span class="comment">// 数组用于返回结果</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(map.has(arr[i])) &#123;    <span class="comment">// 如果有该key值</span></span><br><span class="line">      map.set(arr[i], <span class="literal">true</span>); </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">      map.set(arr[i], <span class="literal">false</span>);    <span class="comment">// 如果没有该key值</span></span><br><span class="line">      array.push(arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="keyword">return</span> array ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "a", "true", true, 15, false, 1, &#123;…&#125;, null, NaN, NaN, "NaN", 0, "a", &#123;…&#125;, undefined]</span></span><br><span class="line"><span class="comment">// 创建一个空Map数据结构，遍历需要去重的数组，把数组的每一个元素作为key存到Map中。由于Map中不会出现相同的key值，所以最终得到的就是去重后的结果。</span></span><br></pre></td></tr></table></figure>
+<h1 id="十一、利用reduce-includes"><a href="#十一、利用reduce-includes" class="headerlink" title="十一、利用reduce+includes"></a>十一、利用reduce+includes</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> arr.reduce(<span class="function">(<span class="params">prev,cur</span>) =&gt;</span> prev.includes(cur) ? prev : [...prev,cur],[]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">1</span>, <span class="string">'true'</span>, <span class="string">'true'</span>, <span class="literal">true</span>, <span class="literal">true</span>, <span class="number">15</span>, <span class="number">15</span>, <span class="literal">false</span>, <span class="literal">false</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="literal">NaN</span>, <span class="string">'NaN'</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="string">'a'</span>, <span class="string">'a'</span>, &#123;&#125;, &#123;&#125;];</span><br><span class="line"><span class="built_in">console</span>.log(unique(arr));</span><br><span class="line"><span class="comment">// [1, "true", true, 15, false, undefined, null, NaN, "NaN", 0, "a", &#123;…&#125;, &#123;…&#125;]</span></span><br></pre></td></tr></table></figure>
+<h1 id="十二、-…new-Set-arr"><a href="#十二、-…new-Set-arr" class="headerlink" title="十二、[…new Set(arr)]"></a>十二、[…new Set(arr)]</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[...new <span class="built_in">Set</span>(arr)] </span><br><span class="line"><span class="comment">//代码就是这么少----（其实，严格来说并不算是一种，相对于第一种方法来说只是简化了代码）</span></span><br></pre></td></tr></table></figure>
+<p>方法多种多样！</p>
 ]]></content>
       <categories>
         <category>技术文章</category>
       </categories>
       <tags>
-        <tag>CSS</tag>
-        <tag>web前端</tag>
+        <tag>js</tag>
+        <tag>array</tag>
+        <tag>repetition</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何利用hexo搭建一个属于自己的博客网站</title>
+    <url>/2018/04/21/build-hexo-blog/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>因为作者准备往前端方向发展，便想搭建一个属于自己的博客网站，用来发布一些文章以及交流学习。发现利用hexo来搭建个人博客挺方便的，于是便自己试着搭建了一个。特写下此文，一防忘记，二供大家参考。</p>
+<a id="more"></a>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><ol>
+<li>安装Git</li>
+<li>安装NodeJs</li>
+<li>安装hexo</li>
+<li>生成SSH并添加到github</li>
+<li>部署项目</li>
+<li>上传到github</li>
+<li>绑定个人域名</li>
+<li>修改及配置主题</li>
+<li>添加RSS</li>
+<li>添加评论</li>
+<li>写博客文章</li>
+<li>站点管理文件</li>
+</ol>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h2><ul>
+<li>Git:<a href="https://gitforwindows.org/" target="_blank" rel="noopener">下载地址</a></li>
+<li>参考文章:<a href="https://www.w3cschool.cn/git/git-install-setup.html" target="_blank" rel="noopener">《W3Cschool上Git教程之Git安装配置》</a></li>
+</ul>
+<h2 id="安装NodeJs"><a href="#安装NodeJs" class="headerlink" title="安装NodeJs"></a>安装NodeJs</h2><p>Hexo是基于nodeJS环境的静态博客，里面的npm工具很有用啊，所以还是老老实实把这玩意儿装了吧！</p>
+<p>安装步骤：反正下载好msi文件后，双击打开安装，也是一路next，不过在Custom Setup这一步记得选 Add to PATH ,这样你就不用自己去配置电脑上环境变量了，装完在按 win + r 快捷键调出运行，然后输入cmd确定，在cmd中输入path可以看到你的node是否配置在里面（环境变量），没有的话你就自由发挥吧！</p>
+<ul>
+<li>NodeJs<a href="https://nodejs.org/en/" target="_blank" rel="noopener">下载地址</a>(说明：LTS为长期支持版，Current为当前最新版)</li>
+<li>参考文章:<a href="https://www.w3cschool.cn/nodejs/nodejs-install-setup.html" target="_blank" rel="noopener">《W3Cschool上Node.js教程之Node.js安装配置》</a></li>
+</ul>
+<h2 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h2><p>先创建一个文件夹（用来存放所有blog的东西），然后cd到该文件夹下。</p>
+<p>安装hexo命令：（在新建的文件夹里右键Git Bash Here）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm i -g hexo</span><br></pre></td></tr></table></figure>
+<p>接着初始化命令：hexo init ：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo init</span><br></pre></td></tr></table></figure>
+<p>初始化完成之后打开所在的文件夹可以看到以下文件：</p>
+<img src="/2018/04/21/build-hexo-blog/b1.png" title="生成的文件">
+<p>解释一下：</p>
+<ul>
+<li>node_modules：是依赖包</li>
+<li>public：存放的是生成的页面</li>
+<li>scaffolds：命令生成文章等的模板</li>
+<li>source：用命令创建的各种文章</li>
+<li>themes：主题</li>
+<li>_config.yml：整个博客的配置</li>
+<li>db.json：source解析所得到的</li>
+<li>package.json：项目所需模块项目的配置信息</li>
+</ul>
+<p>做好这些前置工作之后接下来的就是各种配置了。</p>
+<h1 id="配置工作"><a href="#配置工作" class="headerlink" title="配置工作"></a>配置工作</h1><h2 id="生成SSH并添加到github"><a href="#生成SSH并添加到github" class="headerlink" title="生成SSH并添加到github"></a>生成SSH并添加到github</h2><p>没账号的先创建一个github账号，有账号的看下面。<a href="https://github.com">注册传送门</a></p>
+<p>创建一个repo，名称为yourname.github.io, 其中yourname是你的github名称，按照这个规则创建才有用，如下：</p>
+<img src="/2018/04/21/build-hexo-blog/b2.jpg" title="创建仓库">
+<img src="/2018/04/21/build-hexo-blog/b3.jpg" title="为仓库取名">
+<p>回到gitbash中，配置github账户信息（YourName和YourEail都替换成你自己的）：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git config global user.name &quot;YourName&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git config global user.email &quot;YourEail&quot;</span><br></pre></td></tr></table></figure>
+<p>配置ssh，Git bash中输入命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;youremail@example.com</span><br></pre></td></tr></table></figure>
+<p>一路回车，就能在你的电脑中产生ssh，ssh文件默认在:C:User/Administrator/.ssh文件夹下，打开.ssh文件夹下的id_rsa.pub文件，将里面的内容复制；再打开github的setting：</p>
+<img src="/2018/04/21/build-hexo-blog/b4.png" title="打开setting">
+<p>将.ssh文件夹下的id_rsa.pub文件里一经复制好了的内容添加到ssh keys:</p>
+<img src="/2018/04/21/build-hexo-blog/b5.png" title="创建key">
+<p>添加一个 New SSH key ，title随便取，key就填刚刚复制好了的那一段。</p>
+<p>在Git bash中验证是否添加成功：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+<p>完成下一步你就成功了！</p>
+<h2 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h2><p>用编辑器打开你的blog项目，修改_config.yml文件的一些配置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">    type: git</span><br><span class="line">    repo: https://github.com/yourgithubname/yourgithubname.github.io.git</span><br><span class="line">    branch: master</span><br></pre></td></tr></table></figure>
+<p>在Git bash中，依次输入以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
+<p>注：hexo 3.0把服务器独立成个别模块，需要单独安装：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm i hexo-server</span><br></pre></td></tr></table></figure>
+<p>打开浏览器输入：<a href="http://localhost:4000" target="_blank" rel="noopener">http://localhost:4000</a></p>
+<p>你就可以看到你的项目在本地能够预览了。</p>
+<h2 id="部署到github上"><a href="#部署到github上" class="headerlink" title="部署到github上"></a>部署到github上</h2><p>先安装一波，这样才能将你写好的文章部署到github服务器上并让别人浏览到,输入命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+<p>再依次执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
+<p>注意deploy的过程中(即hexo d)可能要输入你的github上的username及passward</p>
+<p>一切都ok之后，在浏览器中输入<a href="#">http://yourgithubname.github.io</a>就可以看到你的个人博客，飞起来！！！</p>
+<h2 id="绑定个人域名"><a href="#绑定个人域名" class="headerlink" title="绑定个人域名"></a>绑定个人域名</h2><p>虽然，使用<a href="#">http://yourgithubname.github.io</a>也可以让别人看到你写的博客。</p>
+<p>但是，写博客写博客，还是要有点装逼的嘛。搭配一个属于自己的域名显然会让自己的博客变得高大上起来。</p>
+<p>可以去各大域名销售平台买自己喜欢的域名。（不想绑定的可以跳过这一个环节直接看下一节）</p>
+<p>第一步购买域名：随便在哪个网站买一个就行；</p>
+<p>第二步添加CNAME：在项目的source文件夹下新建一个名为CNAME的文件，在里面添加你购买的域名：</p>
+<img src="/2018/04/21/build-hexo-blog/b6.png" title="配置域名">
+<p>其中ip地址为你的github的地址，可在cmd中ping一下就能看到(ping yourname.github.io)：</p>
+<img src="/2018/04/21/build-hexo-blog/b7.png" title="ping">
+<p>接着再次部署（hexo d）一下，用你购买的域名打开，就可以看到你的博客了了了了了！！！</p>
+<h2 id="修改及配置主题"><a href="#修改及配置主题" class="headerlink" title="修改及配置主题"></a>修改及配置主题</h2><p>hexo初始化之后默认的主题是landscape , 然后你可以去<a href="https://hexo.io/themes/" target="_blank" rel="noopener">这个地址</a>里面找到你想要的主题。在github中搜索你要的主题名称，里面都会有该主题的如何使用的介绍，按着来就好了。本人采用的是raytaylorism主题，集体配置方法，看<a href="https://github.com/DM2N/DM2N.github.io/blob/hexo/themes/raytaylorism/README.md">这里</a>。</p>
+<h2 id="添加RSS"><a href="#添加RSS" class="headerlink" title="添加RSS"></a>添加RSS</h2><p>先安装rss相关插件，Git bash命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm i hexo-generator-feed</span><br></pre></td></tr></table></figure>
+<p>在你的项目的_config.yml配置文件下找到Extensions添加如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Extensions  #插件和主题</span><br><span class="line">## Plugins: https://hexo.io/plugins/</span><br><span class="line">## Themes: https://hexo.io/themes/</span><br><span class="line"># RSS订阅</span><br><span class="line">plugin:</span><br><span class="line">- hexo-generator-feed</span><br><span class="line">#Feed Atom</span><br><span class="line">feed:</span><br><span class="line">  type: atom</span><br><span class="line">  path: atom.xml</span><br><span class="line">  limit: 20</span><br></pre></td></tr></table></figure>
+<p>进入到你的主题的配置文件下，找到你的放rss的位置，添加/atom.xml即可。重新部署再打开就能看到效果了。</p>
+<h2 id="添加评论"><a href="#添加评论" class="headerlink" title="添加评论"></a>添加评论</h2><p>评论功能为第三方评论系统，但，多说、网易云跟帖等都已关闭服务。来必力等也能用，所以，骚年，翻墙吧，具体做法，聪明的你肯定是知道百度的。</p>
+<h2 id="写博客文章"><a href="#写博客文章" class="headerlink" title="写博客文章"></a>写博客文章</h2><p>新建文章，输入命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ hexo new &apos;文章名&apos;</span><br></pre></td></tr></table></figure>
+<p>然后你就可以在source/_posts路径下看到你创建的文章，编辑完成之后按照前面说的方式部署，在浏览器刷新就能看到你的文章了。</p>
+<p>博客文章采用markdown格式编写，至于markdown，骚年，学习吧！！！–&gt;<a href="https://www.appinn.com/markdown/index.html" target="_blank" rel="noopener">前往教室</a></p>
+<h2 id="站点管理文件"><a href="#站点管理文件" class="headerlink" title="站点管理文件"></a>站点管理文件</h2><p>如果本地站点文件丢失了或换了电脑怎么办？为解决这个问题，我们利用了Github的多分支来管理站点文件：</p>
+<ol>
+<li>用master分支来管理发布的文件，即public文件夹下的文件；</li>
+<li>用hexo分支来管理主站点文件，即除public下和.gitignore忽视的其他文件；</li>
+<li>将hexo设为默认分支。</li>
+</ol>
+<p>为此，我们要：</p>
+<h3 id="建立远程仓库"><a href="#建立远程仓库" class="headerlink" title="建立远程仓库"></a>建立远程仓库</h3><p>先将远程仓库关联到本地。进入站点文件夹，输入命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git init</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git remote add origin git@github.com:username/username.github.io.git #使用站点仓库地址关联</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git pull</span><br></pre></td></tr></table></figure>
+<h3 id="创建hexo分支"><a href="#创建hexo分支" class="headerlink" title="创建hexo分支"></a>创建hexo分支</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git checkout -b hexo  #创建并切换到hexo分支</span><br></pre></td></tr></table></figure>
+<h3 id="将hexo设为默认分支"><a href="#将hexo设为默认分支" class="headerlink" title="将hexo设为默认分支"></a>将hexo设为默认分支</h3><p>在Github上的站点仓库上，点击Settings=&gt;Branches，将Default branch切换成hexo，然后点击Update即可。</p>
+<img src="/2018/04/21/build-hexo-blog/b8.png" title="change-branch">
+<h3 id="将主站点文件push到hexo分支"><a href="#将主站点文件push到hexo分支" class="headerlink" title="将主站点文件push到hexo分支"></a>将主站点文件push到hexo分支</h3><p>在hexo分支（使用git branch命令查看当前所在分支）下，输入命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git add .</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git commit -m &quot;提交记录&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git push -u origin hexo  #初次push要加-u，此后可省</span><br></pre></td></tr></table></figure>
+<h3 id="本地站点恢复"><a href="#本地站点恢复" class="headerlink" title="本地站点恢复"></a>本地站点恢复</h3><ol>
+<li>使用git clone命令克隆站点仓库（默认分支为hexo）：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ git clone git@github.com:username/username.github.io.git</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>在本地新拷贝的username.github.io文件夹下依次执行命令：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-cli</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+<p>注意，此时不需要执行hexo init这条命令。</p>
+<p>到此，便完成了对站点的一些简单管理。</p>
+]]></content>
+      <categories>
+        <category>技术文章</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>blog</tag>
+        <tag>raytaylorism</tag>
       </tags>
   </entry>
   <entry>
