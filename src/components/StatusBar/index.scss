@@ -1,0 +1,17 @@
+#status_bar {
+  display: flex;
+  justify-content: space-between;
+
+  .status_icons {
+    display: flex;
+    justify-content: space-around;
+    color: #fff;
+    width: 60px;
+
+    .status_icon {
+      font-size: 14px;
+      width: 20px;
+      height: 16px;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+#mobile {
+  background-color: #fff;
+  padding: 10px;
+  width: 400px;
+  height: 800px;
+  border-radius: 20px;
+  background-image: url('../../assets/images/mobile_bg.jpeg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media(max-width: 520px) {
+  #mobile {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+}
