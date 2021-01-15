@@ -1,6 +1,12 @@
 #status_bar {
   display: flex;
   justify-content: space-between;
+  padding: 0 10px;
+
+  .time_bar {
+    color: $text_color;
+    font-weight: 600;
+  }
 
   .status_icons {
     display: flex;
@@ -13,5 +19,11 @@
       width: 20px;
       height: 16px;
     }
+  }
+}
+
+@media(max-width: 520px) {
+  #status_bar {
+    opacity: 0;
   }
 }
