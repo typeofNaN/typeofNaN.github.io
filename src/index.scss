@@ -35,3 +35,25 @@ li {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+::-webkit-scrollbar {
+  display: none;
+  width: 0.25rem;
+  height: 0.25rem;
+  background-color: #eee;
+}
+::-webkit-scrollbar-track {
+  display: none;
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb {
+  display: none;
+  border-radius: 0;
+  background-color: #999;
+  transition: all .2s;
+  border-radius: 0.25rem;
+}
+::-webkit-scrollbar-thumb:hover {
+  display: none;
+  background-color: rgba(95, 95, 95, 0.7);
+}

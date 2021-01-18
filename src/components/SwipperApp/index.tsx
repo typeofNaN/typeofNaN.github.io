@@ -16,7 +16,7 @@ interface IState {
 export default class SwipperApp extends Component<IProps, IState> {
   private readonly mainApps = mainApps
 
-  constructor(props: any) {
+  constructor(props: IProps) {
     super(props)
     this.state = {
       pageIdx: 0,
@@ -108,7 +108,7 @@ export default class SwipperApp extends Component<IProps, IState> {
                   pageData={page}
                   key={index}
                   pageIdx={index}
-                ></SwipperPage>
+                />
               )
             })
           }
@@ -119,7 +119,7 @@ export default class SwipperApp extends Component<IProps, IState> {
               return <i
                 className={pageIdx === index ? 'active dot' : 'dot'}
                 key={index}
-              ></i>
+              />
             })
           }
         </div>

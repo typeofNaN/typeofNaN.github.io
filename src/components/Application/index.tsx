@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PubSub from 'pubsub-js'
 
 import './index.scss'
 import { IApp } from '../../config/apps'
@@ -10,8 +11,12 @@ interface IProps {
 interface IState {}
 
 export default class Application extends Component<IProps, IState> {
+  openActionSheet = (appType: string) => {
+    PubSub.publish('openActionSheet', appType)
+  }
+
   render() {
-    const { name, imgUrl, link } = this.props.app
+    const { name, imgUrl, link, type = '' } = this.props.app
     const appName = name
       ? <p className="app_name">{name}</p>
       : null
@@ -25,7 +30,10 @@ export default class Application extends Component<IProps, IState> {
           <img src={imgUrl} alt=""/>
           {appName}
         </a>
-      : <div className="application">
+      : <div
+          className="application"
+          onClick={() => this.openActionSheet(type)}
+        >
           <img src={imgUrl} alt=""/>
           {appName}
         </div>

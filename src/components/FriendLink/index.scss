@@ -1,0 +1,21 @@
+#friend_link {
+  .link_group {
+    margin-bottom: 10px;
+
+    .group_name {
+      padding: 6px 2px;
+      color: #606266;
+      background-color: #f0f0f0;
+    }
+
+    .group_list {
+      .link_item {
+        height: 40px;
+        line-height: 40px;
+        color: #606266;
+        font-size: 16px;
+        border-bottom: 1px solid #909399;
+      }
+    }
+  }
+}

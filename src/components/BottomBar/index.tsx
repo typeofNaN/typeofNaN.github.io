@@ -16,7 +16,7 @@ export default class BottomBar extends Component {
                 className="app_item"
                 key={index}
               >
-                <Application app={app}></Application>
+                <Application app={app} />
               </div>
             )
           })

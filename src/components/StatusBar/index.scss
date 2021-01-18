@@ -4,14 +4,12 @@
   padding: 0 10px;
 
   .time_bar {
-    color: $text_color;
     font-weight: 600;
   }
 
   .status_icons {
     display: flex;
     justify-content: space-around;
-    color: #fff;
     width: 60px;
 
     .status_icon {

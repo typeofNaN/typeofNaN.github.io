@@ -1,0 +1,82 @@
+#wechat {
+  position: relative;
+  height: 100%;
+
+  .chat_list {
+    padding-bottom: 130px;
+    height: 100%;
+    overflow-y: auto;
+
+    .msg_item {
+      .msg_content {
+        display: inline-block;
+        padding: 6px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+      }
+
+      &.me {
+        text-align: left;
+
+        .msg_content {
+          background-color: #ccc;
+          border-top-left-radius: 2px;
+        }
+      }
+
+      &.you {
+        text-align: right;
+
+        .msg_content {
+          background-color: #7ee77e;
+          border-top-right-radius: 2px;
+        }
+      }
+    }
+  }
+
+  .answer_box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+
+    .answer_tip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 30px;
+      border-top: 1px solid rgba(200, 200, 200, .2);
+      color: #606266;
+      cursor: pointer;
+
+      &.no_close {
+        p {
+          width: 90%;
+        }
+        .close_icon {
+          opacity: 1;
+        }
+      }
+
+      &.show_close {
+        p {
+          width: 100%;
+        }
+        .close_icon {
+          opacity: 0;
+        }
+      }
+    }
+
+    .answer_list {
+      .answer_item {
+        border-top: 1px solid rgba(200, 200, 200, .2);
+        line-height: 30px;
+        color: #909399;
+        cursor: pointer;
+      }
+    }
+  }
+}

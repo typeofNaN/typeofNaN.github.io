@@ -31,7 +31,7 @@ export default class SwipperPage extends Component<IProps, IState> {
                 className="app_item"
                 key={index}
               >
-                <Application app={app}></Application>
+                <Application app={app} />
               </div>
             )
           })

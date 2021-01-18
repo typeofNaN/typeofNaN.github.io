@@ -4,7 +4,9 @@ import './index.scss'
 import SvgIcon from '../SvgIcon'
 import { nowTime } from '../../utils/tools'
 
-interface IProps {}
+interface IProps {
+  color?: string
+}
 
 interface IState {
   time: string
@@ -15,7 +17,7 @@ export default class StatusBar extends Component<IProps, IState> {
 
   private timer: any = null
 
-  constructor(props: any) {
+  constructor(props: IProps) {
     super(props)
     this.state = {
       time: nowTime()
@@ -38,9 +40,13 @@ export default class StatusBar extends Component<IProps, IState> {
   }
 
   render() {
-    const { time } = this.state
+    const { color = '#fff' } = this.props
+    const { time,  } = this.state
     return (
-      <div id="status_bar">
+      <div
+        id="status_bar"
+        style={{color}}
+      >
         <span className="time_bar">{time}</span>
         <div className="status_icons">
           {

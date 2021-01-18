@@ -2,8 +2,7 @@ import github from '../assets/images/apps/github.png'
 import blog from '../assets/images/apps/blog.png'
 import email from '../assets/images/apps/email.png'
 import music from '../assets/images/apps/music.png'
-import map from '../assets/images/apps/map.png'
-import contact from '../assets/images/apps/contact.png'
+// import map from '../assets/images/apps/map.png'
 
 import typeofnan from '../assets/images/apps/typeofnan.png'
 import visualEditing from '../assets/images/apps/visual-editing.png'
@@ -21,7 +20,8 @@ import devtool from '../assets/images/apps/devtool.png'
 import waiting from '../assets/images/apps/waiting.png'
 
 import phone from '../assets/images/apps/phone.png'
-import message from '../assets/images/apps/message.png'
+// import message from '../assets/images/apps/message.png'
+import contact from '../assets/images/apps/contact.png'
 import b612 from '../assets/images/apps/b612.png'
 import wechat from '../assets/images/apps/wechat.png'
 
@@ -29,6 +29,7 @@ export interface IApp {
   imgUrl: string
   name?: string
   link?: string
+  type?: string
 }
 
 export interface IAppPage {
@@ -59,14 +60,10 @@ export const mainApps: Array<IAppPage> = [
         imgUrl: music,
         name: '音乐'
       },
-      {
-        imgUrl: map,
-        name: '地址'
-      },
-      {
-        imgUrl: contact,
-        name: '友情链接'
-      }
+      // {
+      //   imgUrl: map,
+      //   name: '地址'
+      // }
     ]
   },
   {
@@ -152,15 +149,18 @@ export const mainApps: Array<IAppPage> = [
 
 export const bottomBarApps: Array<IApp> = [
   {
-    imgUrl: phone
+    imgUrl: phone,
+    type: 'friendLink'
   },
   {
-    imgUrl: message
+    imgUrl: contact,
+    type: 'friendLink'
   },
   {
     imgUrl: b612
   },
   {
-    imgUrl: wechat
+    imgUrl: wechat,
+    type: 'wechat'
   }
 ]
