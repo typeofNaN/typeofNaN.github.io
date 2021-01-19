@@ -58,7 +58,8 @@ export const mainApps: Array<IAppPage> = [
       },
       {
         imgUrl: music,
-        name: '音乐'
+        name: '音乐',
+        type: 'music'
       },
       // {
       //   imgUrl: map,
@@ -157,7 +158,8 @@ export const bottomBarApps: Array<IApp> = [
     type: 'friendLink'
   },
   {
-    imgUrl: b612
+    imgUrl: b612,
+    type: 'photo'
   },
   {
     imgUrl: wechat,
