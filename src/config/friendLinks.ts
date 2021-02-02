@@ -27,6 +27,14 @@ export const feLinks: Array<ILinks> = [
       {
         name: 'Deno',
         url: 'https://deno.land/'
+      },
+      {
+        name: 'Node.js中文网',
+        url: 'http://nodejs.cn/'
+      },
+      {
+        name: 'Webpack中文文档',
+        url: 'https://webpack.docschina.org/'
       }
     ]
   },
