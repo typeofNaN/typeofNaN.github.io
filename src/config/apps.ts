@@ -49,7 +49,7 @@ export const mainApps: Array<IAppPage> = [
       {
         imgUrl: blog,
         name: '博客',
-        link: 'https://blog.typeofnan.com'
+        link: 'https://blog.typeofnan.me'
       },
       {
         imgUrl: email,
