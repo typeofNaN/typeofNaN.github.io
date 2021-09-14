@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import './index.scss'
 import Application from '../Application'
 import { IAppPage, IApp } from '../../config/apps'
+import './index.scss'
 
 interface IProps {
   pageData: IAppPage,

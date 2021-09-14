@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import './index.scss'
 
 
@@ -18,11 +19,14 @@ const SvgIcon = ({ iconClass, className }: any) => {
 
   return (
     <div>
-      {isExternal(iconClass) ?
-        <div style={styleExternalIcon} className={`svg-external-icon ${svgClass}`} /> :
-        <svg className={svgClass} aria-hidden="true">
-          <use xlinkHref={iconName} />
-        </svg>
+      {
+        isExternal(iconClass)
+          ? <div style={styleExternalIcon} className={`svg-external-icon ${svgClass}`} />
+          : (
+            <svg className={svgClass} aria-hidden="true">
+              <use xlinkHref={iconName} />
+            </svg>
+          )
       }
     </div>
   )

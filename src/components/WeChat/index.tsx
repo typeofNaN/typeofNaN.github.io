@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import './index.scss'
 import SvgIcon from '../SvgIcon'
 import { wechatMsg, IAnswer } from '../../config/wechat'
+import './index.scss'
 
 interface IMsg {
   content: string

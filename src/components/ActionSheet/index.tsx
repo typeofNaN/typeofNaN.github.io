@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import PubSub from 'pubsub-js'
 
-import './index.scss'
 import StatusBar from '../StatusBar'
 import SvgIcon from '../SvgIcon'
 import WeChat from '../WeChat'
 import FriendLink from '../FriendLink'
 import { AppTypes } from '../../config/appType'
+import './index.scss'
 
 interface IProps { }
 

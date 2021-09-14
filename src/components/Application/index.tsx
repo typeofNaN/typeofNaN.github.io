@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PubSub from 'pubsub-js'
 
-import './index.scss'
 import { IApp } from '../../config/apps'
+import './index.scss'
 
 interface IProps {
   app: IApp
@@ -21,22 +21,26 @@ export default class Application extends Component<IProps, IState> {
       ? <p className="app_name">{name}</p>
       : null
     const render = link
-      ? <a
-        href={link}
-        className="application"
-        target="_blank"
-        rel="noreferrer"
-      >
-        <img src={imgUrl} alt="" />
-        {appName}
-      </a>
-      : <div
-        className="application"
-        onClick={() => this.openActionSheet(type)}
-      >
-        <img src={imgUrl} alt="" />
-        {appName}
-      </div>
+      ? (
+        <a
+          href={link}
+          className="application"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img src={imgUrl} alt="" />
+          {appName}
+        </a>
+      )
+      : (
+        <div
+          className="application"
+          onClick={() => this.openActionSheet(type)}
+        >
+          <img src={imgUrl} alt="" />
+          {appName}
+        </div>
+      )
     return render
   }
 }

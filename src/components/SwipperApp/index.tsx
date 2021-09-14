@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import './index.scss'
 import SwipperPage from '../SwipperPage'
 import { mainApps, IAppPage } from '../../config/apps'
+import './index.scss'
 
 interface IProps { }
 

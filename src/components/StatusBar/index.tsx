@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import './index.scss'
 import SvgIcon from '../SvgIcon'
 import { nowTime } from '../../utils/tools'
+import './index.scss'
 
 interface IProps {
   color?: string

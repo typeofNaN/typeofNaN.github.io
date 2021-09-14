@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
-import './index.scss'
 import { feLinks, ILinks, ILinkItem } from '../../config/friendLinks'
+import './index.scss'
 
 export default class FriendLink extends Component {
   private readonly feLinks = feLinks

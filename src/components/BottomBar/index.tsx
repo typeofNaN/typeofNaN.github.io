@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import './index.scss'
 import Application from '../Application'
 import { bottomBarApps, IApp } from '../../config/apps'
+import './index.scss'
 
 export default class BottomBar extends Component {
   private readonly appList = bottomBarApps
