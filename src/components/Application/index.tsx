@@ -8,7 +8,7 @@ interface IProps {
   app: IApp
 }
 
-interface IState {}
+interface IState { }
 
 export default class Application extends Component<IProps, IState> {
   openActionSheet = (appType: string) => {
@@ -22,21 +22,21 @@ export default class Application extends Component<IProps, IState> {
       : null
     const render = link
       ? <a
-          href={link}
-          className="application"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img src={imgUrl} alt=""/>
-          {appName}
-        </a>
+        href={link}
+        className="application"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <img src={imgUrl} alt="" />
+        {appName}
+      </a>
       : <div
-          className="application"
-          onClick={() => this.openActionSheet(type)}
-        >
-          <img src={imgUrl} alt=""/>
-          {appName}
-        </div>
+        className="application"
+        onClick={() => this.openActionSheet(type)}
+      >
+        <img src={imgUrl} alt="" />
+        {appName}
+      </div>
     return render
   }
 }

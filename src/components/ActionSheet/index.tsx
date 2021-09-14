@@ -8,7 +8,7 @@ import WeChat from '../WeChat'
 import FriendLink from '../FriendLink'
 import { AppTypes } from '../../config/appType'
 
-interface IProps {}
+interface IProps { }
 
 interface IState {
   top: string
@@ -25,7 +25,7 @@ export default class ActionSheet extends Component<IProps, IState> {
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     PubSub.subscribe('openActionSheet', (msg: string, data: string) => {
       this.setState({
         appType: data
@@ -67,7 +67,7 @@ export default class ActionSheet extends Component<IProps, IState> {
     return (
       <div
         id="action_sheet"
-        style={{top: this.state.top}}
+        style={{ top: this.state.top }}
       >
         <StatusBar color="303133" />
         <div

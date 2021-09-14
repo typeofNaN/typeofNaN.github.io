@@ -9,7 +9,7 @@ interface IProps {
   pageIdx: number
 }
 
-interface IState {}
+interface IState { }
 
 export default class SwipperPage extends Component<IProps, IState> {
   render() {
@@ -24,18 +24,18 @@ export default class SwipperPage extends Component<IProps, IState> {
       >
         <div className="app_group">{name}</div>
         <div className="app_list">
-        {
-          apps.map((app: IApp, index: number) => {
-            return (
-              <div
-                className="app_item"
-                key={index}
-              >
-                <Application app={app} />
-              </div>
-            )
-          })
-        }
+          {
+            apps.map((app: IApp, index: number) => {
+              return (
+                <div
+                  className="app_item"
+                  key={index}
+                >
+                  <Application app={app} />
+                </div>
+              )
+            })
+          }
         </div>
       </div>
     )

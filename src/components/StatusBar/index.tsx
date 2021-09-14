@@ -41,16 +41,16 @@ export default class StatusBar extends Component<IProps, IState> {
 
   render() {
     const { color = '#fff' } = this.props
-    const { time,  } = this.state
+    const { time } = this.state
     return (
       <div
         id="status_bar"
-        style={{color}}
+        style={{ color }}
       >
         <span className="time_bar">{time}</span>
         <div className="status_icons">
           {
-            this.statusIcon.map((icon: string) => 
+            this.statusIcon.map((icon: string) =>
               <SvgIcon
                 iconClass={icon}
                 key={icon}

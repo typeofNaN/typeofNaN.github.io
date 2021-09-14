@@ -4,7 +4,7 @@ import './index.scss'
 import SwipperPage from '../SwipperPage'
 import { mainApps, IAppPage } from '../../config/apps'
 
-interface IProps {}
+interface IProps { }
 
 interface IState {
   pageIdx: number,

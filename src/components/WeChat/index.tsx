@@ -9,7 +9,7 @@ interface IMsg {
   from: number
 }
 
-interface IProps {}
+interface IProps { }
 
 interface IState {
   wechatMsgList: Array<IMsg>
@@ -106,7 +106,7 @@ export default class WeChat extends Component<IProps, IState> {
           </div>
           <div
             className="answer_list"
-            style={{display: showAnswer ? 'block' : 'none'}}
+            style={{ display: showAnswer ? 'block' : 'none' }}
           >
             {
               answerList.map((answer: IAnswer, index) =>

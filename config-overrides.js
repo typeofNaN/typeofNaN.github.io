@@ -1,5 +1,5 @@
-const { 
-  override, 
+const {
+  override,
   fixBabelImports,
   adjustStyleLoaders,
   addWebpackModuleRule
@@ -7,7 +7,7 @@ const {
 const path = require('path')
 
 // 使用ant-design搭建React+ts项目，可在此重重定义antd全局样式
-const overConfig  = override(
+const overConfig = override(
   fixBabelImports('import', {
     libraryName: 'antd',
     libraryDirectory: 'es',
@@ -26,10 +26,11 @@ const overConfig  = override(
   addWebpackModuleRule({
     test: /\.svg$/,
     include: [path.join(__dirname, 'src/icons')],
-    use: [
-    {
+    use: [{
       loader: 'svg-sprite-loader',
-      options: { symbolId: "icon-[name]" }
+      options: {
+        symbolId: "icon-[name]"
+      }
     }]
   })
 )
