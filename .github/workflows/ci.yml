@@ -30,7 +30,7 @@ jobs:
       # 执行npm脚本打包项目
       - name: Install and Build
         run: |
-          npm install
+          npm install --legacy-peer-deps
           npm run build
       
       # 执行JamesIves/github-pages-deploy-action将项目发布到Github Pages
