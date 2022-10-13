@@ -22,22 +22,17 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
-
       # 执行npm脚本打包项目
       - name: Install and Build
         run: |
           npm install --legacy-peer-deps
           npm run build
-      
+
       # 执行JamesIves/github-pages-deploy-action将项目发布到Github Pages
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
-          # 该workflow需要操作repo，因此需要一个密钥，下面会讲到如何获取这个密钥
+          # 该workflow需要操作repo，因此需要一个密钥
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           # 发布到的分支
           BRANCH: gh-pages
