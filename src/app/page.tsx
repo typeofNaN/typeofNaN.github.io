@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <main className="py-20 px-12 text-center flex flex-col items-center gap-20px">
+    <main className="flex-center flex-col h-500px color-primary">
       Hello typeofNaN
     </main>
   )

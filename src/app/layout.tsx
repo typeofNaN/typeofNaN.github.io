@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { AntdRegistry } from '@ant-design/nextjs-registry'
 import '@unocss/reset/tailwind.css'
 
 import './globals.css'
@@ -24,7 +25,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
+        <AntdRegistry>{children}</AntdRegistry>
       </body>
     </html>
   )
