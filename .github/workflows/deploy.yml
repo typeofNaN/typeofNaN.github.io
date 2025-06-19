@@ -1,0 +1,26 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # 设置触发分支，通常是 main 或 master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Install and Build 🔧 # 安装依赖并构建项目
+        run: |
+          npm install
+          npm run build
+          # npm run export # 对于 Next.js 应用，使用 npm run export 来生成静态文件
+          touch out/.nojekyll # GitHub Pages 需要这个文件来正确处理 Jekyll 站点
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # 部署到的分支，GitHub Pages 使用的是 gh-pages 分支
+          FOLDER: out # 指定静态文件所在的目录，这里是 Next.js 导出后的 out 目录
