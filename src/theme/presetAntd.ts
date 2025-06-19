@@ -48,7 +48,8 @@ import { dark } from './dark'
 //   info?: string
 // }
 
-export function presetAntd(options: any = {}) {
+// @ts-ignore
+export function presetAntd(options?) {
   const {
     prefix = '--un-preset-antd',
     selectors,
