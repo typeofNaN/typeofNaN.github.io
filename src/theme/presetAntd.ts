@@ -1,54 +1,54 @@
-// import type { Theme } from 'unocss/preset-mini'
-import { presetTheme } from 'unocss-preset-theme'
+import type { Theme } from 'unocss/preset-mini'
+import { presetTheme, PresetThemeOptions } from 'unocss-preset-theme'
 import { light } from './light'
 import { dark } from './dark'
 
-// export interface PresetAntdOptions extends Omit<PresetThemeOptions<Theme>, 'theme'> {
-//   /**
-//    * Used to generate light colors
-//    *
-//    * @default #ffffff
-//    */
-//   lightBackgroundColor?: string
-//   /**
-//    * Used to generate dark theme colors
-//    *
-//    * @default #141414
-//    */
-//   darkBackgroundColor?: string
-//   /**
-//    * Base primary color
-//    *
-//    * @default #1677ff
-//    */
-//   primary?: string
-//   /**
-//    * Base success color
-//    *
-//    * @default #52c41a
-//    */
-//   success?: string
-//   /**
-//    * Base warning color
-//    *
-//    * @default #faad14
-//    */
-//   warning?: string
-//   /**
-//    * Base error color
-//    *
-//    * @default #ff4d4f
-//    */
-//   error?: string
-//   /**
-//    * Base info color
-//    *
-//    * @default #1677ff
-//    */
-//   info?: string
-// }
+export interface PresetAntdOptions extends Omit<PresetThemeOptions<Theme>, 'theme'> {
+  /**
+   * Used to generate light colors
+   *
+   * @default #ffffff
+   */
+  lightBackgroundColor?: string
+  /**
+   * Used to generate dark theme colors
+   *
+   * @default #141414
+   */
+  darkBackgroundColor?: string
+  /**
+   * Base primary color
+   *
+   * @default #1677ff
+   */
+  primary?: string
+  /**
+   * Base success color
+   *
+   * @default #52c41a
+   */
+  success?: string
+  /**
+   * Base warning color
+   *
+   * @default #faad14
+   */
+  warning?: string
+  /**
+   * Base error color
+   *
+   * @default #ff4d4f
+   */
+  error?: string
+  /**
+   * Base info color
+   *
+   * @default #1677ff
+   */
+  info?: string
+}
 
-export function presetAntd(options = {}) {
+export function presetAntd(options: PresetAntdOptions = {}) {
   const {
     prefix = '--un-preset-antd',
     selectors,
@@ -59,7 +59,7 @@ export function presetAntd(options = {}) {
     warning = '#faad14',
     error = '#ff4d4f',
     info = '#1677ff'
-  } = options as any
+  } = options
 
   return presetTheme({
     prefix,
