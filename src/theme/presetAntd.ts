@@ -48,8 +48,7 @@ import { dark } from './dark'
 //   info?: string
 // }
 
-// @ts-ignore
-export function presetAntd(options: any = {}) {
+export function presetAntd(options = {}) {
   const {
     prefix = '--un-preset-antd',
     selectors,
@@ -60,7 +59,7 @@ export function presetAntd(options: any = {}) {
     warning = '#faad14',
     error = '#ff4d4f',
     info = '#1677ff'
-  } = options
+  } = options as any
 
   return presetTheme({
     prefix,
