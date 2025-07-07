@@ -28,6 +28,7 @@
     "eslint-config-next": "15.3.4",
     "typescript": "^5",
     "unocss": "^66.2.3",
+    "unocss-config": "^1.0.0",
     "unocss-preset-theme": "^0.14.1"
   }
 }
