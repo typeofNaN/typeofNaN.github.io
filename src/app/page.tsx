@@ -1,7 +1,11 @@
 export default function Home() {
   return (
-    <main className="flex-center flex-col h-500px color-primary">
-      Hello typeofNaN
-    </main>
+    <>
+      <main className="pt-60px">
+        <div className="m-auto pt-20px container">
+          Hello typeofNaN
+        </div>
+      </main>
+    </>
   )
 }

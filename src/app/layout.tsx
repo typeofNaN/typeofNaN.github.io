@@ -3,7 +3,9 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import '@unocss/reset/tailwind.css'
 
+import { CommonHeader } from './components'
 import LoveHeart from '@/src/components/heart-animate'
+import ThemeProvider from '@/src/components/theme-provider'
 import './globals.css'
 
 const geistSans = Geist({
@@ -24,11 +26,24 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="zh-CN" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <LoveHeart>
-          <AntdRegistry>{children}</AntdRegistry>
-        </LoveHeart>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="fixed top-0 left-0 w-full h-full z--1 bg-#e3e3e3 dark:bg-#000">
+            <div className="main-bg absolute inset-0 opacity-30 dark:opacity-20" />
+          </div>
+          <LoveHeart>
+            <AntdRegistry>
+              <CommonHeader />
+              {children}
+            </AntdRegistry>
+          </LoveHeart>
+        </ThemeProvider>
       </body>
     </html>
   )
