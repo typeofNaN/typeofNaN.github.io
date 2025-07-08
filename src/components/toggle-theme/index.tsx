@@ -5,7 +5,7 @@ import { MouseEvent } from 'react'
 import { Icon } from '@iconify/react'
 
 export default function ToggleTheme() {
-  const { theme, setTheme } = useTheme()
+  const { theme = 'system', setTheme } = useTheme()
 
   const handleClick = async (event: MouseEvent<HTMLDivElement>): Promise<void> => {
     const isDarkMode = theme === 'dark'
@@ -15,7 +15,13 @@ export default function ToggleTheme() {
     const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))
 
     const transition = document.startViewTransition(() => {
-      setTheme(theme === 'light' ? 'dark' : 'light')
+      if (theme === 'system') {
+        setTheme('light')
+      } else if (theme === 'light') {
+        setTheme('dark')
+      } else {
+        setTheme('system')
+      }
     })
 
     await transition.ready
@@ -36,11 +42,9 @@ export default function ToggleTheme() {
 
   return (
     <div className="text-primary cursor-pointer" onClick={handleClick}>
-      {
-        theme === 'dark'
-          ? <Icon icon="mdi-moon-waning-crescent" />
-          : <Icon icon="mdi-white-balance-sunny" />
-      }
+      {theme === 'system' && <Icon icon="proicons:dark-theme" />}
+      {theme === 'light' && <Icon icon="mdi-white-balance-sunny" />}
+      {theme === 'dark' && <Icon icon="mdi-moon-waning-crescent" />}
     </div>
   )
 }

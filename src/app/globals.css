@@ -5,12 +5,6 @@
   --foreground: #171717;
 }
 
-@font-face {
-  font-display: swap;
-  font-family: Alimama;
-  src: url("../assets/fonts/alimama.woff2") format("woff2");
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -25,7 +19,7 @@ body {
 }
 
 body {
-  font-family: Alimama, SpecialSymbol, DINRegular, -apple-system, BlinkMacSystemFont, Arial, "PingFang SC", "Helvetica Neue", "Hiragino Sans GB", "Segoe UI", "Microsoft YaHei", 微软雅黑, sans-serif;
+  font-family: SpecialSymbol, DINRegular, -apple-system, BlinkMacSystemFont, Arial, "PingFang SC", "Helvetica Neue", "Hiragino Sans GB", "Segoe UI", "Microsoft YaHei", 微软雅黑, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -45,6 +39,22 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root),
+.dark::view-transition-new(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root),
+.dark::view-transition-old(root) {
+  z-index: 9999;
 }
 
 .main-bg {
