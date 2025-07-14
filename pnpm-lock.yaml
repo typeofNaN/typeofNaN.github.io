@@ -21,8 +21,8 @@ importers:
         specifier: ^5.26.1
         version: 5.26.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       click-love-heart:
-        specifier: ^1.0.3
-        version: 1.0.3
+        specifier: ^1.0.4
+        version: 1.0.4
       next:
         specifier: 15.3.4
         version: 15.3.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -67,8 +67,8 @@ importers:
         specifier: ^66.2.3
         version: 66.2.3(postcss@8.5.6)(vite@6.3.5(@types/node@20.19.1)(jiti@2.4.2))(vue@3.5.17(typescript@5.8.3))
       unocss-config:
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^1.0.1
+        version: 1.0.1
       unocss-preset-theme:
         specifier: ^0.14.1
         version: 0.14.1(@unocss/core@66.2.3)
@@ -1207,8 +1207,8 @@ packages:
   classnames@2.5.1:
     resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
 
-  click-love-heart@1.0.3:
-    resolution: {integrity: sha512-6s4JMu4c1Mvyfuo70w/aZJ8jkXpDIuRrhSfWcVyENqGXCPzFtrq0fKxjbFDO8adIiZG/eJa4xgcE8UhZJu7fCg==}
+  click-love-heart@1.0.4:
+    resolution: {integrity: sha512-tyvnt6w4Cq1pyAUozyZ9jwzprXKHxFMmAKiXYUYbnCrwIfr93bBv1TrXMR/Zv2EAXfZHCYPLi99Xx2UDP4N7Rg==}
 
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
@@ -2550,8 +2550,8 @@ packages:
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
-  unocss-config@1.0.0:
-    resolution: {integrity: sha512-gYF0o7rWmo1G2C0np7ubsAc0dCPfoW96hy2wJj/JmulIchj1ILkhvoFglMyNsmWxkhxiFdZwnZS4StnpVzAUeg==}
+  unocss-config@1.0.1:
+    resolution: {integrity: sha512-sl8aTO3uauhaoNrmFl1Y0ujaIcFbM6xtNDWxA51cBmaYFQyL9rZPvLBFjDXQWPtLxib7W2nA406Q394c8gpXTA==}
 
   unocss-preset-theme@0.14.1:
     resolution: {integrity: sha512-j2sFIUeKy0FC3DejIZ/+tyiKEszoMiAAsuOyZBubw7XErHL5ZvpwBmLM5Qj/czbfKbv1TdeJW5RO4PRKACiRGw==}
@@ -3831,7 +3831,7 @@ snapshots:
 
   classnames@2.5.1: {}
 
-  click-love-heart@1.0.3: {}
+  click-love-heart@1.0.4: {}
 
   client-only@0.0.1: {}
 
@@ -4123,7 +4123,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.34.1(eslint@9.29.0(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.31.0)(eslint@9.29.0(jiti@2.4.2)))(eslint@9.29.0(jiti@2.4.2)):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.34.1(eslint@9.29.0(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.29.0(jiti@2.4.2)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -4145,7 +4145,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.29.0(jiti@2.4.2)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.34.1(eslint@9.29.0(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.31.0)(eslint@9.29.0(jiti@2.4.2)))(eslint@9.29.0(jiti@2.4.2))
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.34.1(eslint@9.29.0(jiti@2.4.2))(typescript@5.8.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.29.0(jiti@2.4.2))
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -5541,7 +5541,7 @@ snapshots:
 
   undici-types@6.21.0: {}
 
-  unocss-config@1.0.0:
+  unocss-config@1.0.1:
     dependencies:
       '@ant-design/colors': 7.2.1
 
