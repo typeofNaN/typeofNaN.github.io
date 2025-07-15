@@ -2,6 +2,20 @@
   "name": "typeofnan",
   "version": "0.1.0",
   "private": true,
+  "description": "typeofNaN的个人主页",
+  "author": {
+    "name": "typeofNaN",
+    "url": "https://github.com/typeofNaN",
+    "email": "dmdefine6@gmail.com"
+  },
+  "homepage": "https://github.com/typeofNaN/typeofNaN.github.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/typeofNaN/typeofNaN.github.io.git"
+  },
+  "bugs": {
+    "url": "https://github.com/typeofNaN/typeofNaN.github.io/issues"
+  },
   "scripts": {
     "dev": "next dev --turbopack -p 4000",
     "build": "next build",

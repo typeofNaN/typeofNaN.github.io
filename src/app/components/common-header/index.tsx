@@ -1,6 +1,9 @@
+'use client'
+
 import Link from 'next/link'
 import React from 'react'
 
+import Github from '@/src/components/github'
 import ToggleTheme from '@/src/components/toggle-theme'
 
 const CommonHeader = () => {
@@ -11,7 +14,8 @@ const CommonHeader = () => {
           <Link href="/" className="text-24px">typeofNaN</Link>
           <div className="text-14px">喜欢就是信仰，热爱会是力量</div>
         </div>
-        <div className="flex-center">
+        <div className="flex-y-center gap-10px text-20px">
+          <Github />
           <ToggleTheme />
         </div>
       </div>

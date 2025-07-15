@@ -41,7 +41,7 @@ export default function ToggleTheme() {
   }
 
   return (
-    <div className="text-primary cursor-pointer" onClick={handleClick}>
+    <div className="flex-center w-30px h-30px text-primary cursor-pointer" onClick={handleClick}>
       {theme === 'system' && <Icon icon="proicons:dark-theme" />}
       {theme === 'light' && <Icon icon="mdi-white-balance-sunny" />}
       {theme === 'dark' && <Icon icon="mdi-moon-waning-crescent" />}

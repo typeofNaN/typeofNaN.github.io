@@ -1,5 +1,7 @@
 import type { NextConfig } from 'next'
 
+import packageJson from './package.json'
+
 const nextConfig: NextConfig = {
   /* config options here */
   output: 'export',
@@ -8,6 +10,9 @@ const nextConfig: NextConfig = {
   },
   images: {
     unoptimized: true
+  },
+  env: {
+    NEXT_PUBLIC_GITHUB_LINK: packageJson.author.url
   }
 }
 
