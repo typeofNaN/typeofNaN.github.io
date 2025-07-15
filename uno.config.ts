@@ -1,5 +1,5 @@
 import { defineConfig, presetWind3, transformerDirectives } from 'unocss'
-import { presetAntd, commonShortcut } from 'unocss-config'
+import { commonShortcut, presetAntd } from 'unocss-config'
 
 export default defineConfig({
   content: {

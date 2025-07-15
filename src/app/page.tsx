@@ -1,11 +1,17 @@
+'use client'
+
+import Typeit from 'typeit-react'
+
 export default function Home() {
+  const options = {
+    strings: 'Hello typeofNaN',
+    lifeLike: true,
+    // speed: 120,
+    loop: true
+  }
   return (
-    <>
-      <main className="pt-60px">
-        <div className="m-auto pt-20px container">
-          Hello typeofNaN
-        </div>
-      </main>
-    </>
+    <div className="m-auto container">
+      <Typeit options={options} className="text-18px" />
+    </div>
   )
 }
