@@ -109,7 +109,7 @@ export function createHookRequest(axiosConfig: AxiosRequestConfig, backendConfig
    * - data: 请求的body的data
    * - axiosConfig: axios配置
    */
-  function useRequest<T>(param: RequestParam): RequestResultHook<T> {
+  function customRequest<T>(param: RequestParam): RequestResultHook<T> {
     let data: T | null = null
     let error: Service.RequestError | null = null
 
@@ -145,7 +145,7 @@ export function createHookRequest(axiosConfig: AxiosRequestConfig, backendConfig
    * @param { AxiosRequestConfig } config - axios配置
    */
   function get<T>(url: string, config?: AxiosRequestConfig) {
-    return useRequest<T>({ url, method: 'get', axiosConfig: config })
+    return customRequest<T>({ url, method: 'get', axiosConfig: config })
   }
 
   /**
@@ -155,7 +155,7 @@ export function createHookRequest(axiosConfig: AxiosRequestConfig, backendConfig
    * @param { AxiosRequestConfig } config - axios配置
    */
   function post<T>(url: string, data?: any, config?: AxiosRequestConfig) {
-    return useRequest<T>({ url, method: 'post', data, axiosConfig: config })
+    return customRequest<T>({ url, method: 'post', data, axiosConfig: config })
   }
 
   /**
@@ -165,7 +165,7 @@ export function createHookRequest(axiosConfig: AxiosRequestConfig, backendConfig
    * @param { AxiosRequestConfig } config - axios配置
    */
   function put<T>(url: string, data?: any, config?: AxiosRequestConfig) {
-    return useRequest<T>({ url, method: 'put', data, axiosConfig: config })
+    return customRequest<T>({ url, method: 'put', data, axiosConfig: config })
   }
 
   /**
@@ -174,7 +174,7 @@ export function createHookRequest(axiosConfig: AxiosRequestConfig, backendConfig
    * @param { AxiosRequestConfig } config - axios配置
    */
   function handleDelete<T>(url: string, config: AxiosRequestConfig) {
-    return useRequest<T>({ url, method: 'delete', axiosConfig: config })
+    return customRequest<T>({ url, method: 'delete', axiosConfig: config })
   }
 
   return {
