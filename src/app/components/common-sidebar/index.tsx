@@ -26,7 +26,7 @@ const CommonSidebar = () => {
   const pathname = usePathname()
 
   return (
-    <aside className="fixed top-80px p-10px b-rd-10px w-280px bg-[rgba(255,255,255,.3)]">
+    <aside className="fixed top-80px p-10px b-rd-10px w-280px bg-color">
       <nav className="">
         {
           navList.map(nav => {

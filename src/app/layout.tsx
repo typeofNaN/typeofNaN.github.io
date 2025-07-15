@@ -40,9 +40,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <LoveHeart>
             <AntdRegistry>
               <CommonHeader />
-              <div className="flex gap-20px relative pt-80px container m-auto overflow-y-auto">
+              <div className="flex gap-20px relative py-80px container m-auto overflow-y-auto">
                 <CommonSidebar />
-                <main className="pl-300px">
+                <main className="pl-300px w-full">
                   {children}
                 </main>
               </div>

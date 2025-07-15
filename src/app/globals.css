@@ -61,3 +61,7 @@ a {
   background-image: url(../assets//images//background.png);
   background-position: top center;
 }
+
+.heart {
+  z-index: 999;
+}

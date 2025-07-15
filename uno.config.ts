@@ -13,6 +13,7 @@ export default defineConfig({
   ],
   transformers: [transformerDirectives()],
   shortcuts: {
-    ...commonShortcut
+    ...commonShortcut,
+    'bg-color': 'bg-[rgba(255,255,255,.6)] dark:bg-[rgba(68,68,68,.6)]'
   }
 })
