@@ -48,7 +48,7 @@ const Album = () => {
                     photoAlbum.cover.split('|').map((cover, index) => {
                       return (
                         <div key={index} className="flex-center w-300px h-180px">
-                          <Image width={300} src={OssHost + cover} preview={false} />
+                          <Image width={300} src={OssHost + cover} preview={false} alt="" />
                         </div>
                       )
                     })
@@ -78,14 +78,7 @@ const Album = () => {
           )
         })
       }
-      <Modal
-        title={currentPhotoAlbumName}
-        width={1000}
-        closable={{ 'aria-label': 'Custom Close Button' }}
-        open={isModalOpen}
-        footer={null}
-        onCancel={() => setIsModalOpen(false)}
-      >
+      <Modal title={currentPhotoAlbumName} width={1000} closable={{ 'aria-label': 'Custom Close Button' }} open={isModalOpen} footer={null} onCancel={() => setIsModalOpen(false)}>
         <div className="flex flex-wrap gap-12px m-auto">
           <Image.PreviewGroup>
             {
@@ -95,10 +88,10 @@ const Album = () => {
                     {
                       media.mediaType === 'image'
                         ? (
-                          <Image src={OssHost + media.mediaUrl} width={180} height={180} className="object-cover" />
+                          <Image src={OssHost + media.mediaUrl} width={180} height={180} alt="" className="object-cover" />
                         )
                         : (
-                          <Image src={OssHost + (media.posterUrl || `${media.mediaUrl}?x-oss-process=video/snapshot,t_1,ar_auto`)} width={180} height={180} className="object-cover" />
+                          <Image src={OssHost + (media.posterUrl || `${media.mediaUrl}?x-oss-process=video/snapshot,t_1,ar_auto`)} width={180} height={180} alt="" className="object-cover" />
                         )
                     }
                   </div>

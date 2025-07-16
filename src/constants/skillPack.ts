@@ -6,7 +6,7 @@ type SkillPack = {
 /**
  * @description 技能包
  */
-export const SkillPackList = [
+export const SkillPackList: SkillPack[] = [
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
     skillName: 'javascript'

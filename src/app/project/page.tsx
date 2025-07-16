@@ -38,7 +38,7 @@ const Project = () => {
   const modalTitle = (projectIconUrl: string, projectName: string) => {
     return (
       <div className="flex-y-center gap-20px">
-        <Image src={OssHost + projectIconUrl} preview={false} width={30} />
+        <Image src={OssHost + projectIconUrl} preview={false} width={30} alt="" />
         <h3 className="text-20px">{projectName}</h3>
       </div>
     )
@@ -58,7 +58,7 @@ const Project = () => {
                       <Col key={project.projectId} lg={6} md={8} sm={12} xs={24}>
                         <div className="flex-y-center bg-color b-rd-8px p-20px cursor-pointer select-none transition-duration-400 hover:transform-translate-y--4px hover:shadow" onClick={() => handleClickProject(project.projectId)}>
                           <div className="flex-center w-40px h-40px">
-                            <Image src={OssHost + project.projectIconUrl} width={40} preview={false} />
+                            <Image src={OssHost + project.projectIconUrl} width={40} preview={false} alt="" />
                           </div>
                           <div className="pl-10px w-[calc(100%-40px)]">{project.projectName}</div>
                         </div>
