@@ -7,7 +7,7 @@ import { Icon } from '@iconify/react'
 import { OssHost } from '@/src/constants'
 import { PhotoAlbumApi } from '@/src/service'
 
-export default function Album() {
+const Album = () => {
   const [photoAlbumList, setPhotoAlbumList] = useState<Api.PhotoAlbumApi.TotalList.ResponseVo>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentPhotoAlbumName, setCurrentPhotoAlbumName] = useState('')
@@ -41,7 +41,7 @@ export default function Album() {
       {
         photoAlbumList.map(photoAlbum => {
           return (
-            <div key={photoAlbum.photoAlbumId} className="flex gap-20px p-20px bg-color b-rd-8px select-none" onClick={() => handleClickAlbum(photoAlbum)}>
+            <div key={photoAlbum.photoAlbumId} className="flex gap-20px p-20px bg-color b-rd-8px select-none transition-duration-400 hover:transform-translate-y--4px hover:shadow" onClick={() => handleClickAlbum(photoAlbum)}>
               <div className="w-300px h-180px">
                 <Carousel autoplay={{ dotDuration: true }} autoplaySpeed={5000}>
                   {
@@ -57,7 +57,7 @@ export default function Album() {
               </div>
               <div className="w-[calc(100%-320px)]">
                 <div className="flex-y-center justify-between mb-10px">
-                  <h3 className="text-20px hover:text-primary">{photoAlbum.photoAlbumName}</h3>
+                  <h3 className="text-20px">{photoAlbum.photoAlbumName}</h3>
                   <div className="flex-y-center gap-8px text-12px opacity-40">
                     <Icon icon="material-symbols:alarm-outline-rounded" />
                     {photoAlbum.dateTime}
@@ -111,3 +111,5 @@ export default function Album() {
     </div>
   )
 }
+
+export default Album

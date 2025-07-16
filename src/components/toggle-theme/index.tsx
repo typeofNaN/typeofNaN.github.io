@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes'
 import { MouseEvent } from 'react'
 import { Icon } from '@iconify/react'
 
-export default function ToggleTheme() {
+const ToggleTheme = () => {
   const { theme = 'system', setTheme } = useTheme()
 
   const handleClick = async (event: MouseEvent<HTMLDivElement>): Promise<void> => {
@@ -48,3 +48,5 @@ export default function ToggleTheme() {
     </div>
   )
 }
+
+export default ToggleTheme

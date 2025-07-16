@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { HeartAnimate } from 'click-love-heart'
 
-export default function LoveHeart({ children }: Readonly<{ children: React.ReactNode }>) {
+const LoveHeart = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   useEffect(() => {
     new HeartAnimate()
   })
@@ -13,3 +13,5 @@ export default function LoveHeart({ children }: Readonly<{ children: React.React
     </>
   )
 }
+
+export default LoveHeart

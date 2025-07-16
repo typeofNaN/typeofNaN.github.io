@@ -8,7 +8,7 @@ import { Icon } from '@iconify/react'
 import { OssHost } from '@/src/constants'
 import { ProjectApi, ProjectGroupApi } from '@/src/service'
 
-export default function Project() {
+const Project = () => {
   const [projectGroupList, setProjectGroupList] = useState<Api.ProjectGroupApi.TotalList.ResponseVo>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [projectDetail, setProjectDetail] = useState<Api.ProjectApi.Detail.ResponseVo>()
@@ -56,7 +56,7 @@ export default function Project() {
                   projectGroup.projectList.map(project => {
                     return (
                       <Col key={project.projectId} lg={6} md={8} sm={12} xs={24}>
-                        <div className="flex-y-center bg-color b-rd-8px p-20px cursor-pointer select-none" onClick={() => handleClickProject(project.projectId)}>
+                        <div className="flex-y-center bg-color b-rd-8px p-20px cursor-pointer select-none transition-duration-400 hover:transform-translate-y--4px hover:shadow" onClick={() => handleClickProject(project.projectId)}>
                           <div className="flex-center w-40px h-40px">
                             <Image src={OssHost + project.projectIconUrl} width={40} preview={false} />
                           </div>
@@ -106,7 +106,7 @@ export default function Project() {
             projectDetail?.homePage && (
               <div className="flex-y-center gap-10px mb-10px text-16px">
                 <Icon icon="material-symbols:home-outline-rounded" />
-                <Link href={projectDetail?.homePage} target="_blank">{projectDetail?.homePage}</Link>
+                <Link href={projectDetail?.homePage} target="_blank" className="text-color hover:underline">{projectDetail?.homePage}</Link>
               </div>
             )
           }
@@ -114,7 +114,7 @@ export default function Project() {
             projectDetail?.repository && (
               <div className="flex-y-center gap-10px mb-10px text-16px">
                 <Icon icon="mdi:git" />
-                <Link href={projectDetail?.repository} target="_blank">{projectDetail?.repository}</Link>
+                <Link href={projectDetail?.repository} target="_blank" className="text-color hover:underline">{projectDetail?.repository}</Link>
               </div>
             )
           }
@@ -207,7 +207,7 @@ export default function Project() {
                   {
                     projectDetail?.screenshots.split('|').map((screenshot, index) => {
                       return (
-                        <Image key={index} src={OssHost + screenshot} alt="" width={180} preview={{title:'11'}} />
+                        <Image key={index} src={OssHost + screenshot} alt="" width={180} preview={{ title: '11' }} />
                       )
                     })
                   }
@@ -220,3 +220,5 @@ export default function Project() {
     </div>
   )
 }
+
+export default Project

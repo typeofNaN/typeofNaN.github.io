@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
 
-export default function Github() {
+const GithubLink = () => {
   const githubUrl = process.env.NEXT_PUBLIC_GITHUB_LINK || ''
 
   return (
@@ -14,3 +14,5 @@ export default function Github() {
     </Link>
   )
 }
+
+export default GithubLink
