@@ -1,6 +1,7 @@
 type SkillPack = {
   icon: string
   skillName: string
+  proficiency: number
 }
 
 /**
@@ -9,166 +10,202 @@ type SkillPack = {
 export const SkillPackList: SkillPack[] = [
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
-    skillName: 'javascript'
+    skillName: 'javascript',
+    proficiency: 90
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg',
-    skillName: 'typescript'
+    skillName: 'typescript',
+    proficiency: 80
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
-    skillName: 'html5'
+    skillName: 'html5',
+    proficiency: 90
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
-    skillName: 'css3'
+    skillName: 'css3',
+    proficiency: 90
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg',
-    skillName: 'jQuery'
+    skillName: 'jQuery',
+    proficiency: 85
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg',
-    skillName: 'Sass'
+    skillName: 'Sass',
+    proficiency: 85
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/less/less-plain-wordmark.svg',
-    skillName: 'Less'
+    skillName: 'Less',
+    proficiency: 80
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg',
-    skillName: 'csharp'
+    skillName: 'csharp',
+    proficiency: 70
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg',
-    skillName: '.NET'
+    skillName: '.NET',
+    proficiency: 65
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg',
-    skillName: '.NET Core'
+    skillName: '.NET Core',
+    proficiency: 65
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nuget/nuget-original.svg',
-    skillName: 'nuget'
+    skillName: 'nuget',
+    proficiency: 40
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
-    skillName: 'Node.js'
+    skillName: 'Node.js',
+    proficiency: 80
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg',
-    skillName: 'NPM'
+    skillName: 'NPM',
+    proficiency: 85
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/denojs/denojs-original.svg',
-    skillName: 'Deno.js'
+    skillName: 'Deno.js',
+    proficiency: 55
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/webpack/webpack-original.svg',
-    skillName: 'webpack'
+    skillName: 'webpack',
+    proficiency: 70
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg',
-    skillName: 'vitejs'
+    skillName: 'vitejs',
+    proficiency: 70
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg',
-    skillName: 'Vue'
+    skillName: 'Vue',
+    proficiency: 85
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nuxtjs/nuxtjs-original.svg',
-    skillName: 'Nuxt.js'
+    skillName: 'Nuxt.js',
+    proficiency: 80
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
-    skillName: 'React'
+    skillName: 'React',
+    proficiency: 80
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg',
-    skillName: 'Next.js'
+    skillName: 'Next.js',
+    proficiency: 75
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg',
-    skillName: 'Express'
+    skillName: 'Express',
+    proficiency: 80
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-original.svg',
-    skillName: 'Nest.js'
+    skillName: 'Nest.js',
+    proficiency: 80
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/electron/electron-original.svg',
-    skillName: 'Electron'
+    skillName: 'Electron',
+    proficiency: 85
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',
-    skillName: 'git'
+    skillName: 'git',
+    proficiency: 75
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',
-    skillName: 'github'
-  },
-  {
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg',
-    skillName: 'gitlab'
+    skillName: 'github',
+    proficiency: 65
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg',
-    skillName: 'vscode'
+    skillName: 'vscode',
+    proficiency: 80
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg',
-    skillName: 'visualstudio'
+    skillName: 'visualstudio',
+    proficiency: 75
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/centos/centos-original.svg',
-    skillName: 'CentOS'
+    skillName: 'CentOS',
+    proficiency: 65
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg',
-    skillName: 'Nginx'
+    skillName: 'Nginx',
+    proficiency: 70
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
-    skillName: 'MySQL'
+    skillName: 'MySQL',
+    proficiency: 70
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg',
-    skillName: 'MongoDB'
+    skillName: 'MongoDB',
+    proficiency: 75
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg',
-    skillName: 'redis'
+    skillName: 'redis',
+    proficiency: 70
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/markdown/markdown-original.svg',
-    skillName: 'markdown'
+    skillName: 'markdown',
+    proficiency: 85
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg',
-    skillName: 'chrome'
+    skillName: 'chrome',
+    proficiency: 85
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuetify/vuetify-original.svg',
-    skillName: 'vuetify'
+    skillName: 'vuetify',
+    proficiency: 80
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg',
-    skillName: 'Material UI'
+    skillName: 'Material UI',
+    proficiency: 80
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg',
-    skillName: 'bootstrap'
+    skillName: 'bootstrap',
+    proficiency: 85
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg',
-    skillName: 'tailwindcss'
+    skillName: 'tailwindcss',
+    proficiency: 80
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg',
-    skillName: 'jenkins'
+    skillName: 'jenkins',
+    proficiency: 75
   },
   {
     icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/travis/travis-original.svg',
-    skillName: 'Travis CI'
+    skillName: 'Travis CI',
+    proficiency: 75
   }
 ]
