@@ -55,10 +55,10 @@ const Home = () => {
                   dot: trajectory.dot,
                   color: trajectory.color,
                   children: (
-                    <>
+                    <div className="text-color">
                       <p className="font-bold">{trajectory.date}</p>
                       <p>{trajectory.content}</p>
-                    </>
+                    </div>
                   )
                 }
               })
