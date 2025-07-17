@@ -70,7 +70,7 @@ const Home = () => {
       <div className="p-20px bg-color b-rd-8px">
         <div className="flex-y-center gap-10px mb-10px font-bold text-18px">
           <div className="w-4px h-20px bg-primary" />
-          个人技能包
+          个人技能
         </div>
         <Row gutter={[12, 12]}>
           {
