@@ -12,7 +12,10 @@ const CommonFooter = () => {
       ·
       <span>Power by Next.js</span>
       ·
-      <Link href={'https://beian.miit.gov.cn/'} target="_blank">赣ICP备2023003304号-1</Link>
+      <Link
+        href={'https://beian.miit.gov.cn/'}
+        target="_blank"
+      >赣ICP备2023003304号-1</Link>
     </footer>
   )
 }

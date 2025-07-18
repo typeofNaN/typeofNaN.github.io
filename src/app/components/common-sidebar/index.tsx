@@ -47,7 +47,12 @@ const CommonSidebar = () => {
         {
           navList.map(nav => {
             return (
-              <Link href={nav.link} key={nav.link} target={nav.target} className={`flex-y-center gap-10px p-10px h-50px b-rd-4px text-16px hover:bg-#e3e3e3 dark:hover:bg-#1c1c1c ${pathname === nav.link && 'text-primary dark:text-primary-7'}`}>
+              <Link
+                href={nav.link}
+                key={nav.link}
+                target={nav.target}
+                className={`flex-y-center gap-10px p-10px h-50px b-rd-4px text-16px hover:bg-#e3e3e3 dark:hover:bg-#1c1c1c ${pathname === nav.link && 'text-primary dark:text-primary-7'}`}
+              >
                 <Icon icon={nav.icon} />
                 {nav.label}
               </Link>

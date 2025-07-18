@@ -41,17 +41,34 @@ const Album = () => {
       {
         photoAlbumList.map(photoAlbum => {
           return (
-            <div key={photoAlbum.photoAlbumId} className="flex gap-20px p-20px bg-color b-rd-8px select-none transition-duration-400 hover:transform-translate-y--4px hover:shadow" onClick={() => handleClickAlbum(photoAlbum)}>
+            <div
+              key={photoAlbum.photoAlbumId}
+              className="flex gap-20px p-20px bg-color b-rd-8px select-none transition-duration-400 hover:transform-translate-y--4px hover:shadow"
+              onClick={() => handleClickAlbum(photoAlbum)}
+            >
               <div className="w-300px h-180px">
-                <Carousel autoplay={{ dotDuration: true }} autoplaySpeed={5000}>
+                <Carousel
+                  autoplay={{ dotDuration: true }}
+                  autoplaySpeed={5000}
+                >
                   {
-                    photoAlbum.cover.split('|').map((cover, index) => {
-                      return (
-                        <div key={index} className="flex-center w-300px h-180px">
-                          <Image width={300} src={OssHost + cover} preview={false} alt="" />
-                        </div>
-                      )
-                    })
+                    photoAlbum.cover
+                      .split('|')
+                      .map((cover, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className="flex-center w-300px h-180px"
+                          >
+                            <Image
+                              width={300}
+                              src={OssHost + cover}
+                              preview={false}
+                              alt=""
+                            />
+                          </div>
+                        )
+                      })
                   }
                 </Carousel>
               </div>
@@ -65,11 +82,13 @@ const Album = () => {
                 </div>
                 <div className="mb-16px">
                   {
-                    photoAlbum.tags.split('|').map((tag, index) => {
-                      return (
-                        <Tag key={index}>{tag}</Tag>
-                      )
-                    })
+                    photoAlbum.tags
+                      .split('|')
+                      .map((tag, index) => {
+                        return (
+                          <Tag key={index}>{tag}</Tag>
+                        )
+                      })
                   }
                 </div>
                 <div className="text-16px opacity-80">{photoAlbum.story}</div>
@@ -78,20 +97,42 @@ const Album = () => {
           )
         })
       }
-      <Modal title={currentPhotoAlbumName} width={1000} closable={{ 'aria-label': 'Custom Close Button' }} open={isModalOpen} footer={null} onCancel={() => setIsModalOpen(false)}>
+      <Modal
+        title={currentPhotoAlbumName}
+        width={1000}
+        closable={{ 'aria-label': 'Custom Close Button' }}
+        open={isModalOpen}
+        footer={null}
+        onCancel={() => setIsModalOpen(false)}
+      >
         <div className="flex flex-wrap gap-12px m-auto">
           <Image.PreviewGroup>
             {
               mediaList.map(media => {
                 return (
-                  <div key={media.mediaId} className="flex-center w-180px h-180px overflow-hidden">
+                  <div
+                    key={media.mediaId}
+                    className="flex-center w-180px h-180px overflow-hidden"
+                  >
                     {
                       media.mediaType === 'image'
                         ? (
-                          <Image src={OssHost + media.mediaUrl} width={180} height={180} alt="" className="object-cover" />
+                          <Image
+                            src={OssHost + media.mediaUrl}
+                            width={180}
+                            height={180}
+                            alt=""
+                            className="object-cover"
+                          />
                         )
                         : (
-                          <Image src={OssHost + (media.posterUrl || `${media.mediaUrl}?x-oss-process=video/snapshot,t_1,ar_auto`)} width={180} height={180} alt="" className="object-cover" />
+                          <Image
+                            src={OssHost + (media.posterUrl || `${media.mediaUrl}?x-oss-process=video/snapshot,t_1,ar_auto`)}
+                            width={180}
+                            height={180}
+                            alt=""
+                            className="object-cover"
+                          />
                         )
                     }
                   </div>

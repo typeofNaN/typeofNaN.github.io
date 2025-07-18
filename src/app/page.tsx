@@ -39,7 +39,10 @@ const Home = () => {
   return (
     <div className="flex flex-col gap-20px">
       <div className="p-20px bg-color b-rd-8px text-center h-150px">
-        <Typeit options={options} className="text-18px font-italic" />
+        <Typeit
+          options={options}
+          className="text-18px font-italic"
+        />
       </div>
       <div className="p-20px bg-color b-rd-8px">
         <div className="flex-y-center gap-10px mb-10px font-bold text-18px">
@@ -76,12 +79,24 @@ const Home = () => {
           {
             SkillPackList.map(skillPack => {
               return (
-                <Col key={skillPack.skillName} span={6}>
+                <Col
+                  key={skillPack.skillName}
+                  span={6}>
                   <div className="flex-y-center gap-6px">
-                    <Image src={skillPack.icon} width={40} height={40} alt={skillPack.skillName} preview={false} />
+                    <Image
+                      src={skillPack.icon}
+                      width={40}
+                      height={40}
+                      alt={skillPack.skillName}
+                      preview={false}
+                    />
                     <div className="flex-grow-1">
                       <p>{skillPack.skillName}</p>
-                      <Progress percent={skillPack.proficiency} showInfo={false} size="small" />
+                      <Progress
+                        percent={skillPack.proficiency}
+                        showInfo={false}
+                        size="small"
+                      />
                     </div>
                   </div>
                 </Col>
