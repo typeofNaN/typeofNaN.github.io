@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import React from 'react'
 
+import WechatApplet from '@/src/components/wechat-applet'
 import GithubLink from '@/src/components/github-link'
 import ToggleTheme from '@/src/components/toggle-theme'
 
@@ -18,6 +19,7 @@ const CommonHeader = () => {
           <div className="text-14px">喜欢就是信仰，热爱会是力量</div>
         </div>
         <div className="flex-y-center gap-10px text-20px">
+          <WechatApplet />
           <GithubLink />
           <ToggleTheme />
         </div>

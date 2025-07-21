@@ -137,6 +137,6 @@ export const LifeTrajectory: LifeTrajectoryType[] = [
   {
     color: 'gray',
     date: '今天',
-    content: '认真过好每一天。'
+    content: '在今天遇见了你！❤️'
   }
 ]
