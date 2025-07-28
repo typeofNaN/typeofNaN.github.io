@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import '@unocss/reset/tailwind.css'
 
-import { CommonFooter, CommonHeader, CommonSidebar } from './components'
+import { CommonFooter, CommonHeader } from './components'
 import LoveHeart from '@/src/components/heart-animate'
 import ThemeProvider from '@/src/components/theme-provider'
 import './globals.css'
@@ -40,12 +40,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
         <LoveHeart>
           <AntdRegistry>
             <CommonHeader />
-            <div className="flex gap-20px relative py-80px px-20px container m-auto overflow-y-auto">
-              <CommonSidebar />
-              <main className="flex-1 pl-300px w-full">
-                {children}
-              </main>
-            </div>
+            <main className="py-60px">
+              {children}
+            </main>
             <CommonFooter />
           </AntdRegistry>
         </LoveHeart>

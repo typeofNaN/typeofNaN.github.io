@@ -65,3 +65,25 @@ a {
 .heart {
   z-index: 999;
 }
+
+.container {
+  margin: 0 auto;
+  width: 1200px;
+}
+
+.page-banner::after {
+  content: "";
+  position: absolute;
+  display: block;
+  height: 12px;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  background-image: radial-gradient(circle, transparent 70%, rgba(255, 255, 255, .9) 70%);
+  background-size: 10px 14px;
+  background-position: 0 -6px;
+}
+
+html.dark .page-banner::after {
+  background-image: radial-gradient(circle, transparent 70%, rgba(68, 68, 68, .9) 70%);
+}

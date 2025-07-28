@@ -117,7 +117,7 @@ const Project = () => {
   ), [projectDetail])
 
   return (
-    <div className="flex flex-col gap-40px w-full">
+    <div className="flex flex-col gap-40px w-full py-20px container">
       {projectGroupList.map(projectGroup => (
         <div key={projectGroup.projectGroupId}>
           <div className="mb-20px font-bold text-18px">{projectGroup.projectGroupName}</div>

@@ -4,16 +4,13 @@ import { memo, useMemo } from 'react'
 import { Icon } from '@iconify/react'
 import { Image, Popover } from 'antd'
 
-import { OssHost } from '@/src/constants'
-
-const APPLET_QRCODE = `${OssHost}applet/qrcode/applet.png`
-const APPLET_NAME = 'typeofNaN'
+const APPLET_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME || 'typeofNaN'
 
 const WechatApplet = () => {
   const content = useMemo(() => (
     <div className="flex-center flex-col gap-10px p-10px w-240px">
       <Image
-        src={APPLET_QRCODE}
+        src="/images/applet.png"
         preview={false}
         width={200}
         height={200}
@@ -25,8 +22,8 @@ const WechatApplet = () => {
 
   return (
     <Popover content={content} trigger="hover" overlayClassName="wechat-applet-popover">
-      <div className="flex-center w-30px h-30px cursor-pointer" title="微信小程序" aria-label="微信小程序" tabIndex={0} role="button">
-        <Icon icon="mingcute:wechat-miniprogram-line" fontSize={22} />
+      <div className="flex-center w-40px h-40px cursor-pointer bg-green b-rd-50%" title="微信小程序" aria-label="微信小程序" tabIndex={0} role="button">
+        <Icon icon="mingcute:wechat-miniprogram-line" fontSize={24} />
       </div>
     </Popover>
   )

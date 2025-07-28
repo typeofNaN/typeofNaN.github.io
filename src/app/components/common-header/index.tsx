@@ -2,9 +2,9 @@
 
 import React, { memo } from 'react'
 import Link from 'next/link'
+import { Divider } from 'antd'
 
-import WechatApplet from '@/src/components/wechat-applet'
-import GithubLink from '@/src/components/github-link'
+import { CommonNav } from '..'
 import ToggleTheme from '@/src/components/toggle-theme'
 
 const slogan = '喜欢就是信仰，热爱会是力量'
@@ -19,8 +19,8 @@ const CommonHeader: React.FC = () => (
         <span className="text-14px">{slogan}</span>
       </div>
       <div className="flex-y-center gap-10px text-20px">
-        <WechatApplet />
-        <GithubLink />
+        <CommonNav />
+        <Divider type="vertical" />
         <ToggleTheme />
       </div>
     </div>

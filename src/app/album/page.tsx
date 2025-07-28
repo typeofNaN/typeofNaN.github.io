@@ -93,7 +93,7 @@ const Album = () => {
   ), [mediaList])
 
   return (
-    <div className="flex flex-col gap-20px">
+    <div className="flex flex-col gap-20px py-20px container">
       {photoAlbumList.map(photoAlbum => (
         <div
           key={photoAlbum.photoAlbumId}
