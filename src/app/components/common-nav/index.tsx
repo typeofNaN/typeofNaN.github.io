@@ -49,7 +49,7 @@ const CommonNav: React.FC = () => {
   }
 
   return (
-    <nav className="flex-y-center gap-20px">
+    <nav className="flex-y-center gap-10px">
       {navList.map(({ label, link, icon, target = '_self' }) => (
         <Link
           href={link}

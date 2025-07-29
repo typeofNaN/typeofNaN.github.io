@@ -42,15 +42,18 @@ interface ContainerBoxProps {
 const ContainerBox: React.FC<ContainerBoxProps> = ({ icon, title, children }) => (
   <div className="p-20px bg-color b-rd-8px">
     <div className="flex-y-center gap-10px mb-10px font-bold text-18px">
-      <Icon icon={icon} className="text-20px" />
+      <div className="flex-center w-30px h-30px">
+        <Icon icon={icon} fontSize={20} />
+      </div>
       {title}
     </div>
-    <div className="pt-20px">{children}</div>
+    <h2 className="pt-20px">{children}</h2>
   </div>
 )
 
 const AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME || 'typeofNaN'
 const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_LINK || ''
+const BLOG_URL = 'https://typeofNaN.github.io/vuepress-blog/'
 
 const Home: React.FC = () => {
   return (
@@ -81,16 +84,30 @@ const Home: React.FC = () => {
                 </div>
               </div>
               <p className="text-18px font-bold text-#fff">喜欢就是信仰，热爱会是力量</p>
-              <div className="flex-center gap-10px h-40px text-#fff">
+              <div className="flex-center gap-20px h-40px text-#fff">
                 <Link
                   href={GITHUB_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub"
                   className="flex-center w-40px h-40px b-rd-50% bg-#24282d"
+                  title="Github"
                 >
                   <Icon
                     icon="ri:github-fill"
+                    fontSize={24}
+                  />
+                </Link>
+                <Link
+                  href={BLOG_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  className="flex-center w-40px h-40px b-rd-50% bg-yellow"
+                  title="博客"
+                >
+                  <Icon
+                    icon="ri:blogger-line"
                     fontSize={24}
                   />
                 </Link>
@@ -101,6 +118,7 @@ const Home: React.FC = () => {
                   rel="noopener noreferrer"
                   aria-label="GitHub"
                   className="flex-center w-40px h-40px b-rd-50% bg-blue"
+                  title="Email"
                 >
                   <Icon
                     icon="mynaui:envelope"
@@ -119,7 +137,10 @@ const Home: React.FC = () => {
         </div>
       </div>
       <div className="container">
-        <ContainerBox icon="ri:history-line" title="人生轨迹">
+        <ContainerBox
+          icon="ri:history-line"
+          title="人生轨迹"
+        >
           <div className="flex-center">
             <Timeline
               mode="alternate"
@@ -139,7 +160,10 @@ const Home: React.FC = () => {
         </ContainerBox>
       </div>
       <div className="container">
-        <ContainerBox icon="material-symbols:tools-wrench-outline-sharp" title="个人技能">
+        <ContainerBox
+          icon="material-symbols:tools-wrench-outline-sharp"
+          title="个人技能"
+        >
           <Row gutter={[20, 20]}>
             {SkillPackList.map(({ skillName, icon, proficiency }) => (
               <Col key={skillName} span={6}>
