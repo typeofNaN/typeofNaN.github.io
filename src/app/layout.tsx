@@ -4,6 +4,7 @@ import { AntdRegistry } from '@ant-design/nextjs-registry'
 import '@unocss/reset/tailwind.css'
 
 import { CommonFooter, CommonHeader } from './components'
+import AntdTheme from '@/src/components/antd-theme'
 import LoveHeart from '@/src/components/heart-animate'
 import ThemeProvider from '@/src/components/theme-provider'
 import './globals.css'
@@ -39,11 +40,13 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
         </div>
         <LoveHeart>
           <AntdRegistry>
-            <CommonHeader />
-            <main className="py-60px">
-              {children}
-            </main>
-            <CommonFooter />
+            <AntdTheme>
+              <CommonHeader />
+              <main className="py-60px">
+                {children}
+              </main>
+              <CommonFooter />
+            </AntdTheme>
           </AntdRegistry>
         </LoveHeart>
       </ThemeProvider>
