@@ -8,8 +8,6 @@ export class ProjectGroupApi {
    * @description 获取项目列表
    */
   public static getProjectGroupList() {
-    return request.get<Api.ProjectGroupApi.TotalList.ResponseVo>(
-      '/project-group'
-    )
+    return request.get<Api.ProjectGroupApi.TotalList.ResponseVo>('/project-group')
   }
 }

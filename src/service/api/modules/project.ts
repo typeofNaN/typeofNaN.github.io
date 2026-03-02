@@ -9,8 +9,6 @@ export class ProjectApi {
    * @param { number } projectId 项目ID
    */
   public static getDetail(projectId: number) {
-    return request.get<Api.ProjectApi.Detail.ResponseVo>(
-      `/project/${projectId}`
-    )
+    return request.get<Api.ProjectApi.Detail.ResponseVo>(`/project/${projectId}`)
   }
 }

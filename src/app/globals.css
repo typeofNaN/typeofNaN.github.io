@@ -19,7 +19,19 @@ body {
 }
 
 body {
-  font-family: SpecialSymbol, DINRegular, -apple-system, BlinkMacSystemFont, Arial, "PingFang SC", "Helvetica Neue", "Hiragino Sans GB", "Segoe UI", "Microsoft YaHei", 微软雅黑, sans-serif;
+  font-family:
+    SpecialSymbol,
+    DINRegular,
+    -apple-system,
+    BlinkMacSystemFont,
+    Arial,
+    'PingFang SC',
+    'Helvetica Neue',
+    'Hiragino Sans GB',
+    'Segoe UI',
+    'Microsoft YaHei',
+    微软雅黑,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -72,18 +84,18 @@ a {
 }
 
 .page-banner::after {
-  content: "";
+  content: '';
   position: absolute;
   display: block;
   height: 12px;
   bottom: -4px;
   left: 0;
   right: 0;
-  background-image: radial-gradient(circle, transparent 70%, rgba(255, 255, 255, .9) 70%);
+  background-image: radial-gradient(circle, transparent 70%, rgba(255, 255, 255, 0.9) 70%);
   background-size: 10px 14px;
   background-position: 0 -6px;
 }
 
 html.dark .page-banner::after {
-  background-image: radial-gradient(circle, transparent 70%, rgba(68, 68, 68, .9) 70%);
+  background-image: radial-gradient(circle, transparent 70%, rgba(68, 68, 68, 0.9) 70%);
 }

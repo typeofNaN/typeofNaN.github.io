@@ -13,9 +13,10 @@ import { ProjectApi, ProjectGroupApi } from '@/src/service'
  */
 const renderTags = (tags?: string) => {
   if (!tags) return null
-  return tags.split('|').filter(Boolean).map((tag, idx) => (
-    <Tag key={idx}>{tag}</Tag>
-  ))
+  return tags
+    .split('|')
+    .filter(Boolean)
+    .map((tag, idx) => <Tag key={idx}>{tag}</Tag>)
 }
 
 /**
@@ -26,9 +27,7 @@ const renderStack = (label: string, stack?: string) => {
   return (
     <div className="flex-y-center gap-10px mb-10px">
       {label}
-      <div className="flex-y-center">
-        {renderTags(stack)}
-      </div>
+      <div className="flex-y-center">{renderTags(stack)}</div>
     </div>
   )
 }
@@ -46,15 +45,18 @@ const renderScreenshots = (screenshots?: string) => {
       </div>
       <div className="flex-y-center flex-wrap gap-10px">
         <Image.PreviewGroup>
-          {screenshots.split('|').filter(Boolean).map((screenshot, idx) => (
-            <Image
-              key={idx}
-              src={OssHost + screenshot}
-              alt=""
-              width={180}
-              preview={{ title: '项目截图' }}
-            />
-          ))}
+          {screenshots
+            .split('|')
+            .filter(Boolean)
+            .map((screenshot, idx) => (
+              <Image
+                key={idx}
+                src={OssHost + screenshot}
+                alt=""
+                width={180}
+                preview={{ title: '项目截图' }}
+              />
+            ))}
         </Image.PreviewGroup>
       </div>
     </div>
@@ -78,12 +80,13 @@ const renderDetailBlock = (title: string, content?: string) => {
 }
 
 const Project = () => {
-  const [projectGroupList, setProjectGroupList] = useState<Api.ProjectGroupApi.TotalList.ResponseVo>([])
+  const [projectGroupList, setProjectGroupList] =
+    useState<Api.ProjectGroupApi.TotalList.ResponseVo>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [projectDetail, setProjectDetail] = useState<Api.ProjectApi.Detail.ResponseVo>()
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       const { data } = await ProjectGroupApi.getProjectGroupList()
       if (data) setProjectGroupList(data)
     })()
@@ -94,42 +97,42 @@ const Project = () => {
     if (data) setProjectDetail(data)
   }, [])
 
-  const handleClickProject = useCallback(async (projectId: number) => {
-    await getProjectDetail(projectId)
-    setIsModalOpen(true)
-  }, [getProjectDetail])
+  const handleClickProject = useCallback(
+    async (projectId: number) => {
+      await getProjectDetail(projectId)
+      setIsModalOpen(true)
+    },
+    [getProjectDetail],
+  )
 
   const handleModalClose = useCallback(() => {
     setIsModalOpen(false)
     setProjectDetail(undefined)
   }, [])
 
-  const modalTitle = useMemo(() => (
-    <div className="flex-y-center gap-20px">
-      <Image
-        src={OssHost + (projectDetail?.projectIconUrl || '')}
-        preview={false}
-        width={30}
-        alt=""
-      />
-      <h3 className="text-20px">{projectDetail?.projectName || ''}</h3>
-    </div>
-  ), [projectDetail])
+  const modalTitle = useMemo(
+    () => (
+      <div className="flex-y-center gap-20px">
+        <Image
+          src={OssHost + (projectDetail?.projectIconUrl || '')}
+          preview={false}
+          width={30}
+          alt=""
+        />
+        <h3 className="text-20px">{projectDetail?.projectName || ''}</h3>
+      </div>
+    ),
+    [projectDetail],
+  )
 
   return (
     <div className="flex flex-col gap-40px w-full py-20px container">
-      {projectGroupList.map(projectGroup => (
+      {projectGroupList.map((projectGroup) => (
         <div key={projectGroup.projectGroupId}>
           <div className="mb-20px font-bold text-18px">{projectGroup.projectGroupName}</div>
           <Row gutter={[20, 20]}>
-            {projectGroup.projectList.map(project => (
-              <Col
-                key={project.projectId}
-                lg={6}
-                md={8}
-                sm={12}
-                xs={24}
-              >
+            {projectGroup.projectList.map((project) => (
+              <Col key={project.projectId} lg={6} md={8} sm={12} xs={24}>
                 <div
                   className="flex-y-center bg-color b-rd-8px p-20px cursor-pointer select-none transition-duration-400 hover:transform-translate-y--4px hover:shadow"
                   onClick={() => handleClickProject(project.projectId)}
@@ -178,7 +181,9 @@ const Project = () => {
                 href={projectDetail.homePage}
                 target="_blank"
                 className="text-color hover:underline"
-              >{projectDetail.homePage}</Link>
+              >
+                {projectDetail.homePage}
+              </Link>
             </div>
           )}
           {projectDetail?.repository && (
@@ -188,7 +193,9 @@ const Project = () => {
                 href={projectDetail.repository}
                 target="_blank"
                 className="text-color hover:underline"
-              >{projectDetail.repository}</Link>
+              >
+                {projectDetail.repository}
+              </Link>
             </div>
           )}
         </div>

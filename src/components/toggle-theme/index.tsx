@@ -7,7 +7,7 @@ import { Icon } from '@iconify/react'
 const themeIcons: Record<string, string> = {
   system: 'proicons:dark-theme',
   light: 'mdi-white-balance-sunny',
-  dark: 'mdi-moon-waning-crescent'
+  dark: 'mdi-moon-waning-crescent',
 }
 
 const getNextTheme = (theme: string) => {
@@ -28,7 +28,7 @@ const ToggleTheme = () => {
 
       const endRadius = Math.hypot(
         Math.max(x, window.innerWidth - x),
-        Math.max(y, window.innerHeight - y)
+        Math.max(y, window.innerHeight - y),
       )
 
       const transition = document.startViewTransition(() => {
@@ -37,25 +37,20 @@ const ToggleTheme = () => {
 
       await transition.ready
 
-      const clipPath = [
-        `circle(0px at ${x}px ${y}px)`,
-        `circle(${endRadius}px at ${x}px ${y}px)`
-      ]
+      const clipPath = [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`]
 
       document.documentElement.animate(
         {
-          clipPath: isDarkMode ? clipPath : [...clipPath].reverse()
+          clipPath: isDarkMode ? clipPath : [...clipPath].reverse(),
         },
         {
           duration: 300,
           easing: 'ease-in',
-          pseudoElement: isDarkMode
-            ? '::view-transition-new(root)'
-            : '::view-transition-old(root)'
-        }
+          pseudoElement: isDarkMode ? '::view-transition-new(root)' : '::view-transition-old(root)',
+        },
       )
     },
-    [theme, setTheme]
+    [theme, setTheme],
   )
 
   const icon = useMemo(() => themeIcons[theme] || themeIcons.system, [theme])

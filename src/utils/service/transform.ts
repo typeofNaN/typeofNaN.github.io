@@ -50,10 +50,10 @@ async function transformFile(formData: FormData, key: string, file: File[] | Fil
   if (isArray(file)) {
     // 多文件
     await Promise.all(
-      (file as File[]).map(item => {
+      (file as File[]).map((item) => {
         formData.append(key, item)
         return true
-      })
+      }),
     )
   } else {
     // 单文件

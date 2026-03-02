@@ -3,13 +3,13 @@ export async function handleServiceResult<T = any>(error: Service.RequestError |
   if (error) {
     const fail: Service.FailedResult = {
       error,
-      data: null
+      data: null,
     }
     return fail
   }
   const success: Service.SuccessResult<T> = {
     error: null,
-    data
+    data,
   }
   return success
 }
@@ -21,22 +21,22 @@ export function adapter<T extends Service.ServiceAdapter>(
 ): Service.RequestResult<ReturnType<T>> {
   let result: Service.RequestResult | undefined
 
-  const hasError = args.some(item => {
+  const hasError = args.some((item) => {
     const flag = Boolean(item.error)
     if (flag) {
       result = {
         error: item.error,
-        data: null
+        data: null,
       }
     }
     return flag
   })
 
   if (!hasError) {
-    const adapterFunArgs = args.map(item => item.data)
+    const adapterFunArgs = args.map((item) => item.data)
     result = {
       error: null,
-      data: adapterFun(...adapterFunArgs)
+      data: adapterFun(...adapterFunArgs),
     }
   }
 

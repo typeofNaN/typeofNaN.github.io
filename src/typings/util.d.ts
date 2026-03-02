@@ -33,7 +33,9 @@ declare namespace TypeUtil {
   // type LastOfArray<T extends any[]> = T extends [...infer _Rest, infer Last] ? Last : never
 
   // union to tuple
-  type Union2IntersectionFn<T> = (T extends unknown ? (k: () => T) => void : never) extends (k: infer R) => void
+  type Union2IntersectionFn<T> = (T extends unknown ? (k: () => T) => void : never) extends (
+    k: infer R,
+  ) => void
     ? R
     : never
   type GetUnionLast<U> = Union2IntersectionFn<U> extends () => infer I ? I : never

@@ -15,7 +15,7 @@ const Album = () => {
 
   // 获取相册列表
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       const { data } = await PhotoAlbumApi.getPhotoAlbumList()
       if (data) setPhotoAlbumList(data)
     })()
@@ -28,11 +28,14 @@ const Album = () => {
   }, [])
 
   // 点击相册
-  const handleClickAlbum = useCallback(async (photoAlbum: Api.PhotoAlbumApi.Detail.ResponseVo) => {
-    await getAlbumDetail(photoAlbum.photoAlbumId)
-    setCurrentPhotoAlbumName(photoAlbum.photoAlbumName)
-    setIsModalOpen(true)
-  }, [getAlbumDetail])
+  const handleClickAlbum = useCallback(
+    async (photoAlbum: Api.PhotoAlbumApi.Detail.ResponseVo) => {
+      await getAlbumDetail(photoAlbum.photoAlbumId)
+      setCurrentPhotoAlbumName(photoAlbum.photoAlbumName)
+      setIsModalOpen(true)
+    },
+    [getAlbumDetail],
+  )
 
   // 关闭弹窗
   const handleModalClose = useCallback(() => {
@@ -48,12 +51,7 @@ const Album = () => {
       .filter(Boolean)
       .map((img, idx) => (
         <div key={idx} className="flex-center w-300px h-180px">
-          <Image
-            width={300}
-            src={OssHost + img}
-            preview={false}
-            alt=""
-          />
+          <Image width={300} src={OssHost + img} preview={false} alt="" />
         </div>
       ))
   }, [])
@@ -63,49 +61,45 @@ const Album = () => {
     return tags
       .split('|')
       .filter(Boolean)
-      .map((tag, idx) => (
-        <Tag key={idx}>{tag}</Tag>
-      ))
+      .map((tag, idx) => <Tag key={idx}>{tag}</Tag>)
   }, [])
 
   // 渲染媒体内容
-  const renderMediaList = useMemo(() => (
-    <Image.PreviewGroup>
-      {mediaList.map(media => (
-        <div
-          key={media.mediaId}
-          className="flex-center w-180px h-180px overflow-hidden"
-        >
-          <Image
-            src={
-              media.mediaType === 'image'
-                ? OssHost + media.mediaUrl
-                : OssHost + (media.posterUrl || `${media.mediaUrl}?x-oss-process=video/snapshot,t_1,ar_auto`)
-            }
-            width={180}
-            height={180}
-            alt=""
-            className="object-cover"
-          />
-        </div>
-      ))}
-    </Image.PreviewGroup>
-  ), [mediaList])
+  const renderMediaList = useMemo(
+    () => (
+      <Image.PreviewGroup>
+        {mediaList.map((media) => (
+          <div key={media.mediaId} className="flex-center w-180px h-180px overflow-hidden">
+            <Image
+              src={
+                media.mediaType === 'image'
+                  ? OssHost + media.mediaUrl
+                  : OssHost +
+                    (media.posterUrl ||
+                      `${media.mediaUrl}?x-oss-process=video/snapshot,t_1,ar_auto`)
+              }
+              width={180}
+              height={180}
+              alt=""
+              className="object-cover"
+            />
+          </div>
+        ))}
+      </Image.PreviewGroup>
+    ),
+    [mediaList],
+  )
 
   return (
     <div className="flex flex-col gap-20px py-20px container">
-      {photoAlbumList.map(photoAlbum => (
+      {photoAlbumList.map((photoAlbum) => (
         <div
           key={photoAlbum.photoAlbumId}
           className="flex gap-20px p-20px bg-color b-rd-8px select-none transition-duration-400 hover:transform-translate-y--4px hover:shadow cursor-pointer"
           onClick={() => handleClickAlbum(photoAlbum)}
         >
           <div className="w-300px h-180px">
-            <Carousel
-              autoplay
-              autoplaySpeed={5000}
-              dots
-            >
+            <Carousel autoplay autoplaySpeed={5000} dots>
               {renderCovers(photoAlbum.cover)}
             </Carousel>
           </div>
@@ -117,9 +111,7 @@ const Album = () => {
                 {photoAlbum.dateTime}
               </div>
             </div>
-            <div className="mb-16px">
-              {renderTags(photoAlbum.tags)}
-            </div>
+            <div className="mb-16px">{renderTags(photoAlbum.tags)}</div>
             <div className="text-16px opacity-80">{photoAlbum.story}</div>
           </div>
         </div>
@@ -133,9 +125,7 @@ const Album = () => {
         onCancel={handleModalClose}
         destroyOnHidden
       >
-        <div className="flex flex-wrap gap-12px m-auto">
-          {renderMediaList}
-        </div>
+        <div className="flex flex-wrap gap-12px m-auto">{renderMediaList}</div>
       </Modal>
     </div>
   )

@@ -40,7 +40,9 @@ export function isArray<T extends any[]>(value: T | unknown): value is T {
   return getDataTypeString(value) === dataTypeLabels.array
 }
 
-export function isFunction<T extends (...args: any[]) => any | void>(value: T | unknown): value is T {
+export function isFunction<T extends (...args: any[]) => any | void>(
+  value: T | unknown,
+): value is T {
   return getDataTypeString(value) === dataTypeLabels.function
 }
 

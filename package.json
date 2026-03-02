@@ -47,6 +47,7 @@
     "@unocss/reset": "^66.2.3",
     "eslint": "^9",
     "eslint-config-next": "15.3.4",
+    "prettier": "^3.8.1",
     "typescript": "^5",
     "unocss": "^66.2.3",
     "unocss-config": "^1.0.1",

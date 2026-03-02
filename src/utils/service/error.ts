@@ -7,7 +7,7 @@ import {
   NETWORK_ERROR_CODE,
   NETWORK_ERROR_MSG,
   REQUEST_TIMEOUT_CODE,
-  REQUEST_TIMEOUT_MSG
+  REQUEST_TIMEOUT_MSG,
 } from '@/src/config'
 import { exeStrategyActions } from '../common'
 import { showErrorMsg } from './msg'
@@ -22,7 +22,7 @@ export function handleAxiosError(axiosError: AxiosError) {
   const error: Service.RequestError = {
     type: 'axios',
     code: DEFAULT_REQUEST_ERROR_CODE,
-    msg: DEFAULT_REQUEST_ERROR_MSG
+    msg: DEFAULT_REQUEST_ERROR_MSG,
   }
 
   const actions: Common.StrategyAction[] = [
@@ -31,14 +31,14 @@ export function handleAxiosError(axiosError: AxiosError) {
       !window.navigator.onLine || axiosError.message === 'Network Error',
       () => {
         Object.assign(error, { code: NETWORK_ERROR_CODE, msg: NETWORK_ERROR_MSG })
-      }
+      },
     ],
     [
       // 超时错误
       axiosError.code === REQUEST_TIMEOUT_CODE && axiosError.message.includes('timeout'),
       () => {
         Object.assign(error, { code: REQUEST_TIMEOUT_CODE, msg: REQUEST_TIMEOUT_MSG })
-      }
+      },
     ],
     [
       // 请求不成功的错误
@@ -47,8 +47,8 @@ export function handleAxiosError(axiosError: AxiosError) {
         const errorCode: ErrorStatus = (axiosError.response?.status as ErrorStatus) || 'DEFAULT'
         const msg = ERROR_STATUS[errorCode]
         Object.assign(error, { code: errorCode, msg })
-      }
-    ]
+      },
+    ],
   ]
 
   exeStrategyActions(actions)
@@ -66,7 +66,7 @@ export function handleResponseError(response: AxiosResponse) {
   const error: Service.RequestError = {
     type: 'axios',
     code: DEFAULT_REQUEST_ERROR_CODE,
-    msg: DEFAULT_REQUEST_ERROR_MSG
+    msg: DEFAULT_REQUEST_ERROR_MSG,
   }
 
   if (!window.navigator.onLine) {
@@ -89,12 +89,15 @@ export function handleResponseError(response: AxiosResponse) {
  * @param { Record<string, any> } backendResult - 后端接口的响应数据
  * @param { Service.BackendResultConfig } config
  */
-export function handleBackendError(backendResult: Record<string, any>, config: Service.BackendResultConfig) {
+export function handleBackendError(
+  backendResult: Record<string, any>,
+  config: Service.BackendResultConfig,
+) {
   const { codeKey, msgKey } = config
   const error: Service.RequestError = {
     type: 'backend',
     code: backendResult[codeKey],
-    msg: backendResult[msgKey]
+    msg: backendResult[msgKey],
   }
 
   showErrorMsg(error)

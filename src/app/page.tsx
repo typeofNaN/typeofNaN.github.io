@@ -26,11 +26,11 @@ const typeitOptions = {
     `Hello，${getHelloStr()}，我是typeofNaN，一名软件开发工程师。`,
     '欢迎来到我的个人空间。',
     '这里展示了一些我的博客文章、项目、记录生活的相册。',
-    '茫茫人海，很幸运，在这里，遇见你 ❤️'
+    '茫茫人海，很幸运，在这里，遇见你 ❤️',
   ],
   lifeLike: true,
   speed: 120,
-  loop: false
+  loop: false,
 }
 
 interface ContainerBoxProps {
@@ -93,10 +93,7 @@ const Home: React.FC = () => {
                   className="flex-center w-40px h-40px b-rd-50% bg-#24282d"
                   title="Github"
                 >
-                  <Icon
-                    icon="ri:github-fill"
-                    fontSize={24}
-                  />
+                  <Icon icon="ri:github-fill" fontSize={24} />
                 </Link>
                 <Link
                   href={BLOG_URL}
@@ -106,10 +103,7 @@ const Home: React.FC = () => {
                   className="flex-center w-40px h-40px b-rd-50% bg-yellow"
                   title="博客"
                 >
-                  <Icon
-                    icon="ri:blogger-line"
-                    fontSize={24}
-                  />
+                  <Icon icon="ri:blogger-line" fontSize={24} />
                 </Link>
                 <WechatApplet />
                 <Link
@@ -120,27 +114,18 @@ const Home: React.FC = () => {
                   className="flex-center w-40px h-40px b-rd-50% bg-blue"
                   title="Email"
                 >
-                  <Icon
-                    icon="mynaui:envelope"
-                    fontSize={24}
-                  />
+                  <Icon icon="mynaui:envelope" fontSize={24} />
                 </Link>
               </div>
             </div>
           </div>
         </div>
         <div className="p-20px bg-color text-center h-150px">
-          <Typeit
-            options={typeitOptions}
-            className="text-18px font-italic"
-          />
+          <Typeit options={typeitOptions} className="text-18px font-italic" />
         </div>
       </div>
       <div className="container">
-        <ContainerBox
-          icon="ri:history-line"
-          title="人生轨迹"
-        >
+        <ContainerBox icon="ri:history-line" title="人生轨迹">
           <div className="flex-center">
             <Timeline
               mode="alternate"
@@ -152,7 +137,7 @@ const Home: React.FC = () => {
                     <p className="font-bold">{date}</p>
                     <p>{content}</p>
                   </div>
-                )
+                ),
               }))}
               className="w-full"
             />
@@ -160,21 +145,12 @@ const Home: React.FC = () => {
         </ContainerBox>
       </div>
       <div className="container">
-        <ContainerBox
-          icon="material-symbols:tools-wrench-outline-sharp"
-          title="个人技能"
-        >
+        <ContainerBox icon="material-symbols:tools-wrench-outline-sharp" title="个人技能">
           <Row gutter={[20, 20]}>
             {SkillPackList.map(({ skillName, icon, proficiency }) => (
               <Col key={skillName} span={6}>
                 <div className="flex-y-center gap-6px">
-                  <Image
-                    src={icon}
-                    width={40}
-                    height={40}
-                    alt={skillName}
-                    preview={false}
-                  />
+                  <Image src={icon} width={40} height={40} alt={skillName} preview={false} />
                   <div className="flex-grow-1">
                     <p className="mb-4px">{skillName}</p>
                     <Progress
@@ -183,7 +159,7 @@ const Home: React.FC = () => {
                       size="small"
                       strokeColor={{
                         '0%': '#108ee9',
-                        '100%': '#87d068'
+                        '100%': '#87d068',
                       }}
                     />
                   </div>

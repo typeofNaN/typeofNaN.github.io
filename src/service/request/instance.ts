@@ -2,7 +2,7 @@ import axios, {
   type AxiosResponse,
   type AxiosError,
   type AxiosInstance,
-  type AxiosRequestConfig
+  type AxiosRequestConfig,
 } from 'axios'
 
 import { REFRESH_TOKEN_CODE } from '@/src/config'
@@ -11,7 +11,7 @@ import {
   handleBackendError,
   handleResponseError,
   handleServiceResult,
-  transformRequestData
+  transformRequestData,
 } from '@/src/utils'
 
 type RefreshRequestQueue = (config: AxiosRequestConfig) => void
@@ -38,8 +38,8 @@ export default class CustomAxiosInstance {
       codeKey: 'code',
       dataKey: 'data',
       msgKey: 'message',
-      successCode: 200
-    }
+      successCode: 200,
+    },
   ) {
     this.backendConfig = backendConfig
     this.instance = axios.create(axiosConfig)
@@ -51,7 +51,7 @@ export default class CustomAxiosInstance {
   /** 设置请求拦截器 */
   setInterceptor() {
     this.instance.interceptors.request.use(
-      async config => {
+      async (config) => {
         const handleConfig = { ...config }
         if (handleConfig.headers) {
           // 数据转换
@@ -63,10 +63,10 @@ export default class CustomAxiosInstance {
       (axiosError: AxiosError) => {
         const error = handleAxiosError(axiosError)
         return handleServiceResult(error, null)
-      }
+      },
     )
     this.instance.interceptors.response.use(
-      (async response => {
+      (async (response) => {
         const { status, config } = response
         if (status === 200 || status < 300 || status === 304) {
           const backend = response.data
@@ -79,7 +79,7 @@ export default class CustomAxiosInstance {
           // token失效, 刷新token
           if (REFRESH_TOKEN_CODE.includes(backend[codeKey])) {
             // 原始请求
-            const originRequest = new Promise(resolve => {
+            const originRequest = new Promise((resolve) => {
               this.retryQueues.push((refreshConfig: AxiosRequestConfig) => {
                 config.headers.Authorization = refreshConfig.headers?.Authorization
                 resolve(this.instance.request(config))
@@ -98,7 +98,7 @@ export default class CustomAxiosInstance {
       (axiosError: AxiosError) => {
         const error = handleAxiosError(axiosError)
         return handleServiceResult(error, null)
-      }
+      },
     )
   }
 }

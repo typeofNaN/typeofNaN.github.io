@@ -14,5 +14,5 @@ export const dataTypeLabels: { [K in TypeUtil.DataTypeStringKey]: TypeUtil.DataT
   promise: '[object Promise]',
   set: '[object Set]',
   map: '[object Map]',
-  file: '[object File]'
+  file: '[object File]',
 }

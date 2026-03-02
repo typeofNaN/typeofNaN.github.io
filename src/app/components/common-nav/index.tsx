@@ -17,26 +17,26 @@ const navList: NavLink[] = [
     label: '首页',
     link: '/',
     icon: 'material-symbols:home-outline-rounded',
-    target: '_self'
+    target: '_self',
   },
   {
     label: '博客',
     link: 'https://typeofNaN.github.io/vuepress-blog/',
     icon: 'ri:blogger-line',
-    target: '_blank'
+    target: '_blank',
   },
   {
     label: '项目',
     link: '/project',
     icon: 'ix:project-new',
-    target: '_self'
+    target: '_self',
   },
   {
     label: '相册',
     link: '/album',
     icon: 'solar:album-bold',
-    target: '_self'
-  }
+    target: '_self',
+  },
 ]
 
 const CommonNav: React.FC = () => {
@@ -57,7 +57,7 @@ const CommonNav: React.FC = () => {
           target={target}
           className={[
             'flex-y-center gap-10px px-16px py-10px h-40px b-rd-20px text-16px opacity-80 hover:bg-#e3e3e3 dark:hover:bg-#1c1c1c',
-            isActive(link) ? 'text-primary dark:text-primary-7' : ''
+            isActive(link) ? 'text-primary dark:text-primary-7' : '',
           ].join(' ')}
         >
           <Icon icon={icon} />

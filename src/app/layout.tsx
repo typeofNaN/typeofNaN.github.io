@@ -11,29 +11,24 @@ import './globals.css'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
-  subsets: ['latin']
+  subsets: ['latin'],
 })
 
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
-  subsets: ['latin']
+  subsets: ['latin'],
 })
 
 export const metadata: Metadata = {
   title: 'typeofNaN - 喜欢就是信仰，热爱会是力量',
   keywords: 'typeofNaN、六碗面、个人网站、前端技术开发、JavaScript 技术',
-  description: '喜欢就是信仰，热爱会是力量'
+  description: '喜欢就是信仰，热爱会是力量',
 }
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="zh-CN" suppressHydrationWarning>
     <body className={`${geistSans.variable} ${geistMono.variable}`}>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
         {/* 背景层 */}
         <div className="fixed top-0 left-0 w-full h-full z--1 bg-#e3e3e3 dark:bg-#000">
           <div className="main-bg absolute inset-0 opacity-30 dark:opacity-20" />
@@ -42,9 +37,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
           <AntdRegistry>
             <AntdTheme>
               <CommonHeader />
-              <main className="py-60px">
-                {children}
-              </main>
+              <main className="py-60px">{children}</main>
               <CommonFooter />
             </AntdTheme>
           </AntdRegistry>

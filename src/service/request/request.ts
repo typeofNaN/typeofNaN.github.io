@@ -16,7 +16,10 @@ interface RequestParam {
  * @param { AxiosRequestConfig } axiosConfig - axios配置
  * @param { Service.BackendResultConfig } backendConfig - 后端接口字段配置
  */
-export function createRequest(axiosConfig: AxiosRequestConfig, backendConfig?: Service.BackendResultConfig) {
+export function createRequest(
+  axiosConfig: AxiosRequestConfig,
+  backendConfig?: Service.BackendResultConfig,
+) {
   const customInstance = new CustomAxiosInstance(axiosConfig, backendConfig)
 
   /**
@@ -36,7 +39,7 @@ export function createRequest(axiosConfig: AxiosRequestConfig, backendConfig?: S
       method,
       url,
       data: param.data,
-      config: param.axiosConfig
+      config: param.axiosConfig,
     })) as Service.RequestResult<T>
 
     return res
@@ -84,7 +87,7 @@ export function createRequest(axiosConfig: AxiosRequestConfig, backendConfig?: S
     get,
     post,
     put,
-    delete: handleDelete
+    delete: handleDelete,
   }
 }
 
@@ -98,7 +101,10 @@ interface RequestResultHook<T = any> {
  * @param { AxiosRequestConfig } axiosConfig - axios配置
  * @param { Service.BackendResultConfig } backendConfig - 后端接口字段配置
  */
-export function createHookRequest(axiosConfig: AxiosRequestConfig, backendConfig?: Service.BackendResultConfig) {
+export function createHookRequest(
+  axiosConfig: AxiosRequestConfig,
+  backendConfig?: Service.BackendResultConfig,
+) {
   const customInstance = new CustomAxiosInstance(axiosConfig, backendConfig)
 
   /**
@@ -128,14 +134,12 @@ export function createHookRequest(axiosConfig: AxiosRequestConfig, backendConfig
       method,
       url,
       data: param.data,
-      config: param.axiosConfig
-    }).then(
-      handleRequestResult
-    )
+      config: param.axiosConfig,
+    }).then(handleRequestResult)
 
     return {
       data,
-      error
+      error,
     }
   }
 
@@ -181,7 +185,7 @@ export function createHookRequest(axiosConfig: AxiosRequestConfig, backendConfig
     get,
     post,
     put,
-    delete: handleDelete
+    delete: handleDelete,
   }
 }
 
@@ -192,13 +196,7 @@ async function getRequestResponse(params: {
   data?: any
   config?: AxiosRequestConfig
 }) {
-  const {
-    instance,
-    method,
-    url,
-    data,
-    config
-  } = params
+  const { instance, method, url, data, config } = params
 
   let res: any
   if (method === 'get' || method === 'delete') {

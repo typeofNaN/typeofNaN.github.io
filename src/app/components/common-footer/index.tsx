@@ -16,12 +16,7 @@ const CommonFooter: React.FC = () => {
       <span className="mx-2">·</span>
       <span>{POWERED_BY}</span>
       <span className="mx-2">·</span>
-      <Link
-        href={BEIAN_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="hover:underline"
-      >
+      <Link href={BEIAN_URL} target="_blank" rel="noopener noreferrer" className="hover:underline">
         {BEIAN_TEXT}
       </Link>
     </footer>
