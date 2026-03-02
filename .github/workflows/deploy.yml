@@ -3,14 +3,24 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # 设置触发分支，通常是 main 或 master
+      - main # 设置触发分支，通常是 main 或 master
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      # 使用 package.json 的 packageManager 指定 pnpm 版本
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
 
       - name: Install and Build 🔧 # 安装依赖并构建项目
         run: |
