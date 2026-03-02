@@ -24,9 +24,9 @@ jobs:
 
       - name: Install and Build 🔧 # 安装依赖并构建项目
         run: |
-          npm install
-          npm run build
-          # npm run export # 对于 Next.js 应用，使用 npm run export 来生成静态文件
+          pnpm install --frozen-lockfile
+          pnpm run build
+          # pnpm run export # 对于 Next.js 应用，使用 npm run export 来生成静态文件
           touch out/.nojekyll # GitHub Pages 需要这个文件来正确处理 Jekyll 站点
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
