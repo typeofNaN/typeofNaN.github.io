@@ -21,7 +21,8 @@
     "dev": "next dev --turbopack -p 4000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write src/"
   },
   "dependencies": {
     "@ant-design/colors": "^7.2.1",
