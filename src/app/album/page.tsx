@@ -50,8 +50,8 @@ const Album = () => {
       .split('|')
       .filter(Boolean)
       .map((img, idx) => (
-        <div key={idx} className="flex-center w-300px h-180px">
-          <Image width={300} src={OssHost + img} preview={false} alt="" />
+        <div key={idx} className="flex-center w-full h-180px">
+          <Image src={OssHost + img} preview={false} alt="" className="max-w-full max-h-full object-contain" />
         </div>
       ))
   }, [])
@@ -69,7 +69,7 @@ const Album = () => {
     () => (
       <Image.PreviewGroup>
         {mediaList.map((media) => (
-          <div key={media.mediaId} className="flex-center w-180px h-180px overflow-hidden">
+          <div key={media.mediaId} className="flex-center sm:w-180px sm:h-180px w-[calc(50%-6px)] h-160px overflow-hidden">
             <Image
               src={
                 media.mediaType === 'image'
@@ -95,18 +95,18 @@ const Album = () => {
       {photoAlbumList.map((photoAlbum) => (
         <div
           key={photoAlbum.photoAlbumId}
-          className="flex gap-20px p-20px bg-color b-rd-8px select-none transition-duration-400 hover:transform-translate-y--4px hover:shadow cursor-pointer"
+          className="flex flex-col sm:flex-row gap-20px p-20px bg-color b-rd-8px select-none transition-duration-400 hover:transform-translate-y--4px hover:shadow cursor-pointer"
           onClick={() => handleClickAlbum(photoAlbum)}
         >
-          <div className="w-300px h-180px">
+          <div className="sm:w-300px w-full sm:h-180px">
             <Carousel autoplay autoplaySpeed={5000} dots>
               {renderCovers(photoAlbum.cover)}
             </Carousel>
           </div>
-          <div className="w-[calc(100%-320px)]">
-            <div className="flex-y-center justify-between mb-10px">
+          <div className="sm:w-[calc(100%-320px)] w-full">
+            <div className="flex-y-center justify-between mb-10px gap-8px">
               <h3 className="text-20px">{photoAlbum.photoAlbumName}</h3>
-              <div className="flex-y-center gap-8px text-12px opacity-40">
+              <div className="flex-y-center gap-8px text-12px opacity-40 flex-shrink-0">
                 <Icon icon="material-symbols:alarm-outline-rounded" />
                 {photoAlbum.dateTime}
               </div>
@@ -124,6 +124,7 @@ const Album = () => {
         footer={null}
         onCancel={handleModalClose}
         destroyOnHidden
+        className="max-w-[calc(100vw-32px)]"
       >
         <div className="flex flex-wrap gap-12px m-auto">{renderMediaList}</div>
       </Modal>

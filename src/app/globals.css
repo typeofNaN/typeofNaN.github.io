@@ -80,7 +80,9 @@ a {
 
 .container {
   margin: 0 auto;
-  width: 1200px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 16px;
 }
 
 .page-banner::after {

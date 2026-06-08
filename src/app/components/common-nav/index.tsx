@@ -61,7 +61,7 @@ const CommonNav: React.FC = () => {
           ].join(' ')}
         >
           <Icon icon={icon} />
-          {label}
+          <span className="hidden sm:inline">{label}</span>
         </Link>
       ))}
     </nav>

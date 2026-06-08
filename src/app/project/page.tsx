@@ -25,9 +25,9 @@ const renderTags = (tags?: string) => {
 const renderStack = (label: string, stack?: string) => {
   if (!stack) return null
   return (
-    <div className="flex-y-center gap-10px mb-10px">
-      {label}
-      <div className="flex-y-center">{renderTags(stack)}</div>
+    <div className="flex items-start gap-10px mb-10px">
+      <span className="flex-shrink-0">{label}</span>
+      <div className="flex flex-wrap gap-4px">{renderTags(stack)}</div>
     </div>
   )
 }
@@ -43,7 +43,7 @@ const renderScreenshots = (screenshots?: string) => {
         <div className="w-4px h-20px bg-primary" />
         项目预览
       </div>
-      <div className="flex-y-center flex-wrap gap-10px">
+      <div className="flex flex-wrap gap-10px">
         <Image.PreviewGroup>
           {screenshots
             .split('|')
@@ -55,6 +55,7 @@ const renderScreenshots = (screenshots?: string) => {
                 alt=""
                 width={180}
                 preview={{ title: '项目截图' }}
+                className="max-w-full"
               />
             ))}
         </Image.PreviewGroup>
@@ -160,39 +161,40 @@ const Project = () => {
         footer={null}
         onCancel={handleModalClose}
         destroyOnHidden
+        className="max-w-[calc(100vw-32px)]"
       >
-        <div className="py-10px">
+        <div className="py-10px overflow-hidden">
           {projectDetail?.tags && (
-            <div className="flex-y-center gap-10px mb-10px text-16px">
-              <Icon icon="material-symbols:bookmark-star-outline" />
-              <div className="flex-y-center">{renderTags(projectDetail.tags)}</div>
+            <div className="flex gap-10px mb-10px text-16px">
+              <Icon icon="material-symbols:bookmark-star-outline" className="flex-shrink-0 mt-4px" />
+              <div className="flex flex-wrap gap-4px">{renderTags(projectDetail.tags)}</div>
             </div>
           )}
           {projectDetail?.license && (
-            <div className="flex-y-center gap-10px mb-10px text-16px">
-              <Icon icon="mdi:license" />
+            <div className="flex gap-10px mb-10px text-16px">
+              <Icon icon="mdi:license" className="flex-shrink-0 mt-4px" />
               <Tag>{projectDetail.license}</Tag>
             </div>
           )}
           {projectDetail?.homePage && (
-            <div className="flex-y-center gap-10px mb-10px text-16px">
-              <Icon icon="material-symbols:home-outline-rounded" />
+            <div className="flex gap-10px mb-10px text-16px">
+              <Icon icon="material-symbols:home-outline-rounded" className="flex-shrink-0 mt-4px" />
               <Link
                 href={projectDetail.homePage}
                 target="_blank"
-                className="text-color hover:underline"
+                className="text-color hover:underline break-all"
               >
                 {projectDetail.homePage}
               </Link>
             </div>
           )}
           {projectDetail?.repository && (
-            <div className="flex-y-center gap-10px mb-10px text-16px">
-              <Icon icon="mdi:git" />
+            <div className="flex gap-10px mb-10px text-16px">
+              <Icon icon="mdi:git" className="flex-shrink-0 mt-4px" />
               <Link
                 href={projectDetail.repository}
                 target="_blank"
-                className="text-color hover:underline"
+                className="text-color hover:underline break-all"
               >
                 {projectDetail.repository}
               </Link>

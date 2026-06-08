@@ -13,6 +13,7 @@ export default defineConfig({
         'public',
         'build',
         'mock',
+        'out',
         './stats.html',
       ],
     },
