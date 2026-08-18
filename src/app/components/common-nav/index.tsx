@@ -20,6 +20,12 @@ const navList: NavLink[] = [
     target: '_self',
   },
   {
+    label: '足迹',
+    link: '/map',
+    icon: 'mingcute:foot-line',
+    target: '_self',
+  },
+  {
     label: '博客',
     link: 'https://typeofNaN.github.io/vuepress-blog/',
     icon: 'ri:blogger-line',

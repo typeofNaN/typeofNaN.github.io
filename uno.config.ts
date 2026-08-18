@@ -3,8 +3,10 @@ import { commonShortcut, presetAntd } from 'unocss-config'
 
 export default defineConfig({
   content: {
+    filesystem: ['./src/**/*.{html,js,ts,jsx,tsx}'],
     pipeline: {
       exclude: [
+        '.next',
         'node_modules',
         'dist',
         '.git',
