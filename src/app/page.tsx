@@ -55,6 +55,7 @@ const ContainerBox: React.FC<ContainerBoxProps> = ({ icon, title, children }) =>
 const AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME || 'typeofNaN'
 const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_LINK || ''
 const BLOG_URL = 'https://typeofNaN.github.io/vuepress-blog/'
+const OLD_BOY_URL = 'https://30.typeofnan.cn'
 
 const Home: React.FC = () => {
   return (
@@ -84,7 +85,9 @@ const Home: React.FC = () => {
                   <p>Not a Number</p>
                 </div>
               </div>
-              <p className="text-18px font-bold text-#fff text-center">喜欢就是信仰，热爱会是力量</p>
+              <p className="text-18px font-bold text-#fff text-center">
+                喜欢就是信仰，热爱会是力量
+              </p>
               <div className="flex-center gap-20px h-40px text-#fff">
                 <Link
                   href={GITHUB_URL}
@@ -105,6 +108,16 @@ const Home: React.FC = () => {
                   title="博客"
                 >
                   <Icon icon="ri:blogger-line" fontSize={24} />
+                </Link>
+                <Link
+                  href={OLD_BOY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  className="flex-center w-40px h-40px b-rd-50% bg-orange"
+                  title="老男孩"
+                >
+                  <Icon icon="fluent-emoji-high-contrast:boy" fontSize={24} />
                 </Link>
                 <WechatApplet />
                 <Link
