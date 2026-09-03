@@ -4,6 +4,8 @@ import { memo, useMemo } from 'react'
 import { Icon } from '@iconify/react'
 import { Image, Popover } from 'antd'
 
+import { OssHost } from '@/src/constants'
+
 const APPLET_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME || 'typeofNaN'
 
 const WechatApplet = () => {
@@ -11,7 +13,7 @@ const WechatApplet = () => {
     () => (
       <div className="flex-center flex-col gap-10px p-10px w-240px">
         <Image
-          src="/images/applet.png"
+          src={OssHost + 'web/images/applet.png'}
           preview={false}
           width={200}
           height={200}

@@ -6,7 +6,7 @@ import { Avatar, Col, Image, Progress, Row, Timeline } from 'antd'
 import { Icon } from '@iconify/react'
 import Typeit from 'typeit-react'
 
-import { SkillPackList, LifeTrajectory } from '@/src/constants'
+import { SkillPackList, LifeTrajectory, OssHost } from '@/src/constants'
 import WechatApplet from '../components/wechat-applet'
 
 /**
@@ -63,7 +63,7 @@ const Home: React.FC = () => {
       <div className="w-full">
         <div className="lg:h-300px md:h-260px h-200px relative page-banner">
           <video
-            src="/videos/personal-bg.mov"
+            src={OssHost + 'web/videos/personal-bg.mov'}
             controls={false}
             autoPlay={true}
             loop={true}
@@ -75,7 +75,7 @@ const Home: React.FC = () => {
               <div className="flex-y-center gap-10px p-10px h-80px b-rd-40px backdrop-blur-[3px] bg-#ffffff24 border-top-color-#ffffff40">
                 <div className="bg-color b-rd-50% h-60px w-60px p-5px flex-center flex-shrink-0">
                   <Avatar
-                    src="/images/avatar.jpg"
+                    src={OssHost + 'web/images/avatar.jpg'}
                     size={50}
                     className="transition-duration-600 hover:transform-rotate-360"
                   />
