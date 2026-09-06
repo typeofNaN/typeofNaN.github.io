@@ -1,9 +1,9 @@
 'use client'
 
 import { memo, useMemo } from 'react'
-import { Icon } from '@iconify/react'
 import { Image, Popover } from 'antd'
 
+import { Icon } from '@/src/components/local-icon'
 import { OssHost } from '@/src/constants'
 
 const APPLET_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME || 'typeofNaN'

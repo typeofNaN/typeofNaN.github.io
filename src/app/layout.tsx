@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { AntdRegistry } from '@ant-design/nextjs-registry'
+import Script from 'next/script'
 import '@unocss/reset/tailwind.css'
 
 import { CommonFooter, CommonHeader } from './components'
@@ -17,6 +18,16 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="zh-CN" suppressHydrationWarning>
     <body>
+      <Script id="theme-mode" strategy="beforeInteractive">
+        {`try {
+          const theme = localStorage.getItem('theme')
+          document.documentElement.dataset.themeMode = ['light', 'dark'].includes(theme || '')
+            ? theme
+            : 'system'
+        } catch (_) {
+          document.documentElement.dataset.themeMode = 'system'
+        }`}
+      </Script>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
         {/* 背景层 */}
         <div className="fixed top-0 left-0 w-full h-full z--1 bg-#e3e3e3 dark:bg-#000">

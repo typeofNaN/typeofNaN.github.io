@@ -3,7 +3,8 @@
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Icon } from '@iconify/react'
+
+import { Icon } from '@/src/components/local-icon'
 
 type NavLink = {
   label: string

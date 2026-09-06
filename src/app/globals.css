@@ -296,7 +296,9 @@ html.dark .page-banner::after {
   background: #fff;
   box-shadow: 0 5px 16px rgba(31, 45, 50, 0.38);
   cursor: pointer;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
 .map-photo-marker:hover {
@@ -406,7 +408,9 @@ html.dark .page-banner::after {
   font-size: 34px;
   line-height: 1;
   transform: translateY(-50%);
-  transition: background-color 0.2s, transform 0.2s;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
 }
 
 .map-media-arrow:hover {
@@ -445,9 +449,15 @@ html.dark .page-banner::after {
   opacity: 0.6;
 }
 
-.maplibregl-map { font-family: inherit; background: #dce5e7; }
+.maplibregl-map {
+  font-family: inherit;
+  background: #dce5e7;
+}
 
-.dark .map-glass { color: #e8eff1; background: rgba(24, 34, 39, 0.8) !important; }
+.dark .map-glass {
+  color: #e8eff1;
+  background: rgba(24, 34, 39, 0.8) !important;
+}
 
 .dark .map-timeline-month > h3 {
   color: #aab6bb;
@@ -466,7 +476,9 @@ html.dark .page-banner::after {
     pointer-events: none;
     transform: translateX(calc(-100% - 24px)) scale(0.96);
     transform-origin: left bottom;
-    transition: opacity 0.2s ease, transform 0.24s ease;
+    transition:
+      opacity 0.2s ease,
+      transform 0.24s ease;
   }
 
   .map-timeline-panel.is-open {
@@ -490,7 +502,9 @@ html.dark .page-banner::after {
     background: #1677ff !important;
     cursor: pointer;
     opacity: 1;
-    transition: opacity 0.18s ease, transform 0.18s ease;
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
   }
 
   .map-timeline-trigger.is-hidden {
@@ -531,4 +545,21 @@ html.dark .page-banner::after {
     right: 12px;
     left: 12px;
   }
+}
+/* 三个主题图标始终保持相同的 SSR DOM，由首屏脚本直接选择当前模式。 */
+.theme-mode-icon {
+  display: none !important;
+}
+
+.theme-mode-icon-system,
+html[data-theme-mode='light'] .theme-mode-icon-system,
+html[data-theme-mode='dark'] .theme-mode-icon-system {
+  display: none !important;
+}
+
+html:not([data-theme-mode]) .theme-mode-icon-system,
+html[data-theme-mode='system'] .theme-mode-icon-system,
+html[data-theme-mode='light'] .theme-mode-icon-light,
+html[data-theme-mode='dark'] .theme-mode-icon-dark {
+  display: inline-block !important;
 }

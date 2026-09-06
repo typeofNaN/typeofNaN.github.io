@@ -2,8 +2,8 @@
 
 import { useEffect, useState, useCallback, useMemo } from 'react'
 import { Carousel, Image, Modal, Tag } from 'antd'
-import { Icon } from '@iconify/react'
 
+import { Icon } from '@/src/components/local-icon'
 import { OssHost } from '@/src/constants'
 import { PhotoAlbumApi } from '@/src/service'
 
@@ -51,7 +51,12 @@ const Album = () => {
       .filter(Boolean)
       .map((img, idx) => (
         <div key={idx} className="flex-center w-full h-180px">
-          <Image src={OssHost + img} preview={false} alt="" className="max-w-full max-h-full object-contain" />
+          <Image
+            src={OssHost + img}
+            preview={false}
+            alt=""
+            className="max-w-full max-h-full object-contain"
+          />
         </div>
       ))
   }, [])
@@ -69,7 +74,10 @@ const Album = () => {
     () => (
       <Image.PreviewGroup>
         {mediaList.map((media) => (
-          <div key={media.mediaId} className="flex-center sm:w-180px sm:h-180px w-[calc(50%-6px)] h-160px overflow-hidden">
+          <div
+            key={media.mediaId}
+            className="flex-center sm:w-180px sm:h-180px w-[calc(50%-6px)] h-160px overflow-hidden"
+          >
             <Image
               src={
                 media.mediaType === 'image'

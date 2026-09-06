@@ -1,13 +1,15 @@
 'use client'
 
 import { useTheme } from 'next-themes'
-import { MouseEvent, useCallback, useMemo } from 'react'
-import { Icon } from '@iconify/react'
+import { MouseEvent, useCallback, useEffect } from 'react'
+import { preload } from 'react-dom'
+
+import { getIconUrl, Icon } from '@/src/components/local-icon'
 
 const themeIcons: Record<string, string> = {
   system: 'proicons:dark-theme',
-  light: 'mdi-white-balance-sunny',
-  dark: 'mdi-moon-waning-crescent',
+  light: 'mdi:white-balance-sunny',
+  dark: 'mdi:moon-waning-crescent',
 }
 
 const getNextTheme = (theme: string) => {
@@ -17,7 +19,16 @@ const getNextTheme = (theme: string) => {
 }
 
 const ToggleTheme = () => {
+  Object.values(themeIcons).forEach((icon) => {
+    const iconUrl = getIconUrl(icon)
+    if (iconUrl) preload(iconUrl, { as: 'image', fetchPriority: 'high' })
+  })
+
   const { theme = 'system', setTheme } = useTheme()
+
+  useEffect(() => {
+    document.documentElement.dataset.themeMode = theme
+  }, [theme])
 
   const handleClick = useCallback(
     async (event: MouseEvent<HTMLDivElement>) => {
@@ -32,6 +43,7 @@ const ToggleTheme = () => {
       )
 
       const transition = document.startViewTransition(() => {
+        document.documentElement.dataset.themeMode = nextTheme
         setTheme(nextTheme)
       })
 
@@ -53,8 +65,6 @@ const ToggleTheme = () => {
     [theme, setTheme],
   )
 
-  const icon = useMemo(() => themeIcons[theme] || themeIcons.system, [theme])
-
   return (
     <div
       className="flex-center w-30px h-30px text-primary cursor-pointer"
@@ -64,7 +74,9 @@ const ToggleTheme = () => {
       role="button"
       tabIndex={0}
     >
-      <Icon icon={icon} />
+      <Icon icon={themeIcons.system} className="theme-mode-icon theme-mode-icon-system" />
+      <Icon icon={themeIcons.light} className="theme-mode-icon theme-mode-icon-light" />
+      <Icon icon={themeIcons.dark} className="theme-mode-icon theme-mode-icon-dark" />
     </div>
   )
 }

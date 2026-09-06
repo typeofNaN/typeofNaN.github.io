@@ -3,9 +3,9 @@
 import React from 'react'
 import Link from 'next/link'
 import { Avatar, Col, Image, Progress, Row, Timeline } from 'antd'
-import { Icon } from '@iconify/react'
 import Typeit from 'typeit-react'
 
+import { Icon } from '@/src/components/local-icon'
 import { SkillPackList, LifeTrajectory, OssHost } from '@/src/constants'
 import WechatApplet from '../components/wechat-applet'
 

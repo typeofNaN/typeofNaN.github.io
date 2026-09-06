@@ -3,8 +3,8 @@
 import Link from 'next/link'
 import { useEffect, useState, useCallback, useMemo } from 'react'
 import { Col, Image, Modal, Row, Tag } from 'antd'
-import { Icon } from '@iconify/react'
 
+import { Icon } from '@/src/components/local-icon'
 import { OssHost } from '@/src/constants'
 import { ProjectApi, ProjectGroupApi } from '@/src/service'
 
@@ -166,7 +166,10 @@ const Project = () => {
         <div className="py-10px overflow-hidden">
           {projectDetail?.tags && (
             <div className="flex gap-10px mb-10px text-16px">
-              <Icon icon="material-symbols:bookmark-star-outline" className="flex-shrink-0 mt-4px" />
+              <Icon
+                icon="material-symbols:bookmark-star-outline"
+                className="flex-shrink-0 mt-4px"
+              />
               <div className="flex flex-wrap gap-4px">{renderTags(projectDetail.tags)}</div>
             </div>
           )}

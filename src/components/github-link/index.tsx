@@ -2,7 +2,8 @@
 
 import React, { memo } from 'react'
 import Link from 'next/link'
-import { Icon } from '@iconify/react'
+
+import { Icon } from '@/src/components/local-icon'
 
 const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_LINK
 
