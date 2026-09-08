@@ -88,10 +88,10 @@ const MapPage = () => {
           type: 'FeatureCollection',
           features: points.map((point) => ({
             type: 'Feature',
-              geometry: {
-                type: 'Point',
-                coordinates: [point.longitude, point.latitude],
-              },
+            geometry: {
+              type: 'Point',
+              coordinates: [point.longitude, point.latitude],
+            },
             properties: {
               id: point.mapPointId,
               cover: point.mediaUrl?.split('|').filter(Boolean)[0] || '',
@@ -252,18 +252,14 @@ const MapPage = () => {
 
   const selectedMediaList = selected?.mediaUrl?.split('|').filter(Boolean) || []
   const switchMedia = (offset: number) => {
-    setSelectedMediaIndex((current) => (
-      (current + offset + selectedMediaList.length) % selectedMediaList.length
-    ))
+    setSelectedMediaIndex(
+      (current) => (current + offset + selectedMediaList.length) % selectedMediaList.length,
+    )
   }
   const renderMedia = (mediaUrl: string) => (
     <div className="map-media-stage" key={mediaUrl}>
       {VIDEO_PATTERN.test(mediaUrl) ? (
-        <video
-          src={resolveMediaUrl(mediaUrl)}
-          controls
-          className="map-media-content"
-        />
+        <video src={resolveMediaUrl(mediaUrl)} controls className="map-media-content" />
       ) : (
         <img
           src={resolveMediaUrl(mediaUrl)}

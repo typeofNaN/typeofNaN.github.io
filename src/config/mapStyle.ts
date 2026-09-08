@@ -26,13 +26,20 @@ export function applyAppleMapTheme(map: Map) {
 
   Object.entries(colors).forEach(([layerId, paint]) => {
     if (!map.getLayer(layerId)) return
-    Object.entries(paint).forEach(([property, value]) => map.setPaintProperty(layerId, property, value))
+    Object.entries(paint).forEach(([property, value]) =>
+      map.setPaintProperty(layerId, property, value),
+    )
   })
 
   map.getStyle().layers.forEach((layer) => {
     if (layer.type !== 'symbol' || !/(label|name|airport)/.test(layer.id)) return
     map.setPaintProperty(layer.id, 'text-color', layer.id.includes('water') ? '#66879a' : '#526168')
     map.setPaintProperty(layer.id, 'text-halo-color', 'rgba(255, 255, 255, 0.88)')
-    map.setLayoutProperty(layer.id, 'text-field', ['coalesce', ['get', 'name:zh-Hans'], ['get', 'name:zh'], ['get', 'name']])
+    map.setLayoutProperty(layer.id, 'text-field', [
+      'coalesce',
+      ['get', 'name:zh-Hans'],
+      ['get', 'name:zh'],
+      ['get', 'name'],
+    ])
   })
 }
