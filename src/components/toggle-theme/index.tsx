@@ -2,9 +2,8 @@
 
 import { useTheme } from 'next-themes'
 import { MouseEvent, useCallback, useEffect } from 'react'
-import { preload } from 'react-dom'
 
-import { getIconUrl, Icon } from '@/src/components/local-icon'
+import { Icon } from '@/src/components/local-icon'
 
 const themeIcons: Record<string, string> = {
   system: 'proicons:dark-theme',
@@ -19,11 +18,6 @@ const getNextTheme = (theme: string) => {
 }
 
 const ToggleTheme = () => {
-  Object.values(themeIcons).forEach((icon) => {
-    const iconUrl = getIconUrl(icon)
-    if (iconUrl) preload(iconUrl, { as: 'image', fetchPriority: 'high' })
-  })
-
   const { theme = 'system', setTheme } = useTheme()
 
   useEffect(() => {
