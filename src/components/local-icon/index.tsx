@@ -13,7 +13,7 @@ import {
   NotebookPen,
   Scale,
   Sun,
-  UserRound,
+  Gift,
   Wrench,
 } from 'lucide-react'
 import type { ComponentProps, CSSProperties } from 'react'
@@ -25,7 +25,7 @@ interface IconProps extends ComponentProps<'svg'> {
 }
 
 const icons = {
-  'fluent-emoji-high-contrast:boy': UserRound,
+  'fluent-emoji-high-contrast:boy': Gift,
   'ix:project-new': FolderPlus,
   'material-symbols:alarm-outline-rounded': AlarmClock,
   'material-symbols:bookmark-star-outline': BadgeCheck,
