@@ -14,12 +14,12 @@ type NavLink = {
 }
 
 const navList: NavLink[] = [
-  {
-    label: '首页',
-    link: '/',
-    icon: 'material-symbols:home-outline-rounded',
-    target: '_self',
-  },
+  // {
+  //   label: '首页',
+  //   link: '/',
+  //   icon: 'material-symbols:home-outline-rounded',
+  //   target: '_self',
+  // },
   {
     label: '足迹',
     link: '/map',
