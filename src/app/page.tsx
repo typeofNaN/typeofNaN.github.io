@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { Avatar, Col, Image, Progress, Row, Timeline } from 'antd'
 import Typeit from 'typeit-react'
@@ -56,19 +56,74 @@ const AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME || 'typeofNaN'
 const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_LINK || ''
 const BLOG_URL = 'https://typeofNaN.github.io/vuepress-blog/'
 const OLD_BOY_URL = 'https://30.typeofnan.cn'
+const BANNER_VIDEO_URL = OssHost + 'web/videos/personal-bg.mov'
 
 const Home: React.FC = () => {
+  const bannerVideoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const retryTimers: number[] = []
+
+    const playBannerVideo = () => {
+      const video = bannerVideoRef.current
+      if (!video) return
+
+      video.muted = true
+      video.defaultMuted = true
+      video.playsInline = true
+
+      if (video.src !== BANNER_VIDEO_URL) {
+        video.src = BANNER_VIDEO_URL
+      }
+
+      if (video.readyState === HTMLMediaElement.HAVE_NOTHING) {
+        video.load()
+      }
+
+      video.play().catch(() => {
+        // 微信内置浏览器偶尔会延后允许自动播放，保持静音内联属性，等待下次 pageshow/visibilitychange 再尝试。
+      })
+    }
+
+    playBannerVideo()
+    ;[300, 1000, 2000].forEach((delay) => {
+      retryTimers.push(window.setTimeout(playBannerVideo, delay))
+    })
+
+    document.addEventListener('WeixinJSBridgeReady', playBannerVideo)
+    window.addEventListener('pageshow', playBannerVideo)
+    document.addEventListener('visibilitychange', playBannerVideo)
+
+    return () => {
+      retryTimers.forEach(window.clearTimeout)
+      document.removeEventListener('WeixinJSBridgeReady', playBannerVideo)
+      window.removeEventListener('pageshow', playBannerVideo)
+      document.removeEventListener('visibilitychange', playBannerVideo)
+    }
+  }, [])
+
   return (
     <div className="flex flex-col gap-20px pb-20px">
       <div className="w-full">
         <div className="lg:h-300px md:h-260px h-200px relative page-banner">
           <video
-            src={OssHost + 'web/videos/personal-bg.mov'}
-            controls={false}
-            autoPlay={true}
-            loop={true}
+            ref={bannerVideoRef}
+            autoPlay
+            loop
             muted
+            playsInline
+            disablePictureInPicture
+            controlsList="nodownload nofullscreen noplaybackrate"
+            preload="auto"
+            aria-hidden="true"
+            tabIndex={-1}
             className="w-full h-full object-cover pointer-events-none object-center"
+            {...{
+              'webkit-playsinline': 'true',
+              'x5-playsinline': 'true',
+              'x5-video-player-fullscreen': 'false',
+              'x5-video-player-type': 'h5-page',
+            }}
           />
           <div className="absolute inset-0 flex-center">
             <div className="flex-center flex-col gap-24px px-16px">
