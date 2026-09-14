@@ -2,9 +2,11 @@
 
 import Link from 'next/link'
 import { useEffect, useState, useCallback, useMemo } from 'react'
-import { Col, Image, Modal, Row, Tag } from 'antd'
+import { Chip } from '@heroui/react'
 
 import { Icon } from '@/src/components/local-icon'
+import MediaLightbox from '@/src/components/media-lightbox'
+import UiModal from '@/src/components/ui-modal'
 import { OssHost } from '@/src/constants'
 import { ProjectApi, ProjectGroupApi } from '@/src/service'
 
@@ -16,7 +18,11 @@ const renderTags = (tags?: string) => {
   return tags
     .split('|')
     .filter(Boolean)
-    .map((tag, idx) => <Tag key={idx}>{tag}</Tag>)
+    .map((tag, idx) => (
+      <Chip key={idx} size="sm" variant="soft">
+        {tag}
+      </Chip>
+    ))
 }
 
 /**
@@ -25,9 +31,9 @@ const renderTags = (tags?: string) => {
 const renderStack = (label: string, stack?: string) => {
   if (!stack) return null
   return (
-    <div className="flex items-start gap-10px mb-10px">
-      <span className="flex-shrink-0">{label}</span>
-      <div className="flex flex-wrap gap-4px">{renderTags(stack)}</div>
+    <div className="mb-[10px] flex items-start gap-[10px]">
+      <span className="shrink-0">{label}</span>
+      <div className="flex flex-wrap gap-[4px]">{renderTags(stack)}</div>
     </div>
   )
 }
@@ -35,30 +41,25 @@ const renderStack = (label: string, stack?: string) => {
 /**
  * 渲染图片预览
  */
-const renderScreenshots = (screenshots?: string) => {
-  if (!screenshots) return null
+const renderScreenshots = (screenshots: string[] = [], onPreview: (index: number) => void) => {
+  if (!screenshots.length) return null
   return (
-    <div className="mb-20px">
-      <div className="flex-y-center gap-10px mb-10px font-bold text-18px">
-        <div className="w-4px h-20px bg-primary" />
+    <div className="mb-[20px]">
+      <div className="mb-[10px] flex items-center gap-[10px] text-[18px] font-bold">
+        <div className="h-5 w-1 shrink-0 rounded-sm bg-[var(--site-accent)]" />
         项目预览
       </div>
-      <div className="flex flex-wrap gap-10px">
-        <Image.PreviewGroup>
-          {screenshots
-            .split('|')
-            .filter(Boolean)
-            .map((screenshot, idx) => (
-              <Image
-                key={idx}
-                src={OssHost + screenshot}
-                alt=""
-                width={180}
-                preview={{ title: '项目截图' }}
-                className="max-w-full"
-              />
-            ))}
-        </Image.PreviewGroup>
+      <div className="flex flex-wrap gap-[10px]">
+        {screenshots.map((screenshot, idx) => (
+          <button
+            type="button"
+            className="h-[120px] w-[180px] cursor-zoom-in overflow-hidden rounded-[7px] border border-[var(--site-border)] bg-[var(--site-surface-soft)] p-0 [&_img]:h-full [&_img]:w-full [&_img]:object-cover"
+            key={screenshot}
+            onClick={() => onPreview(idx)}
+          >
+            <img src={screenshot} alt={`项目截图 ${idx + 1}`} />
+          </button>
+        ))}
       </div>
     </div>
   )
@@ -70,12 +71,12 @@ const renderScreenshots = (screenshots?: string) => {
 const renderDetailBlock = (title: string, content?: string) => {
   if (!content) return null
   return (
-    <div className="mb-20px">
-      <div className="flex-y-center gap-10px mb-10px font-bold text-18px">
-        <div className="w-4px h-20px bg-primary" />
+    <div className="mb-[20px]">
+      <div className="mb-[10px] flex items-center gap-[10px] text-[18px] font-bold">
+        <div className="h-5 w-1 shrink-0 rounded-sm bg-[var(--site-accent)]" />
         {title}
       </div>
-      <div className="indent-2em">{content}</div>
+      <div className="indent-[2em]">{content}</div>
     </div>
   )
 }
@@ -85,6 +86,7 @@ const Project = () => {
     useState<Api.ProjectGroupApi.TotalList.ResponseVo>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [projectDetail, setProjectDetail] = useState<Api.ProjectApi.Detail.ResponseVo>()
+  const [previewIndex, setPreviewIndex] = useState<number | null>(null)
 
   useEffect(() => {
     ;(async () => {
@@ -111,93 +113,97 @@ const Project = () => {
     setProjectDetail(undefined)
   }, [])
 
+  const handlePreviewIndexChange = useCallback((nextIndex: number | null) => {
+    setPreviewIndex(nextIndex)
+    setIsModalOpen(nextIndex === null)
+  }, [])
+
   const modalTitle = useMemo(
     () => (
-      <div className="flex-y-center gap-20px">
-        <Image
-          src={OssHost + (projectDetail?.projectIconUrl || '')}
-          preview={false}
-          width={30}
-          alt=""
-        />
-        <h3 className="text-20px">{projectDetail?.projectName || ''}</h3>
+      <div className="flex items-center gap-[20px]">
+        <img src={OssHost + (projectDetail?.projectIconUrl || '')} width={30} height={30} alt="" />
+        <h3 className="text-[20px]">{projectDetail?.projectName || ''}</h3>
       </div>
     ),
     [projectDetail],
   )
 
+  const screenshotList = useMemo(
+    () =>
+      (projectDetail?.screenshots || '')
+        .split('|')
+        .filter(Boolean)
+        .map((screenshot) => OssHost + screenshot),
+    [projectDetail?.screenshots],
+  )
+
   return (
-    <div className="flex flex-col gap-40px w-full py-20px container">
+    <div className="mx-auto flex min-h-[calc(100vh-121px)] w-full max-w-[1200px] flex-col gap-11 px-4 pt-[42px] pb-14 sm:px-6 max-sm:pt-6 max-sm:pb-9">
       {projectGroupList.map((projectGroup) => (
-        <div key={projectGroup.projectGroupId}>
-          <div className="mb-20px font-bold text-18px">{projectGroup.projectGroupName}</div>
-          <Row gutter={[20, 20]}>
+        <section key={projectGroup.projectGroupId}>
+          <div className="mb-[18px] flex items-center gap-[10px]">
+            <span className="h-5 w-1 rounded-sm bg-[var(--site-accent)]" />
+            <h2 className="text-xl">{projectGroup.projectGroupName}</h2>
+          </div>
+          <div className="grid grid-cols-4 gap-4 max-sm:grid-cols-1">
             {projectGroup.projectList.map((project) => (
-              <Col key={project.projectId} lg={6} md={8} sm={12} xs={24}>
-                <div
-                  className="flex-y-center bg-color b-rd-8px p-20px cursor-pointer select-none transition-duration-400 hover:transform-translate-y--4px hover:shadow"
+              <div key={project.projectId}>
+                <button
+                  type="button"
+                  className="group flex min-h-[76px] w-full cursor-pointer items-center rounded-lg border border-[var(--site-border)] bg-[var(--site-surface)] p-[14px] text-left font-[inherit] text-[var(--site-foreground)] select-none transition hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--site-accent)_45%,var(--site-border))] hover:shadow-[var(--site-shadow)]"
                   onClick={() => handleClickProject(project.projectId)}
                 >
-                  <div className="flex-center w-40px h-40px">
-                    <Image
-                      src={OssHost + project.projectIconUrl}
-                      width={40}
-                      preview={false}
-                      alt=""
-                    />
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[7px] bg-[var(--site-surface-soft)]">
+                    <img src={OssHost + project.projectIconUrl} width={40} height={40} alt="" />
                   </div>
-                  <div className="pl-10px w-[calc(100%-40px)]">{project.projectName}</div>
-                </div>
-              </Col>
+                  <div className="min-w-0 flex-1 truncate pl-3 text-sm font-semibold">
+                    {project.projectName}
+                  </div>
+                  <Icon
+                    icon="lucide:arrow-up-right"
+                    className="shrink-0 translate-x-[-4px] translate-y-1 text-[var(--site-subtle)] opacity-0 transition group-hover:translate-0 group-hover:opacity-100"
+                  />
+                </button>
+              </div>
             ))}
-          </Row>
-        </div>
+          </div>
+        </section>
       ))}
-      <Modal
-        title={modalTitle}
-        width={1000}
-        closable={{ 'aria-label': 'Custom Close Button' }}
-        open={isModalOpen}
-        footer={null}
-        onCancel={handleModalClose}
-        destroyOnHidden
-        className="max-w-[calc(100vw-32px)]"
-      >
-        <div className="py-10px overflow-hidden">
+      <UiModal title={modalTitle} open={isModalOpen} onClose={handleModalClose} size="lg">
+        <div className="overflow-hidden py-[10px]">
           {projectDetail?.tags && (
-            <div className="flex gap-10px mb-10px text-16px">
-              <Icon
-                icon="material-symbols:bookmark-star-outline"
-                className="flex-shrink-0 mt-4px"
-              />
-              <div className="flex flex-wrap gap-4px">{renderTags(projectDetail.tags)}</div>
+            <div className="mb-[10px] flex gap-[10px] text-[16px]">
+              <Icon icon="material-symbols:bookmark-star-outline" className="mt-[4px] shrink-0" />
+              <div className="flex flex-wrap gap-[4px]">{renderTags(projectDetail.tags)}</div>
             </div>
           )}
           {projectDetail?.license && (
-            <div className="flex gap-10px mb-10px text-16px">
-              <Icon icon="mdi:license" className="flex-shrink-0 mt-4px" />
-              <Tag>{projectDetail.license}</Tag>
+            <div className="mb-[10px] flex gap-[10px] text-[16px]">
+              <Icon icon="mdi:license" className="mt-[4px] shrink-0" />
+              <Chip size="sm" variant="soft">
+                {projectDetail.license}
+              </Chip>
             </div>
           )}
           {projectDetail?.homePage && (
-            <div className="flex gap-10px mb-10px text-16px">
-              <Icon icon="material-symbols:home-outline-rounded" className="flex-shrink-0 mt-4px" />
+            <div className="mb-[10px] flex gap-[10px] text-[16px]">
+              <Icon icon="material-symbols:home-outline-rounded" className="mt-[4px] shrink-0" />
               <Link
                 href={projectDetail.homePage}
                 target="_blank"
-                className="text-color hover:underline break-all"
+                className="break-all text-black hover:underline dark:text-white"
               >
                 {projectDetail.homePage}
               </Link>
             </div>
           )}
           {projectDetail?.repository && (
-            <div className="flex gap-10px mb-10px text-16px">
-              <Icon icon="mdi:git" className="flex-shrink-0 mt-4px" />
+            <div className="mb-[10px] flex gap-[10px] text-[16px]">
+              <Icon icon="mdi:git" className="mt-[4px] shrink-0" />
               <Link
                 href={projectDetail.repository}
                 target="_blank"
-                className="text-color hover:underline break-all"
+                className="break-all text-black hover:underline dark:text-white"
               >
                 {projectDetail.repository}
               </Link>
@@ -206,17 +212,23 @@ const Project = () => {
         </div>
         {renderDetailBlock('项目背景', projectDetail?.projectBackground)}
         {renderDetailBlock('项目简介', projectDetail?.projectDescription)}
-        <div className="mb-20px">
-          <div className="flex-y-center gap-10px mb-10px font-bold text-18px">
-            <div className="w-4px h-20px bg-primary" />
+        <div className="mb-[20px]">
+          <div className="mb-[10px] flex items-center gap-[10px] text-[18px] font-bold">
+            <div className="h-5 w-1 shrink-0 rounded-sm bg-[var(--site-accent)]" />
             项目技术栈
           </div>
           {renderStack('主技术栈：', projectDetail?.mainStack)}
           {renderStack('后端技术栈：', projectDetail?.backEnd)}
           {renderStack('前端技术栈：', projectDetail?.frontEnd)}
         </div>
-        {renderScreenshots(projectDetail?.screenshots)}
-      </Modal>
+        {renderScreenshots(screenshotList, handlePreviewIndexChange)}
+      </UiModal>
+      <MediaLightbox
+        images={screenshotList}
+        index={previewIndex}
+        title="项目截图"
+        onIndexChange={handlePreviewIndexChange}
+      />
     </div>
   )
 }

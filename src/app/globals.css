@@ -1,21 +1,60 @@
-@unocss all;
+@import 'tailwindcss';
+@import '@heroui/react/styles';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+:root,
+html.light {
+  --site-background: #f6f8f7;
+  --site-surface: #ffffff;
+  --site-surface-soft: #eef3f1;
+  --site-foreground: #17211f;
+  --site-muted: #66736f;
+  --site-subtle: #8a9692;
+  --site-border: #e2e9e6;
+  --site-accent: #27766f;
+  --site-accent-hover: #1f625d;
+  --site-accent-soft: #e4f0ed;
+  --site-header-bg: rgba(255, 255, 255, 0.88);
+  --site-shadow: 0 12px 32px rgba(29, 54, 48, 0.07);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --site-background: #0d1212;
+    --site-surface: #161d1d;
+    --site-surface-soft: #1c2625;
+    --site-foreground: #e9efed;
+    --site-muted: #a4b0ac;
+    --site-subtle: #778581;
+    --site-border: #293432;
+    --site-accent: #79b9af;
+    --site-accent-hover: #92c9c0;
+    --site-accent-soft: #1d3532;
+    --site-header-bg: rgba(18, 24, 24, 0.88);
+    --site-shadow: 0 16px 42px rgba(0, 0, 0, 0.24);
   }
+}
+
+html.dark {
+  --site-background: #0d1212;
+  --site-surface: #161d1d;
+  --site-surface-soft: #1c2625;
+  --site-foreground: #e9efed;
+  --site-muted: #a4b0ac;
+  --site-subtle: #778581;
+  --site-border: #293432;
+  --site-accent: #79b9af;
+  --site-accent-hover: #92c9c0;
+  --site-accent-soft: #1d3532;
+  --site-header-bg: rgba(18, 24, 24, 0.88);
+  --site-shadow: 0 16px 42px rgba(0, 0, 0, 0.24);
 }
 
 html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  color: var(--site-foreground);
+  background: var(--site-background);
 }
 
 body {
@@ -30,16 +69,10 @@ body {
     'Hiragino Sans GB',
     'Segoe UI',
     'Microsoft YaHei',
-    微软雅黑,
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+  line-height: 1.6;
 }
 
 a {
@@ -69,206 +102,53 @@ a {
   z-index: 9999;
 }
 
-.main-bg {
-  background-image: url(../assets/images/background.png);
-  background-position: top center;
+.site-background {
+  background:
+    linear-gradient(var(--site-background), var(--site-background)),
+    url(../assets/images/background.png) top center / auto repeat;
 }
 
-.heart {
-  z-index: 999;
+.hero-overlay {
+  background: linear-gradient(
+    90deg,
+    rgba(8, 23, 23, 0.72) 0%,
+    rgba(8, 23, 23, 0.38) 48%,
+    rgba(8, 23, 23, 0.14) 100%
+  );
 }
 
-.container {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 1200px;
-  padding: 0 16px;
+@media (max-width: 640px) {
+  .hero-overlay {
+    background: linear-gradient(90deg, rgba(8, 23, 23, 0.72), rgba(8, 23, 23, 0.38));
+  }
 }
 
-.page-banner::after {
+.timeline-item::before {
   content: '';
   position: absolute;
-  display: block;
-  height: 12px;
-  bottom: -4px;
-  left: 0;
-  right: 0;
-  background-image: radial-gradient(circle, transparent 70%, rgba(255, 255, 255, 0.9) 70%);
-  background-size: 10px 14px;
-  background-position: 0 -6px;
+  top: 8px;
+  bottom: -8px;
+  left: 6px;
+  width: 1px;
+  background: var(--site-border);
 }
 
-html.dark .page-banner::after {
-  background-image: radial-gradient(circle, transparent 70%, rgba(68, 68, 68, 0.9) 70%);
-}
-
-.map-page {
-  position: fixed;
-  inset: 0;
-}
-
-.map-shell {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.map-shell > .map-container {
-  position: absolute;
-  inset: 0;
-}
-
-.map-title-panel,
-.map-error-panel {
-  position: absolute;
-  left: 320px;
-  z-index: 1;
-}
-
-.map-title-panel {
-  top: 80px;
-}
-
-.map-error-panel {
-  bottom: 80px;
-}
-
-.map-timeline-panel {
-  position: absolute;
-  top: 80px;
-  left: 20px;
-  bottom: 80px;
-  z-index: 1;
-  display: flex;
-  width: 280px;
-  flex-direction: column;
-  overflow: hidden;
-  border-radius: 16px;
-}
-
-.map-timeline-trigger,
-.map-timeline-backdrop {
+.timeline-item:last-child::before {
   display: none;
 }
 
-.map-timeline-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  padding: 16px 18px 12px;
-  border-bottom: 1px solid rgba(112, 129, 136, 0.18);
+.modal-center-layout {
+  justify-content: center;
 }
 
-.map-timeline-header strong {
-  font-size: 17px;
-}
-
-.map-timeline-header span {
-  font-size: 12px;
-  opacity: 0.55;
-}
-
-.map-timeline-content {
-  min-height: 0;
-  flex: 1;
-  overflow-y: auto;
-  padding: 10px 14px 18px;
-}
-
-.map-timeline-year {
-  position: relative;
-  padding-left: 18px;
-}
-
-.map-timeline-year + .map-timeline-year {
-  margin-top: 18px;
-}
-
-.map-timeline-year::before {
-  content: '';
-  position: absolute;
-  top: 9px;
-  bottom: 2px;
-  left: 4px;
-  width: 1px;
-  background: rgba(22, 119, 255, 0.25);
-}
-
-.map-timeline-year > h2 {
-  position: relative;
-  margin: 0 0 10px;
-  font-size: 18px;
-  line-height: 24px;
-}
-
-.map-timeline-year > h2::before {
-  content: '';
-  position: absolute;
-  top: 7px;
-  left: -18px;
-  width: 9px;
-  height: 9px;
-  border: 2px solid rgba(255, 255, 255, 0.95);
-  border-radius: 50%;
-  background: #1677ff;
-  box-shadow: 0 2px 6px rgba(22, 119, 255, 0.35);
-}
-
-.map-timeline-month + .map-timeline-month {
-  margin-top: 14px;
-}
-
-.map-timeline-month > h3 {
-  margin: 0 0 6px;
-  color: #67747a;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.map-timeline-items {
-  display: grid;
-  gap: 4px;
-}
-
-.map-timeline-items button {
-  overflow: hidden;
-  width: 100%;
-  padding: 7px 9px;
-  border: 0;
-  border-radius: 8px;
-  color: inherit;
-  background: transparent;
-  cursor: pointer;
-  font: inherit;
-  line-height: 20px;
-  text-align: left;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.map-timeline-items button:hover {
-  color: #0958d9;
-  background: rgba(22, 119, 255, 0.1);
-}
-
-.map-timeline-empty {
-  padding: 36px 8px;
-  font-size: 13px;
-  text-align: center;
-  opacity: 0.55;
-}
-
-.map-glass,
+/* MapLibre owns these nodes, so they cannot receive Tailwind classes in JSX. */
 .maplibregl-ctrl-group {
+  overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.72) !important;
+  border-radius: 12px !important;
   background: rgba(248, 251, 251, 0.8) !important;
   box-shadow: 0 10px 30px rgba(40, 66, 75, 0.17) !important;
   backdrop-filter: blur(14px);
-}
-
-.maplibregl-ctrl-group {
-  overflow: hidden;
-  border-radius: 12px !important;
 }
 
 .maplibregl-ctrl-group button {
@@ -277,25 +157,30 @@ html.dark .page-banner::after {
 }
 
 .map-page .maplibregl-ctrl-top-right {
-  top: 60px;
+  top: 20px;
 }
 
 .map-page .maplibregl-ctrl-bottom-right {
-  bottom: 60px;
+  bottom: 20px;
+}
+
+.maplibregl-map {
+  font-family: inherit;
+  background: #dce5e7;
 }
 
 .map-photo-marker {
   position: relative;
   display: block;
-  overflow: visible;
   width: 56px;
   height: 56px;
   padding: 0;
+  overflow: visible;
+  cursor: pointer;
+  background: #fff;
   border: 3px solid rgba(255, 255, 255, 0.96);
   border-radius: 12px;
-  background: #fff;
   box-shadow: 0 5px 16px rgba(31, 45, 50, 0.38);
-  cursor: pointer;
   transition:
     transform 0.18s ease,
     box-shadow 0.18s ease;
@@ -303,8 +188,8 @@ html.dark .page-banner::after {
 
 .map-photo-marker:hover {
   z-index: 2;
-  transform: scale(1.12);
   box-shadow: 0 8px 22px rgba(31, 45, 50, 0.46);
+  transform: scale(1.12);
 }
 
 .map-photo-marker::after {
@@ -314,10 +199,10 @@ html.dark .page-banner::after {
   left: 50%;
   width: 12px;
   height: 12px;
+  background: inherit;
   border: 3px solid rgba(255, 255, 255, 0.96);
   border-top: 0;
   border-left: 0;
-  background: inherit;
   transform: translateX(-50%) rotate(45deg);
 }
 
@@ -325,232 +210,20 @@ html.dark .page-banner::after {
   display: block;
   width: 100%;
   height: 100%;
+  pointer-events: none;
   border-radius: 9px;
   object-fit: cover;
-  pointer-events: none;
 }
 
 .map-photo-marker.is-error {
   width: 22px;
   height: 22px;
-  border-radius: 50%;
   background: #1677ff;
-}
-
-.map-media-modal .ant-modal-content {
-  display: flex;
-  height: 80vh;
-  height: min(80vh, calc(100dvh - 32px));
-  max-height: calc(100dvh - 32px);
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.map-media-modal .ant-modal-body {
-  display: grid;
-  overflow: hidden;
-  min-height: 0;
-  min-width: 0;
-  flex: 1;
-  grid-template-rows: minmax(0, 1fr) auto;
-}
-
-.map-media-stage {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  min-height: 0;
-  min-width: 0;
-  overflow: hidden;
-  border-radius: 12px;
-  background: #000;
-}
-
-.map-media-content {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  object-position: center;
-}
-
-.map-media-carousel {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  min-width: 0;
-  overflow: hidden;
-  border-radius: 12px;
-}
-
-.map-media-arrow {
-  position: absolute;
-  top: 50%;
-  z-index: 1;
-  display: grid;
-  width: 42px;
-  height: 42px;
-  padding: 0 0 4px;
-  place-items: center;
-  border: 0;
   border-radius: 50%;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.48);
-  cursor: pointer;
-  font-size: 34px;
-  line-height: 1;
-  transform: translateY(-50%);
-  transition:
-    background-color 0.2s,
-    transform 0.2s;
 }
 
-.map-media-arrow:hover {
-  background: rgba(22, 119, 255, 0.9);
-  transform: translateY(-50%) scale(1.06);
-}
-
-.map-media-arrow.is-prev {
-  left: 16px;
-}
-
-.map-media-arrow.is-next {
-  right: 16px;
-}
-
-.map-media-pagination {
-  position: absolute;
-  bottom: 14px;
-  left: 50%;
-  z-index: 1;
-  padding: 4px 10px;
-  border-radius: 12px;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.5);
-  font-size: 12px;
-  line-height: 18px;
-  transform: translateX(-50%);
-  backdrop-filter: blur(6px);
-}
-
-.map-media-time {
-  display: block;
-  flex: none;
-  margin-top: 12px;
-  line-height: 20px;
-  opacity: 0.6;
-}
-
-.maplibregl-map {
-  font-family: inherit;
-  background: #dce5e7;
-}
-
-.dark .map-glass {
-  color: #e8eff1;
-  background: rgba(24, 34, 39, 0.8) !important;
-}
-
-.dark .map-timeline-month > h3 {
-  color: #aab6bb;
-}
-
-@media (max-width: 768px) {
-  .map-timeline-panel {
-    top: 72px;
-    right: 12px;
-    bottom: 72px;
-    left: 12px;
-    z-index: 4;
-    width: auto;
-    max-width: 340px;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateX(calc(-100% - 24px)) scale(0.96);
-    transform-origin: left bottom;
-    transition:
-      opacity 0.2s ease,
-      transform 0.24s ease;
-  }
-
-  .map-timeline-panel.is-open {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateX(0) scale(1);
-  }
-
-  .map-timeline-trigger {
-    position: absolute;
-    bottom: 76px;
-    left: 16px;
-    z-index: 3;
-    display: grid;
-    width: 52px;
-    height: 52px;
-    padding: 0;
-    place-items: center;
-    border-radius: 50%;
-    color: #fff;
-    background: #1677ff !important;
-    cursor: pointer;
-    opacity: 1;
-    transition:
-      opacity 0.18s ease,
-      transform 0.18s ease;
-  }
-
-  .map-timeline-trigger.is-hidden {
-    opacity: 0;
-    pointer-events: none;
-    transform: scale(0.72);
-  }
-
-  .map-timeline-trigger svg {
-    width: 25px;
-    height: 25px;
-    fill: #fff;
-    stroke: #fff;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-  }
-
-  .map-timeline-backdrop {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    display: block;
-    padding: 0;
-    border: 0;
-    background: rgba(15, 23, 42, 0.12);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease;
-  }
-
-  .map-timeline-backdrop.is-open {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .map-title-panel,
-  .map-error-panel {
-    right: 12px;
-    left: 12px;
-  }
-}
-/* 三个主题图标始终保持相同的 SSR DOM，由首屏脚本直接选择当前模式。 */
-.theme-mode-icon {
-  display: none !important;
-}
-
+/* Stable SSR theme icons are selected before React hydration. */
+.theme-mode-icon,
 .theme-mode-icon-system,
 html[data-theme-mode='light'] .theme-mode-icon-system,
 html[data-theme-mode='dark'] .theme-mode-icon-system {

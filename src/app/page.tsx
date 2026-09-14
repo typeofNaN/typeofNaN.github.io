@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { Avatar, Col, Image, Progress, Row, Timeline } from 'antd'
+import { Avatar, ProgressBar } from '@heroui/react'
 import Typeit from 'typeit-react'
 
 import { Icon } from '@/src/components/local-icon'
@@ -23,11 +23,7 @@ const getHelloStr = () => {
 
 const typeitOptions = {
   strings: [
-    `Hello，${getHelloStr()}，我是typeofNaN。`,
-    '一名软件开发工程师。',
-    '欢迎来到我的个人空间。',
-    '这里展示了一些我的博客、项目、生活。',
-    '茫茫人海，很幸运，在这里，遇见你 ❤️',
+    `Hello，${getHelloStr()}！我是 typeofNaN，一名软件开发工程师。欢迎来到我的个人空间。这里展示了一些我的足迹、博客、项目、生活。茫茫人海，很幸运，在这里，遇见你 ❤️`,
   ],
   lifeLike: true,
   speed: 120,
@@ -41,15 +37,18 @@ interface ContainerBoxProps {
 }
 
 const ContainerBox: React.FC<ContainerBoxProps> = ({ icon, title, children }) => (
-  <div className="p-20px bg-color b-rd-8px">
-    <div className="flex-y-center gap-10px mb-10px font-bold text-18px">
-      <div className="flex-center w-30px h-30px">
+  <section className="overflow-hidden rounded-lg border border-[var(--site-border)] bg-[var(--site-surface)] shadow-[var(--site-shadow)]">
+    <div className="flex items-center gap-3 border-b border-[var(--site-border)] px-6 py-[22px] max-sm:p-[18px]">
+      <div className="flex h-[34px] w-[34px] items-center justify-center rounded-[7px] bg-[var(--site-accent-soft)] text-[var(--site-accent)]">
         <Icon icon={icon} fontSize={20} />
       </div>
-      {title}
+      <div>
+        <p className="mb-[2px] text-[11px] font-bold text-[var(--site-accent)]">ABOUT ME</p>
+        <h2 className="text-xl leading-[1.3]">{title}</h2>
+      </div>
     </div>
-    <h2 className="pt-20px">{children}</h2>
-  </div>
+    <div className="px-6 pt-7 pb-2 max-sm:px-4 max-sm:pt-6 max-sm:pb-[6px]">{children}</div>
+  </section>
 )
 
 const AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME || 'typeofNaN'
@@ -57,6 +56,8 @@ const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_LINK || ''
 const BLOG_URL = 'https://typeofNaN.github.io/vuepress-blog/'
 const OLD_BOY_URL = 'https://30.typeofnan.cn'
 const BANNER_VIDEO_URL = OssHost + 'web/videos/personal-bg.mov'
+const SOCIAL_LINK_CLASS =
+  'flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-[rgba(12,28,28,0.24)] text-white backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-white/75 hover:bg-white/15'
 
 const Home: React.FC = () => {
   const bannerVideoRef = useRef<HTMLVideoElement>(null)
@@ -103,9 +104,9 @@ const Home: React.FC = () => {
   }, [])
 
   return (
-    <div className="flex flex-col gap-20px pb-20px">
-      <div className="w-full">
-        <div className="lg:h-300px md:h-260px h-200px relative page-banner">
+    <div>
+      <section className="relative h-[clamp(390px,54vh,540px)] min-h-[390px] w-full overflow-hidden max-sm:h-[430px] max-sm:min-h-[430px]">
+        <div className="absolute inset-0 bg-[#263a3a]">
           <video
             ref={bannerVideoRef}
             autoPlay
@@ -125,117 +126,130 @@ const Home: React.FC = () => {
               'x5-video-player-type': 'h5-page',
             }}
           />
-          <div className="absolute inset-0 flex-center">
-            <div className="flex-center flex-col gap-24px px-16px">
-              <div className="flex-y-center gap-10px p-10px h-80px b-rd-40px backdrop-blur-[3px] bg-#ffffff24 border-top-color-#ffffff40">
-                <div className="bg-color b-rd-50% h-60px w-60px p-5px flex-center flex-shrink-0">
-                  <Avatar
-                    src={OssHost + 'web/images/avatar.jpg'}
-                    size={50}
-                    className="transition-duration-600 hover:transform-rotate-360"
-                  />
-                </div>
-                <div className="text-#fff sm:w-260px w-auto">
-                  <h1 className="text-24px">{AUTHOR_NAME}</h1>
-                  <p>Not a Number</p>
-                </div>
+        </div>
+        <div className="hero-overlay absolute inset-0" />
+        <div className="relative mx-auto flex h-full w-full max-w-[1200px] items-center px-4 sm:px-6 max-sm:items-end max-sm:pb-[46px]">
+          <div className="w-[min(610px,100%)] text-white">
+            <div className="flex items-center gap-[14px]">
+              <Avatar size="lg">
+                <Avatar.Image src={OssHost + 'web/images/avatar.jpg'} alt={AUTHOR_NAME} />
+                <Avatar.Fallback>NaN</Avatar.Fallback>
+              </Avatar>
+              <div>
+                <p className="mb-[2px] text-[11px] font-bold text-white/65">HELLO, I AM</p>
+                <h1 className="text-[clamp(30px,4vw,48px)] leading-[1.12] font-bold">
+                  {AUTHOR_NAME}
+                </h1>
               </div>
-              <p className="text-18px font-bold text-#fff text-center">
-                喜欢就是信仰，热爱会是力量
-              </p>
-              <div className="flex-center gap-20px h-40px text-#fff">
-                <Link
-                  href={GITHUB_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                  className="flex-center w-40px h-40px b-rd-50% bg-#24282d"
-                  title="Github"
-                >
-                  <Icon icon="ri:github-fill" fontSize={24} />
-                </Link>
-                <Link
-                  href={BLOG_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                  className="flex-center w-40px h-40px b-rd-50% bg-yellow"
-                  title="博客"
-                >
-                  <Icon icon="ri:blogger-line" fontSize={24} />
-                </Link>
-                <Link
-                  href={OLD_BOY_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                  className="flex-center w-40px h-40px b-rd-50% bg-orange"
-                  title="老男孩"
-                >
-                  <Icon icon="fluent-emoji-high-contrast:boy" fontSize={24} />
-                </Link>
-                <WechatApplet />
-                <Link
-                  href="mailto:dmdefine6@gmail.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                  className="flex-center w-40px h-40px b-rd-50% bg-blue"
-                  title="Email"
-                >
-                  <Icon icon="mynaui:envelope" fontSize={24} />
-                </Link>
-              </div>
+            </div>
+            <p className="mt-7 text-[clamp(22px,3vw,34px)] leading-[1.35] font-semibold max-sm:mt-[22px]">
+              喜欢就是信仰，热爱会是力量
+            </p>
+            <p className="mt-[10px] text-[15px] text-white/75 max-sm:text-sm">
+              软件开发工程师，记录代码、项目与生活。
+            </p>
+            <div className="mt-[26px] flex items-center gap-[10px]">
+              <Link
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className={SOCIAL_LINK_CLASS}
+                title="Github"
+              >
+                <Icon icon="ri:github-fill" fontSize={24} />
+              </Link>
+              <Link
+                href={BLOG_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="博客"
+                className={SOCIAL_LINK_CLASS}
+                title="博客"
+              >
+                <Icon icon="ri:blogger-line" fontSize={24} />
+              </Link>
+              <Link
+                href={OLD_BOY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="老男孩"
+                className={SOCIAL_LINK_CLASS}
+                title="老男孩"
+              >
+                <Icon icon="fluent-emoji-high-contrast:boy" fontSize={24} />
+              </Link>
+              <WechatApplet className={SOCIAL_LINK_CLASS} />
+              <Link
+                href="mailto:dmdefine6@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="电子邮件"
+                className={SOCIAL_LINK_CLASS}
+                title="Email"
+              >
+                <Icon icon="mynaui:envelope" fontSize={24} />
+              </Link>
             </div>
           </div>
         </div>
-        <div className="p-20px bg-color text-center min-h-180px">
-          <Typeit options={typeitOptions} className="text-18px font-italic" />
+      </section>
+
+      <section className="border-b border-[var(--site-border)] bg-[var(--site-surface)]">
+        <div className="mx-auto min-h-[150px] w-full max-w-[1200px] px-4 py-[34px] sm:px-6 max-sm:min-h-[138px] max-sm:py-7">
+          <p className="mb-[2px] text-[11px] font-bold text-[var(--site-accent)]">A FEW WORDS</p>
+          <Typeit
+            options={typeitOptions}
+            className="mt-3 block w-full text-lg leading-[1.85] text-[var(--site-foreground)] italic max-sm:text-base"
+          />
         </div>
-      </div>
-      <div className="container">
+      </section>
+
+      <div className="mx-auto grid w-full max-w-[1200px] gap-7 px-4 pt-[42px] pb-14 sm:px-6 max-sm:pt-6 max-sm:pb-9">
         <ContainerBox icon="ri:history-line" title="人生轨迹">
-          <div className="flex-center">
-            <Timeline
-              mode="left"
-              items={LifeTrajectory.map(({ dot, color, date, content }) => ({
-                dot,
-                color,
-                children: (
-                  <div className="text-color">
-                    <p className="font-bold">{date}</p>
-                    <p>{content}</p>
+          <div className="max-w-[940px]">
+            <ol className="m-0 list-none p-0">
+              {LifeTrajectory.map(({ color, date, content }) => (
+                <li
+                  key={`${date}-${content}`}
+                  className="timeline-item relative min-h-[68px] pb-7 pl-7"
+                  style={{ '--timeline-color': color } as React.CSSProperties}
+                >
+                  <span className="absolute top-[5px] left-px h-[11px] w-[11px] rounded-full border-[3px] border-[var(--site-surface)] bg-[var(--timeline-color,var(--site-accent))] shadow-[0_0_0_1px_var(--site-border)]" />
+                  <div>
+                    <p className="text-sm font-bold text-[var(--site-foreground)]">{date}</p>
+                    <p className="mt-[5px] max-w-[760px] text-sm leading-7 text-[var(--site-muted)] max-sm:text-[13px]">
+                      {content}
+                    </p>
                   </div>
-                ),
-              }))}
-              className="w-full"
-            />
+                </li>
+              ))}
+            </ol>
           </div>
         </ContainerBox>
-      </div>
-      <div className="container">
         <ContainerBox icon="material-symbols:tools-wrench-outline-sharp" title="个人技能">
-          <Row gutter={[20, 20]}>
+          <div className="grid grid-cols-4 gap-[14px] max-sm:grid-cols-2 max-sm:gap-[10px]">
             {SkillPackList.map(({ skillName, icon, proficiency }) => (
-              <Col key={skillName} xs={12} sm={8} lg={6}>
-                <div className="flex-y-center gap-6px">
-                  <Image src={icon} width={40} height={40} alt={skillName} preview={false} />
-                  <div className="flex-grow-1 min-w-0">
-                    <p className="mb-4px truncate">{skillName}</p>
-                    <Progress
-                      percent={proficiency}
-                      showInfo={false}
-                      size="small"
-                      strokeColor={{
-                        '0%': '#108ee9',
-                        '100%': '#87d068',
-                      }}
-                    />
+              <div key={skillName}>
+                <div className="flex min-h-[68px] items-center gap-[10px] rounded-[7px] border border-[var(--site-border)] bg-[var(--site-background)] p-3 max-sm:min-h-[62px] max-sm:p-[9px]">
+                  <img src={icon} width={34} height={34} alt={skillName} />
+                  <div className="min-w-0 grow">
+                    <div className="mb-[6px] flex items-center justify-between gap-[6px]">
+                      <p className="truncate text-[13px] font-semibold text-[var(--site-foreground)]">
+                        {skillName}
+                      </p>
+                      <span className="text-[11px] text-[var(--site-subtle)]">{proficiency}</span>
+                    </div>
+                    <ProgressBar aria-label={`${skillName} 熟练度`} value={proficiency} size="sm">
+                      <ProgressBar.Track>
+                        <ProgressBar.Fill />
+                      </ProgressBar.Track>
+                    </ProgressBar>
                   </div>
                 </div>
-              </Col>
+              </div>
             ))}
-          </Row>
+          </div>
         </ContainerBox>
       </div>
     </div>

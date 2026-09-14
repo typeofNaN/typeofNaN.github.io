@@ -1,9 +1,12 @@
 'use client'
 
 import { useEffect, useState, useCallback, useMemo } from 'react'
-import { Carousel, Image, Modal, Tag } from 'antd'
+import { Chip } from '@heroui/react'
 
 import { Icon } from '@/src/components/local-icon'
+import MediaCarousel from '@/src/components/media-carousel'
+import MediaLightbox from '@/src/components/media-lightbox'
+import UiModal from '@/src/components/ui-modal'
 import { OssHost } from '@/src/constants'
 import { PhotoAlbumApi } from '@/src/service'
 
@@ -12,6 +15,7 @@ const Album = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentPhotoAlbumName, setCurrentPhotoAlbumName] = useState('')
   const [mediaList, setMediaList] = useState<Api.MediaApi.Detail.ResponseVo[]>([])
+  const [previewIndex, setPreviewIndex] = useState<number | null>(null)
 
   // 获取相册列表
   useEffect(() => {
@@ -44,21 +48,9 @@ const Album = () => {
     setCurrentPhotoAlbumName('')
   }, [])
 
-  // 渲染相册封面
-  const renderCovers = useCallback((cover: string) => {
-    return cover
-      .split('|')
-      .filter(Boolean)
-      .map((img, idx) => (
-        <div key={idx} className="flex-center w-full h-180px">
-          <Image
-            src={OssHost + img}
-            preview={false}
-            alt=""
-            className="max-w-full max-h-full object-contain"
-          />
-        </div>
-      ))
+  const handlePreviewIndexChange = useCallback((nextIndex: number | null) => {
+    setPreviewIndex(nextIndex)
+    setIsModalOpen(nextIndex === null)
   }, [])
 
   // 渲染标签
@@ -66,76 +58,92 @@ const Album = () => {
     return tags
       .split('|')
       .filter(Boolean)
-      .map((tag, idx) => <Tag key={idx}>{tag}</Tag>)
+      .map((tag, idx) => (
+        <Chip key={idx} size="sm" variant="soft">
+          {tag}
+        </Chip>
+      ))
   }, [])
+
+  const previewMediaList = useMemo(
+    () =>
+      mediaList.map((media) =>
+        media.mediaType === 'image'
+          ? OssHost + media.mediaUrl
+          : OssHost +
+            (media.posterUrl || `${media.mediaUrl}?x-oss-process=video/snapshot,t_1,ar_auto`),
+      ),
+    [mediaList],
+  )
 
   // 渲染媒体内容
   const renderMediaList = useMemo(
     () => (
-      <Image.PreviewGroup>
-        {mediaList.map((media) => (
-          <div
-            key={media.mediaId}
-            className="flex-center sm:w-180px sm:h-180px w-[calc(50%-6px)] h-160px overflow-hidden"
+      <>
+        {previewMediaList.map((media, index) => (
+          <button
+            type="button"
+            key={media}
+            className="aspect-square cursor-zoom-in overflow-hidden rounded-[7px] border-0 bg-[var(--site-surface-soft)] p-0 [&_img]:h-full [&_img]:w-full [&_img]:object-cover"
+            onClick={() => handlePreviewIndexChange(index)}
           >
-            <Image
-              src={
-                media.mediaType === 'image'
-                  ? OssHost + media.mediaUrl
-                  : OssHost +
-                    (media.posterUrl ||
-                      `${media.mediaUrl}?x-oss-process=video/snapshot,t_1,ar_auto`)
-              }
-              width={180}
-              height={180}
-              alt=""
-              className="object-cover"
-            />
-          </div>
+            <img src={media} alt={`${currentPhotoAlbumName} ${index + 1}`} />
+          </button>
         ))}
-      </Image.PreviewGroup>
+      </>
     ),
-    [mediaList],
+    [currentPhotoAlbumName, handlePreviewIndexChange, previewMediaList],
   )
 
   return (
-    <div className="flex flex-col gap-20px py-20px container">
+    <div className="mx-auto flex min-h-[calc(100vh-121px)] w-full max-w-[1200px] flex-col gap-5 px-4 pt-[42px] pb-14 sm:px-6 max-sm:pt-6 max-sm:pb-9">
       {photoAlbumList.map((photoAlbum) => (
-        <div
+        <article
           key={photoAlbum.photoAlbumId}
-          className="flex flex-col sm:flex-row gap-20px p-20px bg-color b-rd-8px select-none transition-duration-400 hover:transform-translate-y--4px hover:shadow cursor-pointer"
+          className="flex cursor-pointer flex-col overflow-hidden rounded-lg border border-[var(--site-border)] bg-[var(--site-surface)] select-none transition hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--site-accent)_40%,var(--site-border))] hover:shadow-[var(--site-shadow)] sm:flex-row"
           onClick={() => handleClickAlbum(photoAlbum)}
         >
-          <div className="sm:w-300px w-full sm:h-180px">
-            <Carousel autoplay autoplaySpeed={5000} dots>
-              {renderCovers(photoAlbum.cover)}
-            </Carousel>
+          <div className="h-[220px] w-full shrink-0 overflow-hidden bg-[var(--site-surface-soft)] sm:h-[210px] sm:w-[320px]">
+            <MediaCarousel
+              images={photoAlbum.cover
+                .split('|')
+                .filter(Boolean)
+                .map((img) => OssHost + img)}
+              alt={photoAlbum.photoAlbumName}
+            />
           </div>
-          <div className="sm:w-[calc(100%-320px)] w-full">
-            <div className="flex-y-center justify-between mb-10px gap-8px">
-              <h3 className="text-20px">{photoAlbum.photoAlbumName}</h3>
-              <div className="flex-y-center gap-8px text-12px opacity-40 flex-shrink-0">
+          <div className="flex min-w-0 grow flex-col p-5 sm:px-[26px] sm:py-6">
+            <div className="flex items-center justify-between gap-[12px]">
+              <h2 className="text-[21px] leading-[1.35]">{photoAlbum.photoAlbumName}</h2>
+              <div className="flex shrink-0 items-center gap-[6px] text-xs text-[var(--site-subtle)]">
                 <Icon icon="material-symbols:alarm-outline-rounded" />
                 {photoAlbum.dateTime}
               </div>
             </div>
-            <div className="mb-16px">{renderTags(photoAlbum.tags)}</div>
-            <div className="text-16px opacity-80">{photoAlbum.story}</div>
+            <div className="mt-[14px]">{renderTags(photoAlbum.tags)}</div>
+            <p className="mt-[14px] line-clamp-2 text-sm leading-7 text-[var(--site-muted)]">
+              {photoAlbum.story}
+            </p>
+            <span className="mt-auto flex items-center gap-[6px] pt-4 text-[13px] font-semibold text-[var(--site-accent)] sm:pt-[18px]">
+              查看相册 <Icon icon="lucide:arrow-right" />
+            </span>
           </div>
-        </div>
+        </article>
       ))}
-      <Modal
+      <UiModal
         title={currentPhotoAlbumName}
-        width={1000}
-        closable={{ 'aria-label': 'Custom Close Button' }}
         open={isModalOpen}
-        footer={null}
-        onCancel={handleModalClose}
-        destroyOnHidden
-        className="max-w-[calc(100vw-32px)]"
+        onClose={handleModalClose}
+        size="lg"
       >
-        <div className="flex flex-wrap gap-12px m-auto">{renderMediaList}</div>
-      </Modal>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">{renderMediaList}</div>
+      </UiModal>
+      <MediaLightbox
+        images={previewMediaList}
+        index={previewIndex}
+        title={currentPhotoAlbumName || '相册预览'}
+        onIndexChange={handlePreviewIndexChange}
+      />
     </div>
   )
 }

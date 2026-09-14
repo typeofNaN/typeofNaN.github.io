@@ -61,7 +61,7 @@ const ToggleTheme = () => {
 
   return (
     <div
-      className="flex-center w-30px h-30px text-primary cursor-pointer"
+      className="flex h-[30px] w-[30px] cursor-pointer items-center justify-center text-[var(--site-accent)]"
       onClick={handleClick}
       title="切换主题"
       aria-label="切换主题"

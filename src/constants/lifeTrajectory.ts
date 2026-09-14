@@ -1,11 +1,7 @@
-import { ReactNode } from 'react'
-import { LiteralUnion } from 'antd/es/_util/type'
-
 type Color = 'blue' | 'red' | 'green' | 'gray'
 
 type LifeTrajectoryType = {
-  dot?: ReactNode
-  color?: LiteralUnion<Color>
+  color?: Color | (string & {})
   date: string
   content: string
 }

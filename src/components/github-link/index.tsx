@@ -16,9 +16,9 @@ const GithubLink: React.FC = () => {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="GitHub"
-      className="flex-center w-30px h-30px hover:bg-#e3e3e3 dark:hover:bg-#222 b-rd-4px transition-colors"
+      className="flex h-[30px] w-[30px] items-center justify-center rounded-[4px] transition-colors hover:bg-[#e3e3e3] dark:hover:bg-[#222]"
     >
-      <Icon icon="ri:github-fill" className="text-22px" />
+      <Icon icon="ri:github-fill" className="text-[22px]" />
     </Link>
   )
 }

@@ -2,22 +2,27 @@
 
 import React, { memo } from 'react'
 import Link from 'next/link'
-import { Divider } from 'antd'
+import { Separator } from '@heroui/react'
 
 import { CommonNav } from '..'
 import ToggleTheme from '@/src/components/toggle-theme'
 
 const CommonHeader: React.FC = () => (
-  <header className="fixed top-0 left-0 w-full h-60px z-99 bg-color b-b-1px b-b-solid b-b-[rgb(222,222,222)] dark:b-b-[rgb(35,35,35)] backdrop-blur-5px">
-    <div className="flex-y-center justify-between container m-auto h-full">
-      <div className="flex-y-center sm:gap-60px gap-20px h-full select-none text-primary dark:text-#fff">
-        <Link href="/" className="sm:text-24px text-20px font-bold leading-none">
+  <header className="fixed top-0 left-0 z-[99] h-[60px] w-full border-b border-[var(--site-border)] bg-[var(--site-header-bg)] backdrop-blur-[16px] backdrop-saturate-[1.4]">
+    <div className="mx-auto flex h-full w-full max-w-[1200px] items-center justify-between px-4 sm:px-6">
+      <div className="flex h-full items-center select-none">
+        <Link
+          href="/"
+          className="site-brand text-[19px] leading-none font-bold text-[var(--site-foreground)] sm:text-[22px]"
+        >
           typeofNaN
         </Link>
       </div>
-      <div className="flex-y-center sm:gap-10px gap-4px sm:text-20px text-18px">
+      <div className="flex items-center gap-[2px] text-[18px] sm:gap-[8px] sm:text-[20px]">
         <CommonNav />
-        <Divider type="vertical" />
+        <span className="flex h-[18px] max-sm:hidden">
+          <Separator orientation="vertical" />
+        </span>
         <ToggleTheme />
       </div>
     </div>

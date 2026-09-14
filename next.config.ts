@@ -21,9 +21,9 @@ const nextConfig: NextConfig = {
         ...config.optimization.splitChunks,
         cacheGroups: {
           ...config.optimization.splitChunks?.cacheGroups,
-          antd: {
-            test: /[\\/]node_modules[\\/](@ant-design|antd|rc-|@rc-component)[\\/]/,
-            name: 'vendor-antd',
+          heroUi: {
+            test: /[\\/]node_modules[\\/](@heroui|react-aria|@react-aria)[\\/]/,
+            name: 'vendor-heroui',
             chunks: 'all',
             priority: 30,
           },

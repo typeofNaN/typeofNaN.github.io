@@ -1,10 +1,7 @@
 import type { Metadata } from 'next'
-import { AntdRegistry } from '@ant-design/nextjs-registry'
 import Script from 'next/script'
-import '@unocss/reset/tailwind.css'
 
 import { CommonFooter, CommonHeader } from './components'
-import AntdTheme from '@/src/components/antd-theme'
 import LoveHeart from '@/src/components/heart-animate'
 import ThemeProvider from '@/src/components/theme-provider'
 import './globals.css'
@@ -29,18 +26,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
         }`}
       </Script>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-        {/* 背景层 */}
-        <div className="fixed top-0 left-0 w-full h-full z--1 bg-#e3e3e3 dark:bg-#000">
-          <div className="main-bg absolute inset-0 opacity-30 dark:opacity-20" />
-        </div>
+        <div className="site-background fixed inset-0 -z-1" />
         <LoveHeart>
-          <AntdRegistry>
-            <AntdTheme>
-              <CommonHeader />
-              <main className="py-60px">{children}</main>
-              <CommonFooter />
-            </AntdTheme>
-          </AntdRegistry>
+          <CommonHeader />
+          <main className="pt-[60px]">{children}</main>
+          <CommonFooter />
         </LoveHeart>
       </ThemeProvider>
     </body>
