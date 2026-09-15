@@ -111,15 +111,16 @@ a {
 .hero-overlay {
   background: linear-gradient(
     90deg,
-    rgba(8, 23, 23, 0.72) 0%,
-    rgba(8, 23, 23, 0.38) 48%,
-    rgba(8, 23, 23, 0.14) 100%
+    rgba(2, 12, 13, 0.86) 0%,
+    rgba(2, 12, 13, 0.62) 35%,
+    rgba(2, 12, 13, 0.16) 62%,
+    rgba(2, 12, 13, 0.04) 100%
   );
 }
 
 @media (max-width: 640px) {
   .hero-overlay {
-    background: linear-gradient(90deg, rgba(8, 23, 23, 0.72), rgba(8, 23, 23, 0.38));
+    background: linear-gradient(90deg, rgba(2, 12, 13, 0.76), rgba(2, 12, 13, 0.3));
   }
 }
 

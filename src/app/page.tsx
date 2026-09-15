@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { Avatar, ProgressBar } from '@heroui/react'
 import Typeit from 'typeit-react'
 
@@ -55,77 +56,16 @@ const AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME || 'typeofNaN'
 const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_LINK || ''
 const BLOG_URL = 'https://typeofNaN.github.io/vuepress-blog/'
 const OLD_BOY_URL = 'https://30.typeofnan.cn'
-const BANNER_VIDEO_URL = OssHost + 'web/videos/personal-bg.mov'
+const HeroThreeScene = dynamic(() => import('@/src/components/hero-three-scene'), { ssr: false })
 const SOCIAL_LINK_CLASS =
   'flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-[rgba(12,28,28,0.24)] text-white backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-white/75 hover:bg-white/15'
 
 const Home: React.FC = () => {
-  const bannerVideoRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    const retryTimers: number[] = []
-
-    const playBannerVideo = () => {
-      const video = bannerVideoRef.current
-      if (!video) return
-
-      video.muted = true
-      video.defaultMuted = true
-      video.playsInline = true
-
-      if (video.src !== BANNER_VIDEO_URL) {
-        video.src = BANNER_VIDEO_URL
-      }
-
-      if (video.readyState === HTMLMediaElement.HAVE_NOTHING) {
-        video.load()
-      }
-
-      video.play().catch(() => {
-        // 微信内置浏览器偶尔会延后允许自动播放，保持静音内联属性，等待下次 pageshow/visibilitychange 再尝试。
-      })
-    }
-
-    playBannerVideo()
-    ;[300, 1000, 2000].forEach((delay) => {
-      retryTimers.push(window.setTimeout(playBannerVideo, delay))
-    })
-
-    document.addEventListener('WeixinJSBridgeReady', playBannerVideo)
-    window.addEventListener('pageshow', playBannerVideo)
-    document.addEventListener('visibilitychange', playBannerVideo)
-
-    return () => {
-      retryTimers.forEach(window.clearTimeout)
-      document.removeEventListener('WeixinJSBridgeReady', playBannerVideo)
-      window.removeEventListener('pageshow', playBannerVideo)
-      document.removeEventListener('visibilitychange', playBannerVideo)
-    }
-  }, [])
-
   return (
     <div>
       <section className="relative h-[clamp(390px,54vh,540px)] min-h-[390px] w-full overflow-hidden max-sm:h-[430px] max-sm:min-h-[430px]">
-        <div className="absolute inset-0 bg-[#263a3a]">
-          <video
-            ref={bannerVideoRef}
-            autoPlay
-            loop
-            muted
-            playsInline
-            disablePictureInPicture
-            controlsList="nodownload nofullscreen noplaybackrate"
-            preload="auto"
-            aria-hidden="true"
-            tabIndex={-1}
-            className="w-full h-full object-cover pointer-events-none object-center"
-            {...{
-              'webkit-playsinline': 'true',
-              'x5-playsinline': 'true',
-              'x5-video-player-fullscreen': 'false',
-              'x5-video-player-type': 'h5-page',
-            }}
-          />
+        <div className="absolute inset-0 bg-[#071312]">
+          <HeroThreeScene />
         </div>
         <div className="hero-overlay absolute inset-0" />
         <div className="relative mx-auto flex h-full w-full max-w-[1200px] items-center px-4 sm:px-6 max-sm:items-end max-sm:pb-[46px]">
@@ -207,25 +147,23 @@ const Home: React.FC = () => {
 
       <div className="mx-auto grid w-full max-w-[1200px] gap-7 px-4 pt-[42px] pb-14 sm:px-6 max-sm:pt-6 max-sm:pb-9">
         <ContainerBox icon="ri:history-line" title="人生轨迹">
-          <div className="max-w-[940px]">
-            <ol className="m-0 list-none p-0">
-              {LifeTrajectory.map(({ color, date, content }) => (
-                <li
-                  key={`${date}-${content}`}
-                  className="timeline-item relative min-h-[68px] pb-7 pl-7"
-                  style={{ '--timeline-color': color } as React.CSSProperties}
-                >
-                  <span className="absolute top-[5px] left-px h-[11px] w-[11px] rounded-full border-[3px] border-[var(--site-surface)] bg-[var(--timeline-color,var(--site-accent))] shadow-[0_0_0_1px_var(--site-border)]" />
-                  <div>
-                    <p className="text-sm font-bold text-[var(--site-foreground)]">{date}</p>
-                    <p className="mt-[5px] max-w-[760px] text-sm leading-7 text-[var(--site-muted)] max-sm:text-[13px]">
-                      {content}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
+          <ol className="m-0 list-none p-0">
+            {LifeTrajectory.map(({ color, date, content }) => (
+              <li
+                key={`${date}-${content}`}
+                className="timeline-item relative min-h-[68px] pb-7 pl-7"
+                style={{ '--timeline-color': color } as React.CSSProperties}
+              >
+                <span className="absolute top-[5px] left-px h-[11px] w-[11px] rounded-full border-[3px] border-[var(--site-surface)] bg-[var(--timeline-color,var(--site-accent))] shadow-[0_0_0_1px_var(--site-border)]" />
+                <div>
+                  <p className="text-sm font-bold text-[var(--site-foreground)]">{date}</p>
+                  <p className="mt-[5px] text-sm leading-7 text-[var(--site-muted)] max-sm:text-[13px]">
+                    {content}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </ContainerBox>
         <ContainerBox icon="material-symbols:tools-wrench-outline-sharp" title="个人技能">
           <div className="grid grid-cols-4 gap-[14px] max-sm:grid-cols-2 max-sm:gap-[10px]">
