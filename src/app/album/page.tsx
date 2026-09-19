@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback, useMemo } from 'react'
 import { Chip } from '@heroui/react'
 
 import { Icon } from '@/src/components/local-icon'
-import MediaCarousel from '@/src/components/media-carousel'
+import AlbumBook from '@/src/components/album-book'
 import MediaLightbox from '@/src/components/media-lightbox'
 import UiModal from '@/src/components/ui-modal'
 import { OssHost } from '@/src/constants'
@@ -16,6 +16,7 @@ const Album = () => {
   const [currentPhotoAlbumName, setCurrentPhotoAlbumName] = useState('')
   const [mediaList, setMediaList] = useState<Api.MediaApi.Detail.ResponseVo[]>([])
   const [previewIndex, setPreviewIndex] = useState<number | null>(null)
+  const [activeMediaIndex, setActiveMediaIndex] = useState(0)
 
   // 获取相册列表
   useEffect(() => {
@@ -36,6 +37,7 @@ const Album = () => {
     async (photoAlbum: Api.PhotoAlbumApi.Detail.ResponseVo) => {
       await getAlbumDetail(photoAlbum.photoAlbumId)
       setCurrentPhotoAlbumName(photoAlbum.photoAlbumName)
+      setActiveMediaIndex(0)
       setIsModalOpen(true)
     },
     [getAlbumDetail],
@@ -49,6 +51,7 @@ const Album = () => {
   }, [])
 
   const handlePreviewIndexChange = useCallback((nextIndex: number | null) => {
+    if (nextIndex !== null) setActiveMediaIndex(nextIndex)
     setPreviewIndex(nextIndex)
     setIsModalOpen(nextIndex === null)
   }, [])
@@ -76,23 +79,9 @@ const Album = () => {
     [mediaList],
   )
 
-  // 渲染媒体内容
-  const renderMediaList = useMemo(
-    () => (
-      <>
-        {previewMediaList.map((media, index) => (
-          <button
-            type="button"
-            key={media}
-            className="aspect-square cursor-zoom-in overflow-hidden rounded-[7px] border-0 bg-[var(--site-surface-soft)] p-0 [&_img]:h-full [&_img]:w-full [&_img]:object-cover"
-            onClick={() => handlePreviewIndexChange(index)}
-          >
-            <img src={media} alt={`${currentPhotoAlbumName} ${index + 1}`} />
-          </button>
-        ))}
-      </>
-    ),
-    [currentPhotoAlbumName, handlePreviewIndexChange, previewMediaList],
+  const previewVideoSources = useMemo(
+    () => mediaList.map((media) => (media.mediaType === 'video' ? OssHost + media.mediaUrl : null)),
+    [mediaList],
   )
 
   return (
@@ -104,12 +93,10 @@ const Album = () => {
           onClick={() => handleClickAlbum(photoAlbum)}
         >
           <div className="h-[220px] w-full shrink-0 overflow-hidden bg-[var(--site-surface-soft)] sm:h-[210px] sm:w-[320px]">
-            <MediaCarousel
-              images={photoAlbum.cover
-                .split('|')
-                .filter(Boolean)
-                .map((img) => OssHost + img)}
+            <img
+              src={OssHost + photoAlbum.cover.split('|').filter(Boolean)[0]}
               alt={photoAlbum.photoAlbumName}
+              className="h-full w-full object-cover"
             />
           </div>
           <div className="flex min-w-0 grow flex-col p-5 sm:px-[26px] sm:py-6">
@@ -135,11 +122,20 @@ const Album = () => {
         open={isModalOpen}
         onClose={handleModalClose}
         size="lg"
+        containerClassName="w-full!"
+        dialogClassName="w-[min(1540px,calc(100vw-40px))]! max-w-[min(1540px,calc(100vw-40px))]! max-h-[calc(100vh-32px)]! border-0! bg-transparent! shadow-none! max-[700px]:w-[calc(100vw-16px)]! max-[700px]:max-w-[calc(100vw-16px)]! max-[700px]:max-h-[calc(100vh-16px)]! [&_[data-slot=modal-header]]:absolute [&_[data-slot=modal-header]]:top-2 [&_[data-slot=modal-header]]:left-5 [&_[data-slot=modal-header]]:z-10 [&_[data-slot=modal-header]]:text-white [&_[data-slot=modal-header]]:[text-shadow:0_2px_12px_rgba(0,0,0,.72)] [&_[data-slot=modal-body]]:overflow-visible! [&_[data-slot=modal-body]]:p-0! [&_[data-slot=modal-close-trigger]]:bg-[rgba(16,22,21,.58)] [&_[data-slot=modal-close-trigger]]:text-white [&_[data-slot=modal-close-trigger]]:backdrop-blur-[10px]"
       >
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">{renderMediaList}</div>
+        <AlbumBook
+          albumName={currentPhotoAlbumName}
+          mediaList={mediaList}
+          activeMediaIndex={activeMediaIndex}
+          onPreview={(index) => handlePreviewIndexChange(index)}
+          onPageChange={setActiveMediaIndex}
+        />
       </UiModal>
       <MediaLightbox
         images={previewMediaList}
+        videoSources={previewVideoSources}
         index={previewIndex}
         title={currentPhotoAlbumName || '相册预览'}
         onIndexChange={handlePreviewIndexChange}

@@ -9,9 +9,19 @@ interface UiModalProps {
   children: React.ReactNode
   onClose: () => void
   size?: 'md' | 'lg' | 'cover' | 'full'
+  containerClassName?: string
+  dialogClassName?: string
 }
 
-const UiModal = ({ open, title, children, onClose, size = 'lg' }: UiModalProps) => (
+const UiModal = ({
+  open,
+  title,
+  children,
+  onClose,
+  size = 'lg',
+  containerClassName = '',
+  dialogClassName = '',
+}: UiModalProps) => (
   <Modal>
     <Modal.Backdrop
       isOpen={open}
@@ -23,9 +33,9 @@ const UiModal = ({ open, title, children, onClose, size = 'lg' }: UiModalProps) 
         size={size}
         placement="center"
         scroll="inside"
-        className="modal-center-layout"
+        className={`modal-center-layout ${containerClassName}`}
       >
-        <Modal.Dialog>
+        <Modal.Dialog className={dialogClassName}>
           <Modal.CloseTrigger aria-label="关闭">
             <X size={20} aria-hidden="true" />
           </Modal.CloseTrigger>
