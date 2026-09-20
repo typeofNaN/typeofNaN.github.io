@@ -221,7 +221,7 @@ const AlbumBook = ({
                     </button>
                     <div className="mt-4 flex justify-between gap-3 font-serif text-xs text-[#75654e]/75">
                       <span>{String(index + 1).padStart(2, '0')}</span>
-                      <span>{media.createdTime?.split(' ')[0] || albumName}</span>
+                      {/* <span>{media.createdTime?.split(' ')[0] || albumName}</span> */}
                     </div>
                   </div>
                 ) : (
