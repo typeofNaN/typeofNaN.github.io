@@ -20,10 +20,10 @@ interface PageFlipInstance {
   destroy: () => void
 }
 
-const resizeOssImage = (url: string) => {
-  if (url.includes('x-oss-process=')) return `${url}/resize,w_1100/quality,q_82`
-  return `${url}${url.includes('?') ? '&' : '?'}x-oss-process=image/resize,w_1100/quality,q_82`
-}
+// const resizeOssImage = (url: string) => {
+//   if (url.includes('x-oss-process=')) return `${url}/resize,w_1100/quality,q_82`
+//   return `${url}${url.includes('?') ? '&' : '?'}x-oss-process=image/resize,w_1100/quality,q_82`
+// }
 
 const getPreviewSource = (media: Api.MediaApi.Detail.ResponseVo) => {
   const source =
@@ -31,7 +31,8 @@ const getPreviewSource = (media: Api.MediaApi.Detail.ResponseVo) => {
     (media.mediaType === 'video'
       ? media.posterUrl || `${media.mediaUrl}?x-oss-process=video/snapshot,t_1,ar_auto`
       : media.mediaUrl)
-  return resizeOssImage(source)
+  // return resizeOssImage(source)
+  return source
 }
 
 const AlbumBook = ({
