@@ -23,6 +23,12 @@ const resolveMediaUrl = (url: string) => {
   return `${OssHost || ''}${url}`
 }
 
+const resolveTimelineThumbnailUrl = (url: string) => {
+  if (!VIDEO_PATTERN.test(url)) return resolveMediaUrl(url)
+  const separator = url.includes('?') ? '&' : '?'
+  return resolveMediaUrl(`${url}${separator}x-oss-process=video/snapshot,t_1,ar_auto`)
+}
+
 const MapPage = () => {
   const container = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
@@ -126,7 +132,7 @@ const MapPage = () => {
         source: 'map-points',
         filter: ['has', 'point_count'],
         paint: {
-          'circle-color': 'rgba(22, 119, 255, .18)',
+          'circle-color': 'rgba(39, 118, 111, .18)',
           'circle-radius': ['step', ['get', 'point_count'], 29, 10, 37, 50, 45],
           'circle-blur': 0.35,
         },
@@ -137,7 +143,7 @@ const MapPage = () => {
         source: 'map-points',
         filter: ['has', 'point_count'],
         paint: {
-          'circle-color': ['step', ['get', 'point_count'], '#69b1ff', 10, '#4096ff', 50, '#1677ff'],
+          'circle-color': ['step', ['get', 'point_count'], '#79b9af', 10, '#3b8f84', 50, '#27766f'],
           'circle-radius': ['step', ['get', 'point_count'], 21, 10, 28, 50, 35],
           'circle-stroke-width': 3,
           'circle-stroke-color': 'rgba(255,255,255,.92)',
@@ -157,7 +163,7 @@ const MapPage = () => {
         source: 'map-points',
         filter: ['all', ['!', ['has', 'point_count']], ['==', ['get', 'cover'], '']],
         paint: {
-          'circle-color': '#1677ff',
+          'circle-color': '#27766f',
           'circle-radius': 9,
           'circle-stroke-width': 4,
           'circle-stroke-color': 'rgba(255,255,255,.94)',
@@ -305,7 +311,7 @@ const MapPage = () => {
         />
         <button
           type="button"
-          className={`${MAP_GLASS_CLASS} absolute bottom-4 left-4 z-3 hidden h-[52px] w-[52px] cursor-pointer place-items-center rounded-full bg-[#1677ff]! p-0 text-white transition max-md:grid ${timelineOpen ? 'pointer-events-none scale-75 opacity-0' : 'opacity-100'}`}
+          className={`absolute bottom-4 left-4 z-3 hidden h-[52px] w-[52px] cursor-pointer place-items-center rounded-full border border-white/70 bg-[#27766f] p-0 text-white shadow-[0_10px_30px_rgba(40,66,75,0.32)] transition hover:bg-[#1f625d] max-md:grid dark:border-white/20 dark:bg-[#3b8f84] dark:hover:bg-[#27766f] ${timelineOpen ? 'pointer-events-none scale-75 opacity-0' : 'opacity-100'}`}
           aria-label="展开足迹时间线"
           aria-expanded={timelineOpen}
           onClick={() => setTimelineOpen(true)}
@@ -322,23 +328,26 @@ const MapPage = () => {
           </svg>
         </button>
         <aside
-          className={`${MAP_GLASS_CLASS} absolute top-5 bottom-5 left-5 z-1 flex w-[280px] flex-col overflow-hidden rounded-2xl max-md:top-3 max-md:right-3 max-md:bottom-3 max-md:left-3 max-md:z-4 max-md:w-auto max-md:max-w-[340px] max-md:origin-bottom-left max-md:transition-[opacity,transform] ${timelineOpen ? 'max-md:pointer-events-auto max-md:translate-x-0 max-md:scale-100 max-md:opacity-100' : 'max-md:pointer-events-none max-md:translate-x-[calc(-100%_-_24px)] max-md:scale-[0.96] max-md:opacity-0'}`}
+          className={`${MAP_GLASS_CLASS} absolute top-4 bottom-4 left-4 z-1 flex w-[304px] flex-col overflow-hidden rounded-2xl max-md:top-3 max-md:right-3 max-md:bottom-3 max-md:left-3 max-md:z-4 max-md:w-auto max-md:max-w-[340px] max-md:origin-bottom-left max-md:transition-[opacity,transform] ${timelineOpen ? 'max-md:pointer-events-auto max-md:translate-x-0 max-md:scale-100 max-md:opacity-100' : 'max-md:pointer-events-none max-md:translate-x-[calc(-100%_-_24px)] max-md:scale-[0.96] max-md:opacity-0'}`}
           aria-label="足迹时间线"
         >
-          <div className="flex items-baseline justify-between border-b border-[rgba(112,129,136,0.18)] px-[18px] pt-4 pb-3">
-            <strong className="text-[17px]">时光足迹</strong>
-            <span className="text-xs opacity-55">
-              {mapPointList.filter((point) => point.title?.trim()).length} 个地点
-            </span>
+          <div className="border-b border-[rgba(112,129,136,0.18)] px-5 pt-4 pb-3">
+            <div className="flex items-baseline justify-between">
+              <strong className="font-serif text-[22px]">时光足迹</strong>
+              <span className="text-xs opacity-55">
+                {mapPointList.filter((point) => point.title?.trim()).length} 个地点
+              </span>
+            </div>
+            <p className="mt-0.5 text-xs opacity-50">用地图，串起生活的坐标</p>
           </div>
           <div className="min-h-0 flex-1 overflow-y-auto px-[14px] pt-[10px] pb-[18px]">
             {timeline.length ? (
               timeline.map(({ year, months }) => (
                 <section
-                  className="relative pl-[18px] before:absolute before:top-[9px] before:bottom-0.5 before:left-1 before:w-px before:bg-[rgba(22,119,255,0.25)] [&+&]:mt-[18px]"
+                  className="relative pl-[18px] before:absolute before:top-[9px] before:bottom-0.5 before:left-1 before:w-px before:bg-[rgba(39,118,111,0.28)] [&+&]:mt-[18px]"
                   key={year}
                 >
-                  <h2 className="relative mb-[10px] text-lg leading-6 before:absolute before:top-[7px] before:left-[-18px] before:h-[9px] before:w-[9px] before:rounded-full before:border-2 before:border-white/95 before:bg-[#1677ff] before:shadow-[0_2px_6px_rgba(22,119,255,0.35)]">
+                  <h2 className="relative mb-[10px] text-lg leading-6 before:absolute before:top-[7px] before:left-[-18px] before:h-[9px] before:w-[9px] before:rounded-full before:border-2 before:border-white/95 before:bg-[#27766f] before:shadow-[0_2px_6px_rgba(39,118,111,0.35)]">
                     {year}
                   </h2>
                   {months.map(({ month, points }) => (
@@ -352,10 +361,29 @@ const MapPage = () => {
                             type="button"
                             key={point.mapPointId}
                             title={point.title}
-                            className="w-full cursor-pointer overflow-hidden rounded-lg border-0 bg-transparent px-[9px] py-[7px] text-left font-[inherit] leading-5 text-ellipsis whitespace-nowrap hover:bg-[rgba(22,119,255,0.1)] hover:text-[#0958d9]"
+                            className="group flex w-full cursor-pointer items-center gap-2.5 rounded-lg border-0 bg-transparent px-2 py-1.5 text-left font-[inherit] hover:bg-[rgba(39,118,111,0.1)] hover:text-[#1f625d] dark:hover:bg-[rgba(121,185,175,0.13)] dark:hover:text-[#b8e0d9]"
                             onClick={() => focusMapPoint(point)}
                           >
-                            {point.title}
+                            <span className="w-7 shrink-0 text-[11px] opacity-55">
+                              {point.occurredTime.slice(8, 10)}日
+                            </span>
+                            {point.mediaUrl?.split('|').filter(Boolean)[0] ? (
+                              <img
+                                src={resolveTimelineThumbnailUrl(
+                                  point.mediaUrl.split('|').filter(Boolean)[0],
+                                )}
+                                alt=""
+                                className="h-10 w-10 shrink-0 rounded-md object-cover"
+                              />
+                            ) : (
+                              <span className="h-10 w-10 shrink-0 rounded-md bg-[var(--site-accent-soft)]" />
+                            )}
+                            <span className="min-w-0 flex-1 truncate text-[13px] font-semibold">
+                              {point.title}
+                            </span>
+                            <span className="text-base opacity-35 transition group-hover:translate-x-0.5 group-hover:opacity-80">
+                              ›
+                            </span>
                           </button>
                         ))}
                       </div>

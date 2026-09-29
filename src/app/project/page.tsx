@@ -138,37 +138,75 @@ const Project = () => {
   )
 
   return (
-    <div className="mx-auto flex min-h-[calc(100vh-121px)] w-full max-w-[1200px] flex-col gap-11 px-4 pt-[42px] pb-14 sm:px-6 max-sm:pt-6 max-sm:pb-9">
-      {projectGroupList.map((projectGroup) => (
-        <section key={projectGroup.projectGroupId}>
-          <div className="mb-[18px] flex items-center gap-[10px]">
-            <span className="h-5 w-1 rounded-sm bg-[var(--site-accent)]" />
-            <h2 className="text-xl">{projectGroup.projectGroupName}</h2>
-          </div>
-          <div className="grid grid-cols-4 gap-4 max-sm:grid-cols-1">
-            {projectGroup.projectList.map((project) => (
-              <div key={project.projectId}>
-                <button
-                  type="button"
-                  className="group flex min-h-[76px] w-full cursor-pointer items-center rounded-lg border border-[var(--site-border)] bg-[var(--site-surface)] p-[14px] text-left font-[inherit] text-[var(--site-foreground)] select-none transition hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--site-accent)_45%,var(--site-border))] hover:shadow-[var(--site-shadow)]"
-                  onClick={() => handleClickProject(project.projectId)}
+    <div className="mx-auto flex min-h-[calc(100vh-121px)] w-full max-w-[1280px] flex-col px-5 pt-12 pb-20 sm:px-8 lg:px-10">
+      <header className="mb-12 grid grid-cols-[1fr_auto] items-end border-b border-[var(--site-border)] pb-8 max-md:grid-cols-1">
+        <div>
+          <h1 className="font-serif text-[46px] leading-none font-semibold tracking-[-.04em]">
+            项目
+          </h1>
+          <p className="mt-3 text-[20px] tracking-[.08em] text-[var(--site-muted)]">
+            把想法变成现实
+          </p>
+        </div>
+        <p className="max-w-[190px] border-l border-[var(--site-border)] pl-6 text-sm leading-7 text-[var(--site-subtle)] max-md:hidden">
+          一些正在生长的想法
+          <br />
+          也是我与世界对话的方式。
+        </p>
+      </header>
+      <div className="flex flex-col gap-14">
+        {projectGroupList.map((projectGroup) => (
+          <section key={projectGroup.projectGroupId}>
+            <div className="mb-2 flex items-baseline gap-4">
+              <span className="h-6 w-1 rounded-full bg-[var(--site-accent)]" />
+              <h2 className="font-serif text-[24px] font-semibold">
+                {projectGroup.projectGroupName}
+              </h2>
+              <span className="text-[13px] text-[var(--site-subtle)]">
+                {projectGroup.projectList.length} 个项目
+              </span>
+            </div>
+            <div className="grid grid-cols-2 max-md:grid-cols-1">
+              {projectGroup.projectList.map((project) => (
+                <div
+                  className="border-b border-[var(--site-border)] even:border-l max-md:even:border-l-0"
+                  key={project.projectId}
                 >
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[7px] bg-[var(--site-surface-soft)]">
-                    <img src={OssHost + project.projectIconUrl} width={40} height={40} alt="" />
-                  </div>
-                  <div className="min-w-0 flex-1 truncate pl-3 text-sm font-semibold">
-                    {project.projectName}
-                  </div>
-                  <Icon
-                    icon="lucide:arrow-up-right"
-                    className="shrink-0 translate-x-[-4px] translate-y-1 text-[var(--site-subtle)] opacity-0 transition group-hover:translate-0 group-hover:opacity-100"
-                  />
-                </button>
-              </div>
-            ))}
-          </div>
-        </section>
-      ))}
+                  <button
+                    type="button"
+                    className="group flex min-h-[106px] w-full cursor-pointer items-center gap-5 bg-transparent px-4 py-5 text-left font-[inherit] text-[var(--site-foreground)] transition duration-300 hover:bg-[var(--site-accent-soft)] sm:px-5"
+                    onClick={() => handleClickProject(project.projectId)}
+                  >
+                    <div className="flex h-[58px] w-[58px] shrink-0 items-center justify-center rounded-[10px] bg-[var(--site-accent-soft)] transition group-hover:bg-[var(--site-surface)]">
+                      <img
+                        src={OssHost + project.projectIconUrl}
+                        width={42}
+                        height={42}
+                        alt=""
+                        className="rounded-[7px]"
+                      />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="truncate font-serif text-[18px] font-semibold">
+                        {project.projectName}
+                      </h3>
+                      <p className="mt-1 line-clamp-2 text-[13px] leading-6 text-[var(--site-muted)]">
+                        {project.projectDescription ||
+                          project.projectBackground ||
+                          '查看项目详情与技术实现'}
+                      </p>
+                    </div>
+                    <Icon
+                      icon="lucide:arrow-right"
+                      className="shrink-0 text-[18px] text-[var(--site-accent)] transition group-hover:translate-x-1"
+                    />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
       <UiModal title={modalTitle} open={isModalOpen} onClose={handleModalClose} size="lg">
         <div className="overflow-hidden py-[10px]">
           {projectDetail?.tags && (
