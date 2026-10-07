@@ -166,6 +166,8 @@ const Home = () => {
             </button>
           </div>
           <figure className="relative m-0 h-[340px] overflow-hidden max-[800px]:h-[280px]">
+            {/* The static export serves this remote OSS image directly. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="h-full w-full object-cover"
               src={OssHost + 'web/images/mountain-field-note.png'}
@@ -196,6 +198,8 @@ const Home = () => {
             <div className="grid grid-cols-2 gap-x-14 gap-y-7 py-2 max-[800px]:grid-cols-1">
               {visibleSkills.map(({ skillName, icon, proficiency }) => (
                 <div className="grid grid-cols-[38px_1fr] gap-x-3.5" key={skillName}>
+                  {/* Skill icons have dynamic remote URLs and are rendered as-is. */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img className="row-span-2 h-[30px] w-[30px] self-center" src={icon} alt="" />
                   <div className="flex justify-between text-[13px]">
                     <span>{skillName}</span>
