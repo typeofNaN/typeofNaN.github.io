@@ -1,4 +1,4 @@
-"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[655],{1655:(e,t,r)=>{r.r(t),r.d(t,{default:()=>M});var i=r(4332),s=r(4608),a=r(1627),o=r(9564);let l={name:"CopyShader",uniforms:{tDiffuse:{value:null},opacity:{value:1}},vertexShader:`
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[813],{813:(e,t,r)=>{r.r(t),r.d(t,{default:()=>M});var i=r(5650),s=r(6938),a=r(7312),o=r(7268);let l={name:"CopyShader",uniforms:{tDiffuse:{value:null},opacity:{value:1}},vertexShader:`
 
 		varying vec2 vUv;
 
