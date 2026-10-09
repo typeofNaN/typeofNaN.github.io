@@ -4,17 +4,18 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import maplibregl, { type GeoJSONSource, type MapMouseEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
+import { CalendarDays, ChevronRight, Images, MapPin, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 
 import { OssHost } from '@/src/constants'
 import UiModal from '@/src/components/ui-modal'
-import { applyAppleMapTheme, mapStyleUrl } from '@/src/config/mapStyle'
+import { applyMapTheme, mapStyle } from '@/src/config/mapStyle'
 import { MapPointApi } from '@/src/service'
 
 const DEFAULT_CENTER: [number, number] = [113.2644, 23.1291]
 const DEFAULT_ZOOM = 10
 const VIDEO_PATTERN = /\.(mp4|mov|webm|m4v)(\?.*)?$/i
 const MAP_GLASS_CLASS =
-  'border border-white/70! bg-[rgba(248,251,251,0.8)]! shadow-[0_10px_30px_rgba(40,66,75,0.17)]! backdrop-blur-[14px] dark:bg-[rgba(24,34,39,0.8)]! dark:text-[#e8eff1]'
+  'border border-white/75! bg-[rgba(252,253,251,0.9)]! shadow-[0_18px_48px_rgba(35,59,51,0.16)]! backdrop-blur-[18px] dark:border-white/10! dark:bg-[rgba(19,27,26,0.9)]! dark:text-[#e8efec]'
 
 const resolveMediaUrl = (url: string) => {
   if (/^(https?:)?\/\//i.test(url) || url.startsWith('data:') || url.startsWith('blob:')) {
@@ -37,6 +38,7 @@ const MapPage = () => {
   const [mapPointList, setMapPointList] = useState<Api.MapPointApi.Detail[]>([])
   const [requestError, setRequestError] = useState(false)
   const [timelineOpen, setTimelineOpen] = useState(false)
+  const [activePointId, setActivePointId] = useState<number>()
   const [mediaViewportRef, mediaEmblaApi] = useEmblaCarousel({ loop: true })
 
   const syncSelectedMediaIndex = useCallback(() => {
@@ -82,13 +84,19 @@ const MapPage = () => {
       }))
   }, [mapPointList])
 
+  const footprintStats = useMemo(() => {
+    const namedPoints = mapPointList.filter((point) => point.title?.trim())
+    const years = new Set(namedPoints.map((point) => point.occurredTime.slice(0, 4)).filter(Boolean))
+    return { places: namedPoints.length, years: years.size }
+  }, [mapPointList])
+
   useEffect(() => {
     if (!container.current) return
     let cancelled = false
     const mediaMarkers = new Map<number, maplibregl.Marker>()
     const map = new maplibregl.Map({
       container: container.current,
-      style: mapStyleUrl,
+      style: mapStyle,
       center: DEFAULT_CENTER,
       zoom: DEFAULT_ZOOM,
       attributionControl: false,
@@ -98,7 +106,7 @@ const MapPage = () => {
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right')
     map.addControl(new maplibregl.AttributionControl({ compact: true }))
     map.on('load', async () => {
-      applyAppleMapTheme(map)
+      applyMapTheme(map)
       const { data, error } = await MapPointApi.getList()
       if (cancelled) return
       if (error) {
@@ -212,13 +220,16 @@ const MapPage = () => {
           markerElement.appendChild(mediaElement)
           markerElement.addEventListener('click', (event) => {
             event.stopPropagation()
+            setActivePointId(id)
             setSelectedMediaIndex(0)
             setSelected(points.find((item) => item.mapPointId === id))
           })
 
           mediaMarkers.set(
             id,
-            new maplibregl.Marker({ element: markerElement }).setLngLat(coordinates).addTo(map),
+            new maplibregl.Marker({ element: markerElement, anchor: 'bottom' })
+              .setLngLat(coordinates)
+              .addTo(map),
           )
         })
 
@@ -244,6 +255,7 @@ const MapPage = () => {
       })
       map.on('click', 'points', (e) => {
         const id = Number(e.features?.[0]?.properties?.id)
+        setActivePointId(id)
         setSelectedMediaIndex(0)
         setSelected(points.find((item) => item.mapPointId === id))
       })
@@ -267,6 +279,7 @@ const MapPage = () => {
 
   const focusMapPoint = (point: Api.MapPointApi.Detail) => {
     setTimelineOpen(false)
+    setActivePointId(point.mapPointId)
     const map = mapRef.current
     if (!map) return
     map.flyTo({
@@ -300,9 +313,39 @@ const MapPage = () => {
   )
 
   return (
-    <div className="map-page fixed top-[60px] right-0 bottom-[60px] left-0">
+    <div className="map-page fixed top-[60px] right-0 bottom-[60px] left-0 bg-[#dfe8e5]">
       <div className="relative h-full w-full">
         <div ref={container} className="absolute! inset-0" />
+        <div className="pointer-events-none absolute top-5 left-[348px] z-1 flex items-center gap-5 max-md:top-3 max-md:left-3">
+          <div className={`${MAP_GLASS_CLASS} rounded-2xl px-5 py-3.5 max-md:px-4 max-md:py-3`}>
+            <h1 className="font-serif text-[26px] leading-none font-semibold tracking-[-0.03em] text-[#183a33] dark:text-[#e4f0ec] max-md:text-xl">
+              时光足迹
+            </h1>
+            <p className="mt-1.5 text-xs text-[#68766f] dark:text-[#9eaca7] max-md:hidden">
+              用地图，串起生活的坐标
+            </p>
+          </div>
+          <div className={`${MAP_GLASS_CLASS} flex rounded-2xl px-4 py-3 max-md:hidden`}>
+            <div className="flex items-center gap-2 pr-4">
+              <MapPin className="h-4 w-4 text-[#d9685e]" strokeWidth={2} />
+              <div>
+                <strong className="block text-lg leading-none text-[#183a33] dark:text-[#e4f0ec]">
+                  {footprintStats.places}
+                </strong>
+                <span className="text-[10px] tracking-[0.08em] text-[#7a8782]">个地点</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 border-l border-[#dfe5e1] pl-4 dark:border-white/10">
+              <CalendarDays className="h-4 w-4 text-[#397a6c]" strokeWidth={2} />
+              <div>
+                <strong className="block text-lg leading-none text-[#183a33] dark:text-[#e4f0ec]">
+                  {footprintStats.years}
+                </strong>
+                <span className="text-[10px] tracking-[0.08em] text-[#7a8782]">年记录</span>
+              </div>
+            </div>
+          </div>
+        </div>
         <button
           type="button"
           className={`absolute inset-0 z-2 hidden border-0 bg-slate-900/10 p-0 transition-opacity max-md:block ${timelineOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
@@ -311,44 +354,45 @@ const MapPage = () => {
         />
         <button
           type="button"
-          className={`absolute bottom-4 left-4 z-3 hidden h-[52px] w-[52px] cursor-pointer place-items-center rounded-full border border-white/70 bg-[#27766f] p-0 text-white shadow-[0_10px_30px_rgba(40,66,75,0.32)] transition hover:bg-[#1f625d] max-md:grid dark:border-white/20 dark:bg-[#3b8f84] dark:hover:bg-[#27766f] ${timelineOpen ? 'pointer-events-none scale-75 opacity-0' : 'opacity-100'}`}
+          className={`absolute bottom-4 left-4 z-3 hidden h-[48px] w-[48px] cursor-pointer place-items-center rounded-full border border-white/70 bg-[#174d43] p-0 text-white shadow-[0_10px_30px_rgba(40,66,75,0.32)] transition hover:bg-[#d9685e] max-md:grid dark:border-white/20 ${timelineOpen ? 'pointer-events-none scale-75 opacity-0' : 'opacity-100'}`}
           aria-label="展开足迹时间线"
           aria-expanded={timelineOpen}
           onClick={() => setTimelineOpen(true)}
         >
-          <svg
-            className="h-[25px] w-[25px] fill-white stroke-white [stroke-linecap:round] [stroke-width:1.8]"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path d="M6 5h12M6 12h12M6 19h12" />
-            <circle cx="6" cy="5" r="1.7" />
-            <circle cx="6" cy="12" r="1.7" />
-            <circle cx="6" cy="19" r="1.7" />
-          </svg>
+          <PanelLeftOpen className="h-[22px] w-[22px]" aria-hidden="true" />
         </button>
         <aside
-          className={`${MAP_GLASS_CLASS} absolute top-4 bottom-4 left-4 z-1 flex w-[304px] flex-col overflow-hidden rounded-2xl max-md:top-3 max-md:right-3 max-md:bottom-3 max-md:left-3 max-md:z-4 max-md:w-auto max-md:max-w-[340px] max-md:origin-bottom-left max-md:transition-[opacity,transform] ${timelineOpen ? 'max-md:pointer-events-auto max-md:translate-x-0 max-md:scale-100 max-md:opacity-100' : 'max-md:pointer-events-none max-md:translate-x-[calc(-100%_-_24px)] max-md:scale-[0.96] max-md:opacity-0'}`}
+          className={`${MAP_GLASS_CLASS} absolute top-4 bottom-4 left-4 z-2 flex w-[312px] flex-col overflow-hidden rounded-[20px] max-md:top-3 max-md:right-3 max-md:bottom-3 max-md:left-3 max-md:z-4 max-md:w-auto max-md:max-w-[350px] max-md:origin-bottom-left max-md:transition-[opacity,transform] ${timelineOpen ? 'max-md:pointer-events-auto max-md:translate-x-0 max-md:scale-100 max-md:opacity-100' : 'max-md:pointer-events-none max-md:translate-x-[calc(-100%_-_24px)] max-md:scale-[0.96] max-md:opacity-0'}`}
           aria-label="足迹时间线"
         >
-          <div className="border-b border-[rgba(112,129,136,0.18)] px-5 pt-4 pb-3">
+          <div className="border-b border-[rgba(112,129,136,0.16)] px-5 pt-[18px] pb-4">
             <div className="flex items-baseline justify-between">
-              <strong className="font-serif text-[22px]">时光足迹</strong>
-              <span className="text-xs opacity-55">
-                {mapPointList.filter((point) => point.title?.trim()).length} 个地点
-              </span>
+              <strong className="font-serif text-[23px] tracking-[-0.02em] text-[#183a33] dark:text-[#e4f0ec]">
+                足迹档案
+              </strong>
+              <button
+                type="button"
+                onClick={() => setTimelineOpen(false)}
+                aria-label="收起足迹时间线"
+                className="hidden h-8 w-8 cursor-pointer place-items-center rounded-full border-0 bg-[#edf2ef] text-[#49615a] max-md:grid dark:bg-white/10 dark:text-white/70"
+              >
+                <PanelLeftClose className="h-4 w-4" />
+              </button>
             </div>
-            <p className="mt-0.5 text-xs opacity-50">用地图，串起生活的坐标</p>
+            <p className="mt-1 text-xs text-[#7a8782]">沿着日期，重访走过的地方</p>
           </div>
-          <div className="min-h-0 flex-1 overflow-y-auto px-[14px] pt-[10px] pb-[18px]">
+          <div className="map-timeline-scroll min-h-0 flex-1 overflow-y-auto px-[14px] pt-[14px] pb-[18px]">
             {timeline.length ? (
               timeline.map(({ year, months }) => (
                 <section
-                  className="relative pl-[18px] before:absolute before:top-[9px] before:bottom-0.5 before:left-1 before:w-px before:bg-[rgba(39,118,111,0.28)] [&+&]:mt-[18px]"
+                  className="relative pl-[18px] before:absolute before:top-[9px] before:bottom-0.5 before:left-1 before:w-px before:bg-[rgba(54,116,102,0.22)] [&+&]:mt-[22px]"
                   key={year}
                 >
-                  <h2 className="relative mb-[10px] text-lg leading-6 before:absolute before:top-[7px] before:left-[-18px] before:h-[9px] before:w-[9px] before:rounded-full before:border-2 before:border-white/95 before:bg-[#27766f] before:shadow-[0_2px_6px_rgba(39,118,111,0.35)]">
-                    {year}
+                  <h2 className="relative mb-[10px] flex items-center justify-between pr-2 text-lg leading-6 text-[#173b34] before:absolute before:top-[7px] before:left-[-18px] before:h-[9px] before:w-[9px] before:rounded-full before:border-2 before:border-white/95 before:bg-[#397a6c] before:shadow-[0_2px_6px_rgba(39,118,111,0.3)] dark:text-[#dceae6]">
+                    <span>{year}</span>
+                    <span className="font-sans text-[10px] font-medium tracking-[.06em] text-[#8a9792]">
+                      {months.reduce((count, item) => count + item.points.length, 0)} 个地点
+                    </span>
                   </h2>
                   {months.map(({ month, points }) => (
                     <div className="[&+&]:mt-[14px]" key={`${year}-${month}`}>
@@ -361,7 +405,7 @@ const MapPage = () => {
                             type="button"
                             key={point.mapPointId}
                             title={point.title}
-                            className="group flex w-full cursor-pointer items-center gap-2.5 rounded-lg border-0 bg-transparent px-2 py-1.5 text-left font-[inherit] hover:bg-[rgba(39,118,111,0.1)] hover:text-[#1f625d] dark:hover:bg-[rgba(121,185,175,0.13)] dark:hover:text-[#b8e0d9]"
+                            className={`group relative flex w-full cursor-pointer items-center gap-2.5 rounded-xl border-0 px-2 py-2 text-left font-[inherit] transition ${activePointId === point.mapPointId ? 'bg-[#f8e7e3] text-[#8f3f38] shadow-[inset_3px_0_0_#d9685e] dark:bg-[#4a2927] dark:text-[#ffc4bc]' : 'bg-transparent hover:bg-[rgba(39,118,111,0.08)] hover:text-[#1f625d] dark:hover:bg-[rgba(121,185,175,0.13)] dark:hover:text-[#b8e0d9]'}`}
                             onClick={() => focusMapPoint(point)}
                           >
                             <span className="w-7 shrink-0 text-[11px] opacity-55">
@@ -373,7 +417,7 @@ const MapPage = () => {
                                   point.mediaUrl.split('|').filter(Boolean)[0],
                                 )}
                                 alt=""
-                                className="h-10 w-10 shrink-0 rounded-md object-cover"
+                                className="h-11 w-11 shrink-0 rounded-lg border-2 border-white object-cover shadow-sm dark:border-white/20"
                               />
                             ) : (
                               <span className="h-10 w-10 shrink-0 rounded-md bg-[var(--site-accent-soft)]" />
@@ -381,9 +425,7 @@ const MapPage = () => {
                             <span className="min-w-0 flex-1 truncate text-[13px] font-semibold">
                               {point.title}
                             </span>
-                            <span className="text-base opacity-35 transition group-hover:translate-x-0.5 group-hover:opacity-80">
-                              ›
-                            </span>
+                            <ChevronRight className="h-4 w-4 opacity-30 transition group-hover:translate-x-0.5 group-hover:opacity-80" />
                           </button>
                         ))}
                       </div>
@@ -392,7 +434,10 @@ const MapPage = () => {
                 </section>
               ))
             ) : (
-              <div className="px-2 py-9 text-center text-[13px] opacity-55">暂无带标题的足迹</div>
+              <div className="grid place-items-center px-2 py-10 text-center text-[13px] text-[#7a8782]">
+                <Images className="mb-2 h-6 w-6 opacity-50" strokeWidth={1.5} />
+                暂无带标题的足迹
+              </div>
             )}
           </div>
         </aside>
