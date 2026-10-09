@@ -4,7 +4,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import maplibregl, { type GeoJSONSource, type MapMouseEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import { CalendarDays, ChevronRight, Images, MapPin, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
+import {
+  CalendarDays,
+  ChevronRight,
+  Images,
+  MapPin,
+  PanelLeftClose,
+  PanelLeftOpen,
+} from 'lucide-react'
 
 import { OssHost } from '@/src/constants'
 import UiModal from '@/src/components/ui-modal'
@@ -14,6 +21,8 @@ import { MapPointApi } from '@/src/service'
 const DEFAULT_CENTER: [number, number] = [113.2644, 23.1291]
 const DEFAULT_ZOOM = 10
 const VIDEO_PATTERN = /\.(mp4|mov|webm|m4v)(\?.*)?$/i
+const timelineThumbnailCallbacks = new WeakMap<Element, () => void>()
+let timelineThumbnailObserver: IntersectionObserver | undefined
 const MAP_GLASS_CLASS =
   'border border-white/75! bg-[rgba(252,253,251,0.9)]! shadow-[0_18px_48px_rgba(35,59,51,0.16)]! backdrop-blur-[18px] dark:border-white/10! dark:bg-[rgba(19,27,26,0.9)]! dark:text-[#e8efec]'
 
@@ -25,9 +34,63 @@ const resolveMediaUrl = (url: string) => {
 }
 
 const resolveTimelineThumbnailUrl = (url: string) => {
-  if (!VIDEO_PATTERN.test(url)) return resolveMediaUrl(url)
+  if (url.includes('x-oss-process=')) return resolveMediaUrl(url)
+  const isOssMedia = !/^(https?:)?\/\//i.test(url) || Boolean(OssHost && url.startsWith(OssHost))
+  if (!isOssMedia) return resolveMediaUrl(url)
   const separator = url.includes('?') ? '&' : '?'
-  return resolveMediaUrl(`${url}${separator}x-oss-process=video/snapshot,t_1,ar_auto`)
+  const process = VIDEO_PATTERN.test(url)
+    ? 'video/snapshot,t_1,ar_auto'
+    : 'image/resize,m_fill,w_128,h_128/quality,q_75'
+  return resolveMediaUrl(`${url}${separator}x-oss-process=${process}`)
+}
+
+const observeTimelineThumbnail = (element: Element, onVisible: () => void) => {
+  timelineThumbnailCallbacks.set(element, onVisible)
+  timelineThumbnailObserver ??= new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        timelineThumbnailCallbacks.get(entry.target)?.()
+        timelineThumbnailCallbacks.delete(entry.target)
+        timelineThumbnailObserver?.unobserve(entry.target)
+      })
+    },
+    { rootMargin: '240px 0px' },
+  )
+  timelineThumbnailObserver.observe(element)
+  return () => {
+    timelineThumbnailCallbacks.delete(element)
+    timelineThumbnailObserver?.unobserve(element)
+  }
+}
+
+const TimelineThumbnail = ({ mediaUrl }: { mediaUrl: string }) => {
+  const placeholderRef = useRef<HTMLSpanElement>(null)
+  const [shouldLoad, setShouldLoad] = useState(false)
+
+  useEffect(() => {
+    const element = placeholderRef.current
+    if (!element || shouldLoad) return
+
+    return observeTimelineThumbnail(element, () => setShouldLoad(true))
+  }, [shouldLoad])
+
+  return (
+    <span
+      ref={placeholderRef}
+      className="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg border-2 border-white bg-[var(--site-accent-soft)] shadow-sm dark:border-white/20"
+    >
+      {shouldLoad && (
+        <img
+          src={resolveTimelineThumbnailUrl(mediaUrl)}
+          alt=""
+          decoding="async"
+          fetchPriority="low"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      )}
+    </span>
+  )
 }
 
 const MapPage = () => {
@@ -39,6 +102,8 @@ const MapPage = () => {
   const [requestError, setRequestError] = useState(false)
   const [timelineOpen, setTimelineOpen] = useState(false)
   const [activePointId, setActivePointId] = useState<number>()
+  const [collapsedYears, setCollapsedYears] = useState<Set<string>>(() => new Set())
+  const [collapsedMonths, setCollapsedMonths] = useState<Set<string>>(() => new Set())
   const [mediaViewportRef, mediaEmblaApi] = useEmblaCarousel({ loop: true })
 
   const syncSelectedMediaIndex = useCallback(() => {
@@ -86,9 +151,30 @@ const MapPage = () => {
 
   const footprintStats = useMemo(() => {
     const namedPoints = mapPointList.filter((point) => point.title?.trim())
-    const years = new Set(namedPoints.map((point) => point.occurredTime.slice(0, 4)).filter(Boolean))
+    const years = new Set(
+      namedPoints.map((point) => point.occurredTime.slice(0, 4)).filter(Boolean),
+    )
     return { places: namedPoints.length, years: years.size }
   }, [mapPointList])
+
+  const toggleCollapsedYear = (year: string) => {
+    setCollapsedYears((current) => {
+      const next = new Set(current)
+      if (next.has(year)) next.delete(year)
+      else next.add(year)
+      return next
+    })
+  }
+
+  const toggleCollapsedMonth = (year: string, month: string) => {
+    const monthKey = `${year}-${month}`
+    setCollapsedMonths((current) => {
+      const next = new Set(current)
+      if (next.has(monthKey)) next.delete(monthKey)
+      else next.add(monthKey)
+      return next
+    })
+  }
 
   useEffect(() => {
     if (!container.current) return
@@ -362,7 +448,7 @@ const MapPage = () => {
           <PanelLeftOpen className="h-[22px] w-[22px]" aria-hidden="true" />
         </button>
         <aside
-          className={`${MAP_GLASS_CLASS} absolute top-4 bottom-4 left-4 z-2 flex w-[312px] flex-col overflow-hidden rounded-[20px] max-md:top-3 max-md:right-3 max-md:bottom-3 max-md:left-3 max-md:z-4 max-md:w-auto max-md:max-w-[350px] max-md:origin-bottom-left max-md:transition-[opacity,transform] ${timelineOpen ? 'max-md:pointer-events-auto max-md:translate-x-0 max-md:scale-100 max-md:opacity-100' : 'max-md:pointer-events-none max-md:translate-x-[calc(-100%_-_24px)] max-md:scale-[0.96] max-md:opacity-0'}`}
+          className={`${MAP_GLASS_CLASS} map-timeline-panel absolute top-4 bottom-4 left-4 z-2 flex w-[312px] min-w-0 flex-col overflow-hidden rounded-[20px] max-md:top-3 max-md:right-3 max-md:bottom-3 max-md:left-3 max-md:z-4 max-md:w-auto max-md:max-w-[350px] max-md:origin-bottom-left max-md:transition-[opacity,transform] ${timelineOpen ? 'max-md:pointer-events-auto max-md:translate-x-0 max-md:scale-100 max-md:opacity-100' : 'max-md:pointer-events-none max-md:translate-x-[calc(-100%_-_24px)] max-md:scale-[0.96] max-md:opacity-0'}`}
           aria-label="足迹时间线"
         >
           <div className="border-b border-[rgba(112,129,136,0.16)] px-5 pt-[18px] pb-4">
@@ -381,58 +467,97 @@ const MapPage = () => {
             </div>
             <p className="mt-1 text-xs text-[#7a8782]">沿着日期，重访走过的地方</p>
           </div>
-          <div className="map-timeline-scroll min-h-0 flex-1 overflow-y-auto px-[14px] pt-[14px] pb-[18px]">
+          <div className="map-timeline-scroll min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-[14px] pt-[14px] pb-[18px]">
             {timeline.length ? (
-              timeline.map(({ year, months }) => (
-                <section
-                  className="relative pl-[18px] before:absolute before:top-[9px] before:bottom-0.5 before:left-1 before:w-px before:bg-[rgba(54,116,102,0.22)] [&+&]:mt-[22px]"
-                  key={year}
-                >
-                  <h2 className="relative mb-[10px] flex items-center justify-between pr-2 text-lg leading-6 text-[#173b34] before:absolute before:top-[7px] before:left-[-18px] before:h-[9px] before:w-[9px] before:rounded-full before:border-2 before:border-white/95 before:bg-[#397a6c] before:shadow-[0_2px_6px_rgba(39,118,111,0.3)] dark:text-[#dceae6]">
-                    <span>{year}</span>
-                    <span className="font-sans text-[10px] font-medium tracking-[.06em] text-[#8a9792]">
-                      {months.reduce((count, item) => count + item.points.length, 0)} 个地点
-                    </span>
-                  </h2>
-                  {months.map(({ month, points }) => (
-                    <div className="[&+&]:mt-[14px]" key={`${year}-${month}`}>
-                      <h3 className="mb-[6px] text-xs font-semibold text-[#67747a] dark:text-[#aab6bb]">
-                        {Number(month)}月
-                      </h3>
-                      <div className="grid gap-1">
-                        {points.map((point) => (
-                          <button
-                            type="button"
-                            key={point.mapPointId}
-                            title={point.title}
-                            className={`group relative flex w-full cursor-pointer items-center gap-2.5 rounded-xl border-0 px-2 py-2 text-left font-[inherit] transition ${activePointId === point.mapPointId ? 'bg-[#f8e7e3] text-[#8f3f38] shadow-[inset_3px_0_0_#d9685e] dark:bg-[#4a2927] dark:text-[#ffc4bc]' : 'bg-transparent hover:bg-[rgba(39,118,111,0.08)] hover:text-[#1f625d] dark:hover:bg-[rgba(121,185,175,0.13)] dark:hover:text-[#b8e0d9]'}`}
-                            onClick={() => focusMapPoint(point)}
-                          >
-                            <span className="w-7 shrink-0 text-[11px] opacity-55">
-                              {point.occurredTime.slice(8, 10)}日
-                            </span>
-                            {point.mediaUrl?.split('|').filter(Boolean)[0] ? (
-                              <img
-                                src={resolveTimelineThumbnailUrl(
-                                  point.mediaUrl.split('|').filter(Boolean)[0],
-                                )}
-                                alt=""
-                                className="h-11 w-11 shrink-0 rounded-lg border-2 border-white object-cover shadow-sm dark:border-white/20"
-                              />
-                            ) : (
-                              <span className="h-10 w-10 shrink-0 rounded-md bg-[var(--site-accent-soft)]" />
-                            )}
-                            <span className="min-w-0 flex-1 truncate text-[13px] font-semibold">
-                              {point.title}
-                            </span>
-                            <ChevronRight className="h-4 w-4 opacity-30 transition group-hover:translate-x-0.5 group-hover:opacity-80" />
-                          </button>
-                        ))}
+              <div className="min-w-0">
+                {timeline.map(({ year, months }) => {
+                  const yearCollapsed = collapsedYears.has(year)
+                  const yearCount = months.reduce((sum, item) => sum + item.points.length, 0)
+                  return (
+                    <section
+                      className="relative min-w-0 pl-[18px] before:absolute before:top-[22px] before:bottom-0 before:left-1 before:w-px before:bg-[rgba(54,116,102,0.22)] [&+&]:mt-3"
+                      key={year}
+                    >
+                      <button
+                        type="button"
+                        aria-expanded={!yearCollapsed}
+                        className="group relative flex h-11 w-full cursor-pointer items-center gap-2 border-0 bg-transparent pr-2 text-left text-[#173b34] before:absolute before:left-[-18px] before:h-[9px] before:w-[9px] before:rounded-full before:border-2 before:border-white/95 before:bg-[#397a6c] before:shadow-[0_2px_6px_rgba(39,118,111,0.3)] dark:text-[#dceae6]"
+                        onClick={() => toggleCollapsedYear(year)}
+                      >
+                        <span className="text-lg leading-6 font-semibold">{year}</span>
+                        <span className="ml-auto font-sans text-[10px] font-medium tracking-[.06em] text-[#8a9792]">
+                          {yearCount} 个地点
+                        </span>
+                        <ChevronRight
+                          className={`h-4 w-4 shrink-0 opacity-45 transition-transform duration-200 ${yearCollapsed ? '' : 'rotate-90'}`}
+                        />
+                      </button>
+                      <div
+                        className={`map-timeline-collapse map-timeline-collapse-year ${yearCollapsed ? 'is-collapsed' : ''}`}
+                        aria-hidden={yearCollapsed}
+                      >
+                        <div className="min-h-0 overflow-hidden">
+                          {months.map(({ month, points }) => {
+                            const monthKey = `${year}-${month}`
+                            const monthCollapsed = collapsedMonths.has(monthKey)
+                            return (
+                              <div className="min-w-0" key={monthKey}>
+                                <button
+                                  type="button"
+                                  aria-expanded={!monthCollapsed}
+                                  tabIndex={yearCollapsed ? -1 : 0}
+                                  className="group flex h-[30px] w-full cursor-pointer items-center gap-1.5 border-0 bg-transparent pr-2 text-left text-xs font-semibold text-[#67747a] hover:text-[#27766f] dark:text-[#aab6bb] dark:hover:text-[#b8e0d9]"
+                                  onClick={() => toggleCollapsedMonth(year, month)}
+                                >
+                                  <ChevronRight
+                                    className={`h-3.5 w-3.5 shrink-0 opacity-45 transition-transform duration-200 ${monthCollapsed ? '' : 'rotate-90'}`}
+                                  />
+                                  <span>{Number(month)}月</span>
+                                  <span className="ml-auto text-[10px] font-normal opacity-55">
+                                    {points.length}
+                                  </span>
+                                </button>
+                                <div
+                                  className={`map-timeline-collapse ${monthCollapsed ? 'is-collapsed' : ''}`}
+                                  aria-hidden={monthCollapsed}
+                                >
+                                  <div className="grid min-h-0 gap-1 overflow-hidden">
+                                    {points.map((point) => (
+                                      <button
+                                        type="button"
+                                        key={point.mapPointId}
+                                        title={point.title}
+                                        tabIndex={monthCollapsed || yearCollapsed ? -1 : 0}
+                                        className={`map-timeline-entry group relative flex w-full min-w-0 max-w-full cursor-pointer items-center gap-2.5 rounded-xl border-0 px-2 py-2 text-left font-[inherit] transition ${activePointId === point.mapPointId ? 'bg-[#f8e7e3] text-[#8f3f38] shadow-[inset_3px_0_0_#d9685e] dark:bg-[#4a2927] dark:text-[#ffc4bc]' : 'bg-transparent hover:bg-[rgba(39,118,111,0.08)] hover:text-[#1f625d] dark:hover:bg-[rgba(121,185,175,0.13)] dark:hover:text-[#b8e0d9]'}`}
+                                        onClick={() => focusMapPoint(point)}
+                                      >
+                                        <span className="w-7 shrink-0 text-[11px] opacity-55">
+                                          {point.occurredTime.slice(8, 10)}日
+                                        </span>
+                                        {point.mediaUrl?.split('|').filter(Boolean)[0] ? (
+                                          <TimelineThumbnail
+                                            mediaUrl={point.mediaUrl.split('|').filter(Boolean)[0]}
+                                          />
+                                        ) : (
+                                          <span className="h-10 w-10 shrink-0 rounded-md bg-[var(--site-accent-soft)]" />
+                                        )}
+                                        <span className="map-timeline-title min-w-0 flex-1 truncate text-[13px] font-semibold">
+                                          {point.title}
+                                        </span>
+                                        <ChevronRight className="h-4 w-4 shrink-0 opacity-30 transition group-hover:translate-x-0.5 group-hover:opacity-80" />
+                                      </button>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            )
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </section>
-              ))
+                    </section>
+                  )
+                })}
+              </div>
             ) : (
               <div className="grid place-items-center px-2 py-10 text-center text-[13px] text-[#7a8782]">
                 <Images className="mb-2 h-6 w-6 opacity-50" strokeWidth={1.5} />

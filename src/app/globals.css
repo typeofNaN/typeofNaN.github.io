@@ -228,8 +228,47 @@ a {
 }
 
 .map-timeline-scroll {
+  overscroll-behavior: contain;
+  overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: rgba(68, 103, 94, 0.22) transparent;
+}
+
+/* Blurring a live WebGL canvas on every scroll frame is expensive. The panel's
+   near-opaque fill keeps the glass look without repeatedly repainting the map. */
+.map-timeline-panel {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  contain: layout paint;
+}
+
+.map-timeline-collapse {
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition:
+    grid-template-rows 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 180ms ease;
+}
+
+.map-timeline-collapse.is-collapsed {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+
+/* Animating an auto height that contains hundreds of rows forces full layout on
+   every frame. Year groups switch layout immediately and retain a short fade;
+   month groups are small enough to keep the height transition. */
+.map-timeline-collapse-year {
+  transition: opacity 140ms ease;
+}
+
+.map-timeline-collapse-year.is-collapsed {
+  pointer-events: none;
+}
+
+.map-timeline-entry {
+  contain: layout paint style;
 }
 
 .map-timeline-scroll::-webkit-scrollbar {
@@ -256,6 +295,10 @@ a {
   .map-photo-marker:hover {
     transition: none;
     transform: none;
+  }
+
+  .map-timeline-collapse {
+    transition: none;
   }
 }
 
