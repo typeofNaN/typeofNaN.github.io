@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState, useCallback, useMemo } from 'react'
+import { useEffect, useState, useCallback, useMemo, type CSSProperties } from 'react'
 import { Chip } from '@heroui/react'
 
 import { Icon } from '@/src/components/local-icon'
@@ -139,7 +139,10 @@ const Project = () => {
 
   return (
     <div className="mx-auto flex min-h-[calc(100vh-121px)] w-full max-w-[1280px] flex-col px-5 pt-12 pb-20 sm:px-8 lg:px-10">
-      <header className="mb-12 grid grid-cols-[1fr_auto] items-end border-b border-[var(--site-border)] pb-8 max-md:grid-cols-1">
+      <header
+        data-reveal
+        className="page-intro reveal-up mb-12 grid grid-cols-[1fr_auto] items-end border-b border-[var(--site-border)] pb-8 max-md:grid-cols-1"
+      >
         <div>
           <h1 className="font-serif text-[46px] leading-none font-semibold tracking-[-.04em]">
             项目
@@ -155,8 +158,13 @@ const Project = () => {
         </p>
       </header>
       <div className="flex flex-col gap-14">
-        {projectGroupList.map((projectGroup) => (
-          <section key={projectGroup.projectGroupId}>
+        {projectGroupList.map((projectGroup, groupIndex) => (
+          <section
+            data-reveal
+            className="reveal-up"
+            style={{ '--reveal-delay': `${Math.min(groupIndex, 3) * 70}ms` } as CSSProperties}
+            key={projectGroup.projectGroupId}
+          >
             <div className="mb-2 flex items-baseline gap-4">
               <span className="h-6 w-1 rounded-full bg-[var(--site-accent)]" />
               <h2 className="font-serif text-[24px] font-semibold">
@@ -167,17 +175,18 @@ const Project = () => {
               </span>
             </div>
             <div className="grid grid-cols-2 max-md:grid-cols-1">
-              {projectGroup.projectList.map((project) => (
+              {projectGroup.projectList.map((project, projectIndex) => (
                 <div
-                  className="border-b border-[var(--site-border)] even:border-l max-md:even:border-l-0"
+                  className="project-row border-b border-[var(--site-border)] even:border-l max-md:even:border-l-0"
+                  style={{ '--item-index': projectIndex } as CSSProperties}
                   key={project.projectId}
                 >
                   <button
                     type="button"
-                    className="group flex min-h-[106px] w-full cursor-pointer items-center gap-5 bg-transparent px-4 py-5 text-left font-[inherit] text-[var(--site-foreground)] transition duration-300 hover:bg-[var(--site-accent-soft)] sm:px-5"
+                    className="project-card group flex min-h-[106px] w-full cursor-pointer items-center gap-5 bg-transparent px-4 py-5 text-left font-[inherit] text-[var(--site-foreground)] sm:px-5"
                     onClick={() => handleClickProject(project.projectId)}
                   >
-                    <div className="flex h-[58px] w-[58px] shrink-0 items-center justify-center rounded-[10px] bg-[var(--site-accent-soft)] transition group-hover:bg-[var(--site-surface)]">
+                    <div className="project-icon flex h-[58px] w-[58px] shrink-0 items-center justify-center rounded-[10px] bg-[var(--site-accent-soft)] group-hover:bg-[var(--site-surface)]">
                       <img
                         src={OssHost + project.projectIconUrl}
                         width={42}

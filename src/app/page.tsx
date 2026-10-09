@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, type CSSProperties } from 'react'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { Avatar } from '@heroui/react'
@@ -16,7 +16,7 @@ const BLOG_URL = 'https://typeofNaN.github.io/vuepress-blog/'
 const OLD_BOY_URL = 'https://30.typeofnan.cn'
 const AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME || 'typeofNaN'
 const SOCIAL_LINK_CLASS =
-  'flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-[rgba(12,28,28,0.24)] text-white backdrop-blur-sm transition hover:-translate-y-0.5 hover:border-white/75 hover:bg-white/15'
+  'hero-social-link flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-[rgba(12,28,28,0.24)] text-white backdrop-blur-sm'
 const TOGGLE_CLASS =
   'group mt-3 inline-flex cursor-pointer items-center gap-2.5 border-b border-current py-2.5 text-[13px] leading-none font-bold text-[#17483e] transition-all hover:gap-3.5 hover:text-[#27766f] [&_svg]:h-4 [&_svg]:w-4 [&_svg]:transition-transform aria-expanded:[&_svg]:-rotate-90'
 
@@ -46,14 +46,14 @@ const Home = () => {
 
   return (
     <div className="bg-[#f4f7f5] text-[#14231f]">
-      <section className="relative h-[clamp(390px,54vh,540px)] min-h-[390px] w-full overflow-hidden max-sm:h-[430px] max-sm:min-h-[430px]">
+      <section className="home-hero relative h-[clamp(390px,54vh,540px)] min-h-[390px] w-full overflow-hidden max-sm:h-[430px] max-sm:min-h-[430px]">
         <div className="absolute inset-0 bg-[#071312]">
           <HeroThreeScene />
         </div>
         <div className="hero-overlay absolute inset-0" />
         <div className="relative mx-auto flex h-full w-full max-w-[1200px] items-center px-4 sm:px-6 max-sm:items-end max-sm:pb-[46px]">
           <div className="w-[min(610px,100%)] text-white">
-            <div className="flex items-center gap-[14px]">
+            <div className="hero-enter hero-enter-1 flex items-center gap-[14px]">
               <Avatar size="lg">
                 <Avatar.Image src={OssHost + 'web/images/avatar.jpg'} alt={AUTHOR_NAME} />
                 <Avatar.Fallback>NaN</Avatar.Fallback>
@@ -65,13 +65,13 @@ const Home = () => {
                 </h1>
               </div>
             </div>
-            <p className="mt-7 text-[clamp(22px,3vw,34px)] leading-[1.35] font-semibold max-sm:mt-[22px]">
+            <p className="hero-enter hero-enter-2 mt-7 text-[clamp(22px,3vw,34px)] leading-[1.35] font-semibold max-sm:mt-[22px]">
               喜欢就是信仰，热爱会是力量
             </p>
-            <p className="mt-[10px] text-[15px] text-white/75 max-sm:text-sm">
+            <p className="hero-enter hero-enter-3 mt-[10px] text-[15px] text-white/75 max-sm:text-sm">
               软件开发工程师，记录代码、项目与生活。
             </p>
-            <div className="mt-[26px] flex items-center gap-[10px]">
+            <div className="hero-enter hero-enter-4 mt-[26px] flex items-center gap-[10px]">
               <Link
                 href={GITHUB_URL}
                 target="_blank"
@@ -119,7 +119,10 @@ const Home = () => {
       </section>
 
       <main className="mx-auto w-[min(1320px,calc(100%_-_80px))] max-[800px]:w-[calc(100%_-_36px)]">
-        <section className="min-h-[150px] border-b border-[#d5ddda] py-[34px] max-sm:min-h-[138px] max-sm:py-7">
+        <section
+          data-reveal
+          className="reveal-up min-h-[150px] border-b border-[#d5ddda] py-[34px] max-sm:min-h-[138px] max-sm:py-7"
+        >
           <p className="mb-2 text-[11px] font-bold tracking-[0.08em] text-[#27766f]">A FEW WORDS</p>
           <Typeit
             options={typeitOptions}
@@ -127,8 +130,11 @@ const Home = () => {
           />
         </section>
 
-        <section className="grid grid-cols-[220px_1fr_330px] gap-[46px] border-b border-[#d5ddda] py-[54px] max-[800px]:grid-cols-1 max-[800px]:gap-[38px]">
-          <div>
+        <section
+          data-reveal
+          className="reveal-up grid grid-cols-[220px_1fr_330px] gap-[46px] border-b border-[#d5ddda] py-[54px] max-[800px]:grid-cols-1 max-[800px]:gap-[38px]"
+        >
+          <div data-reveal className="reveal-up reveal-delay-1">
             <span className="mb-5 block h-0.5 w-[34px] bg-[#17483e]" />
             <h2 className="text-[29px] tracking-[-.03em]">人生轨迹</h2>
             <p className="mt-2.5 text-[9px] leading-[1.7] tracking-[.24em] text-[#96a39f]">
@@ -137,14 +143,15 @@ const Home = () => {
               IN MY LIFE
             </p>
           </div>
-          <div>
+          <div data-reveal className="reveal-up reveal-delay-2">
             <ol className="list-none pt-[7px]">
               {visibleTimeline.map(({ date, content }, index) => {
                 const isCurrent = index === visibleTimeline.length - 1 && date === '今天'
                 return (
                   <li
                     key={`${date}-${content}`}
-                    className="relative grid grid-cols-[92px_1fr] gap-5 border-l border-[#cbd5d1] pb-[26px] pl-7 max-sm:grid-cols-[78px_1fr] max-sm:gap-3"
+                    className="timeline-row relative grid grid-cols-[92px_1fr] gap-5 border-l border-[#cbd5d1] pb-[26px] pl-7 max-sm:grid-cols-[78px_1fr] max-sm:gap-3"
+                    style={{ '--row-index': index } as CSSProperties}
                   >
                     <span
                       className={`absolute rounded-full ${isCurrent ? 'top-[3px] -left-2 h-[15px] w-[15px] bg-[#ef6c65] shadow-[0_0_0_5px_#f4f7f5]' : 'top-1.5 -left-[5px] h-[9px] w-[9px] bg-[#6f9188]'}`}
@@ -165,11 +172,11 @@ const Home = () => {
               <ArrowRight />
             </button>
           </div>
-          <figure className="relative m-0 h-[340px] overflow-hidden max-[800px]:h-[280px]">
+          <figure className="image-reveal reveal-delay-3 relative m-0 h-[340px] overflow-hidden max-[800px]:h-[280px]">
             {/* The static export serves this remote OSS image directly. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              className="h-full w-full object-cover"
+              className="parallax-image h-full w-full object-cover"
               src={OssHost + 'web/images/mountain-field-note.png'}
               alt="云雾漫过群山与森林"
             />
@@ -181,8 +188,11 @@ const Home = () => {
           </figure>
         </section>
 
-        <section className="grid grid-cols-[220px_1fr] gap-[46px] border-b border-[#d5ddda] py-[54px] max-[800px]:grid-cols-1 max-[800px]:gap-[38px]">
-          <div>
+        <section
+          data-reveal
+          className="reveal-up grid grid-cols-[220px_1fr] gap-[46px] border-b border-[#d5ddda] py-[54px] max-[800px]:grid-cols-1 max-[800px]:gap-[38px]"
+        >
+          <div data-reveal className="reveal-up reveal-delay-1">
             <span className="mb-5 block h-0.5 w-[34px] bg-[#17483e]" />
             <h2 className="text-[29px] tracking-[-.03em]">技能与工具</h2>
             <p className="mt-2.5 text-[9px] leading-[1.7] tracking-[.24em] text-[#96a39f]">
@@ -197,7 +207,7 @@ const Home = () => {
           <div>
             <div className="grid grid-cols-2 gap-x-14 gap-y-7 py-2 max-[800px]:grid-cols-1">
               {visibleSkills.map(({ skillName, icon, proficiency }) => (
-                <div className="grid grid-cols-[38px_1fr] gap-x-3.5" key={skillName}>
+                <div className="skill-row grid grid-cols-[38px_1fr] gap-x-3.5" key={skillName}>
                   {/* Skill icons have dynamic remote URLs and are rendered as-is. */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img className="row-span-2 h-[30px] w-[30px] self-center" src={icon} alt="" />
@@ -207,8 +217,8 @@ const Home = () => {
                   </div>
                   <div className="mt-[9px] h-1 bg-[#d7dfdc]">
                     <span
-                      className="block h-full bg-[#0c4338]"
-                      style={{ width: `${proficiency}%` }}
+                      className="skill-meter block h-full bg-[#0c4338]"
+                      style={{ '--skill-value': `${proficiency}%` } as CSSProperties}
                     />
                   </div>
                 </div>
@@ -226,7 +236,11 @@ const Home = () => {
           </div>
         </section>
 
-        <nav className="grid grid-cols-3 py-[42px] max-[800px]:grid-cols-1" aria-label="探索更多">
+        <nav
+          data-reveal
+          className="reveal-up grid grid-cols-3 py-[42px] max-[800px]:grid-cols-1"
+          aria-label="探索更多"
+        >
           {[
             {
               href: '/map',
@@ -250,7 +264,7 @@ const Home = () => {
             <Link
               key={href}
               href={href}
-              className={`flex min-h-[92px] items-center gap-5 border-[#d5ddda] px-9 max-[800px]:border-b max-[800px]:px-0 max-[800px]:py-6 ${index < 2 ? 'border-r max-[800px]:border-r-0' : ''} ${index === 0 ? 'pl-0' : ''}`}
+              className={`destination-link flex min-h-[92px] items-center gap-5 border-[#d5ddda] px-9 max-[800px]:border-b max-[800px]:px-0 max-[800px]:py-6 ${index < 2 ? 'border-r max-[800px]:border-r-0' : ''} ${index === 0 ? 'pl-0' : ''}`}
             >
               <DestinationIcon className="h-[42px] w-[42px] text-[#73958d]" strokeWidth={1.2} />
               <span>

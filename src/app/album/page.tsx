@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback, useMemo } from 'react'
+import { useEffect, useState, useCallback, useMemo, type CSSProperties } from 'react'
 import { Chip } from '@heroui/react'
 
 import { Icon } from '@/src/components/local-icon'
@@ -86,7 +86,10 @@ const Album = () => {
 
   return (
     <div className="mx-auto flex min-h-[calc(100vh-121px)] w-full max-w-[1280px] flex-col px-5 pt-10 pb-20 sm:px-8 lg:px-10">
-      <header className="mb-12 grid grid-cols-[1fr_auto] items-end border-b border-[var(--site-border)] pb-8 max-md:grid-cols-1">
+      <header
+        data-reveal
+        className="page-intro reveal-up mb-12 grid grid-cols-[1fr_auto] items-end border-b border-[var(--site-border)] pb-8 max-md:grid-cols-1"
+      >
         <div>
           <h1 className="font-serif text-[46px] leading-none font-semibold tracking-[-.04em]">
             相册
@@ -104,17 +107,19 @@ const Album = () => {
       {photoAlbumList.map((photoAlbum, index) => (
         <article
           key={photoAlbum.photoAlbumId}
-          className="group grid cursor-pointer grid-cols-[48px_minmax(280px,460px)_minmax(300px,1fr)] gap-7 border-b border-[var(--site-border)] px-3 py-5 select-none transition duration-300 hover:bg-[var(--site-surface-soft)] max-md:grid-cols-[36px_1fr] max-md:gap-4 sm:px-5"
+          data-reveal
+          style={{ '--reveal-delay': `${Math.min(index, 4) * 70}ms` } as CSSProperties}
+          className="album-row reveal-up group grid cursor-pointer grid-cols-[48px_minmax(280px,460px)_minmax(300px,1fr)] gap-7 border-b border-[var(--site-border)] px-3 py-5 select-none max-md:grid-cols-[36px_1fr] max-md:gap-4 sm:px-5"
           onClick={() => handleClickAlbum(photoAlbum)}
         >
           <span className="border-r border-[var(--site-border)] pt-2 text-xs tracking-[.14em] text-[var(--site-accent)]">
             {String(index + 1).padStart(2, '0')}
           </span>
-          <div className="h-[230px] w-full overflow-hidden bg-[var(--site-surface-soft)] max-md:h-[210px]">
+          <div className="album-image-frame h-[230px] w-full overflow-hidden bg-[var(--site-surface-soft)] max-md:h-[210px]">
             <img
               src={OssHost + photoAlbum.cover.split('|').filter(Boolean)[0]}
               alt={photoAlbum.photoAlbumName}
-              className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]"
+              className="h-full w-full object-cover"
             />
           </div>
           <div className="flex min-w-0 grow flex-col py-2 max-md:col-span-2 max-md:pl-10">

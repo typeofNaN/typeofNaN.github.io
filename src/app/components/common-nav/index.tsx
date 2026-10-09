@@ -14,12 +14,12 @@ type NavLink = {
 }
 
 const navList: NavLink[] = [
-  {
-    label: '首页',
-    link: '/',
-    icon: 'material-symbols:home-outline-rounded',
-    target: '_self',
-  },
+  // {
+  //   label: '首页',
+  //   link: '/',
+  //   icon: 'material-symbols:home-outline-rounded',
+  //   target: '_self',
+  // },
   {
     label: '足迹',
     link: '/map',
@@ -63,7 +63,7 @@ const CommonNav: React.FC = () => {
           key={link}
           target={target}
           className={[
-            'relative flex h-[40px] items-center gap-2 rounded-md px-[9px] text-[15px] text-[var(--site-muted)] transition-colors hover:bg-[var(--site-surface-soft)] hover:text-[var(--site-foreground)] sm:px-[13px]',
+            'site-nav-link relative flex h-[40px] items-center gap-2 rounded-md px-[9px] text-[15px] text-[var(--site-muted)] hover:bg-[var(--site-surface-soft)] hover:text-[var(--site-foreground)] sm:px-[13px]',
             isActive(link) ? 'bg-[var(--site-accent-soft)] text-[var(--site-accent)]' : '',
           ].join(' ')}
         >

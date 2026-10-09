@@ -4,6 +4,7 @@ import Script from 'next/script'
 import { CommonFooter, CommonHeader } from './components'
 import LoveHeart from '@/src/components/heart-animate'
 import ThemeProvider from '@/src/components/theme-provider'
+import SiteMotion from '@/src/components/site-motion'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -27,6 +28,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
       </Script>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
         <div className="site-background fixed inset-0 -z-1" />
+        <SiteMotion />
         <LoveHeart>
           <CommonHeader />
           <main className="pt-[60px]">{children}</main>

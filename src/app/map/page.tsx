@@ -402,7 +402,7 @@ const MapPage = () => {
     <div className="map-page fixed top-[60px] right-0 bottom-[60px] left-0 bg-[#dfe8e5]">
       <div className="relative h-full w-full">
         <div ref={container} className="absolute! inset-0" />
-        <div className="pointer-events-none absolute top-5 left-[348px] z-1 flex items-center gap-5 max-md:top-3 max-md:left-3">
+        <div className="map-floating-summary pointer-events-none absolute top-5 left-[348px] z-1 flex items-center gap-5 max-md:top-3 max-md:left-3">
           <div className={`${MAP_GLASS_CLASS} rounded-2xl px-5 py-3.5 max-md:px-4 max-md:py-3`}>
             <h1 className="font-serif text-[26px] leading-none font-semibold tracking-[-0.03em] text-[#183a33] dark:text-[#e4f0ec] max-md:text-xl">
               时光足迹
@@ -448,7 +448,7 @@ const MapPage = () => {
           <PanelLeftOpen className="h-[22px] w-[22px]" aria-hidden="true" />
         </button>
         <aside
-          className={`${MAP_GLASS_CLASS} map-timeline-panel absolute top-4 bottom-4 left-4 z-2 flex w-[312px] min-w-0 flex-col overflow-hidden rounded-[20px] max-md:top-3 max-md:right-3 max-md:bottom-3 max-md:left-3 max-md:z-4 max-md:w-auto max-md:max-w-[350px] max-md:origin-bottom-left max-md:transition-[opacity,transform] ${timelineOpen ? 'max-md:pointer-events-auto max-md:translate-x-0 max-md:scale-100 max-md:opacity-100' : 'max-md:pointer-events-none max-md:translate-x-[calc(-100%_-_24px)] max-md:scale-[0.96] max-md:opacity-0'}`}
+          className={`${MAP_GLASS_CLASS} map-timeline-panel map-panel-enter absolute top-4 bottom-4 left-4 z-2 flex w-[312px] min-w-0 flex-col overflow-hidden rounded-[20px] max-md:top-3 max-md:right-3 max-md:bottom-3 max-md:left-3 max-md:z-4 max-md:w-auto max-md:max-w-[350px] max-md:origin-bottom-left max-md:transition-[opacity,transform] ${timelineOpen ? 'max-md:pointer-events-auto max-md:translate-x-0 max-md:scale-100 max-md:opacity-100' : 'max-md:pointer-events-none max-md:translate-x-[calc(-100%_-_24px)] max-md:scale-[0.96] max-md:opacity-0'}`}
           aria-label="足迹时间线"
         >
           <div className="border-b border-[rgba(112,129,136,0.16)] px-5 pt-[18px] pb-4">
