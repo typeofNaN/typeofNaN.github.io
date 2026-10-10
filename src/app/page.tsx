@@ -2,23 +2,22 @@
 
 import { useState, type CSSProperties } from 'react'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
 import { Avatar } from '@heroui/react'
 import { ArrowRight, MapPin, Images, FolderKanban } from 'lucide-react'
 import Typeit from 'typeit-react'
 import { SkillPackList, LifeTrajectory, OssHost } from '@/src/constants'
 import { Icon } from '@/src/components/local-icon'
+import HeroArtScene from '@/src/components/hero-three-scene'
 import WechatApplet from '../components/wechat-applet'
 
-const HeroThreeScene = dynamic(() => import('@/src/components/hero-three-scene'), { ssr: false })
 const GITHUB_URL = process.env.NEXT_PUBLIC_GITHUB_LINK || 'https://github.com/typeofNaN'
 const BLOG_URL = 'https://typeofNaN.github.io/vuepress-blog/'
 const OLD_BOY_URL = 'https://30.typeofnan.cn'
 const AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME || 'typeofNaN'
 const SOCIAL_LINK_CLASS =
-  'hero-social-link flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-[rgba(12,28,28,0.24)] text-white backdrop-blur-sm'
+  'hero-social-link flex h-10 w-10 items-center justify-center rounded-full backdrop-blur-sm'
 const TOGGLE_CLASS =
-  'group mt-3 inline-flex cursor-pointer items-center gap-2.5 border-b border-current py-2.5 text-[13px] leading-none font-bold text-[#17483e] transition-all hover:gap-3.5 hover:text-[#27766f] [&_svg]:h-4 [&_svg]:w-4 [&_svg]:transition-transform aria-expanded:[&_svg]:-rotate-90'
+  'group mt-3 inline-flex cursor-pointer items-center gap-2.5 border-b border-current py-2.5 text-[13px] leading-none font-bold text-[var(--site-accent)] transition-all hover:gap-3.5 hover:text-[var(--site-accent-hover)] [&_svg]:h-4 [&_svg]:w-4 [&_svg]:transition-transform aria-expanded:[&_svg]:-rotate-90'
 
 const getHelloStr = () => {
   const hour = new Date().getHours()
@@ -45,21 +44,24 @@ const Home = () => {
   const visibleSkills = skillsExpanded ? SkillPackList : SkillPackList.slice(0, 12)
 
   return (
-    <div className="bg-[#f4f7f5] text-[#14231f]">
+    <div className="bg-[var(--site-background)] text-[var(--site-foreground)] transition-colors duration-300">
       <section className="home-hero relative h-[clamp(390px,54vh,540px)] min-h-[390px] w-full overflow-hidden max-sm:h-[430px] max-sm:min-h-[430px]">
-        <div className="absolute inset-0 bg-[#071312]">
-          <HeroThreeScene />
+        <div className="absolute inset-0 bg-[var(--hero-background)]">
+          <div className="hero-scene-fallback absolute inset-0" aria-hidden="true" />
+          <HeroArtScene />
         </div>
         <div className="hero-overlay absolute inset-0" />
         <div className="relative mx-auto flex h-full w-full max-w-[1200px] items-center px-4 sm:px-6 max-sm:items-end max-sm:pb-[46px]">
-          <div className="w-[min(610px,100%)] text-white">
+          <div className="w-[min(610px,100%)] text-[var(--hero-text)]">
             <div className="hero-enter hero-enter-1 flex items-center gap-[14px]">
               <Avatar size="lg">
                 <Avatar.Image src={OssHost + 'web/images/avatar.jpg'} alt={AUTHOR_NAME} />
                 <Avatar.Fallback>NaN</Avatar.Fallback>
               </Avatar>
               <div>
-                <p className="mb-[2px] text-[11px] font-bold text-white/65">HELLO, I AM</p>
+                <p className="mb-[2px] text-[11px] font-bold tracking-[.14em] text-[var(--hero-muted)]">
+                  HELLO, I AM
+                </p>
                 <h1 className="text-[clamp(30px,4vw,48px)] leading-[1.12] font-bold">
                   {AUTHOR_NAME}
                 </h1>
@@ -68,7 +70,7 @@ const Home = () => {
             <p className="hero-enter hero-enter-2 mt-7 text-[clamp(22px,3vw,34px)] leading-[1.35] font-semibold max-sm:mt-[22px]">
               喜欢就是信仰，热爱会是力量
             </p>
-            <p className="hero-enter hero-enter-3 mt-[10px] text-[15px] text-white/75 max-sm:text-sm">
+            <p className="hero-enter hero-enter-3 mt-[10px] text-[15px] text-[var(--hero-muted)] max-sm:text-sm">
               软件开发工程师，记录代码、项目与生活。
             </p>
             <div className="hero-enter hero-enter-4 mt-[26px] flex items-center gap-[10px]">
@@ -121,23 +123,25 @@ const Home = () => {
       <main className="mx-auto w-[min(1320px,calc(100%_-_80px))] max-[800px]:w-[calc(100%_-_36px)]">
         <section
           data-reveal
-          className="reveal-up min-h-[150px] border-b border-[#d5ddda] py-[34px] max-sm:min-h-[138px] max-sm:py-7"
+          className="reveal-up min-h-[150px] border-b border-[var(--site-border)] py-[34px] max-sm:min-h-[138px] max-sm:py-7"
         >
-          <p className="mb-2 text-[11px] font-bold tracking-[0.08em] text-[#27766f]">A FEW WORDS</p>
+          <p className="mb-2 text-[11px] font-bold tracking-[0.08em] text-[var(--site-accent)]">
+            A FEW WORDS
+          </p>
           <Typeit
             options={typeitOptions}
-            className="block text-lg leading-[1.85] text-[#17211f] italic max-sm:text-base"
+            className="block text-lg leading-[1.85] text-[var(--site-foreground)] italic max-sm:text-base"
           />
         </section>
 
         <section
           data-reveal
-          className="reveal-up grid grid-cols-[220px_1fr_330px] gap-[46px] border-b border-[#d5ddda] py-[54px] max-[800px]:grid-cols-1 max-[800px]:gap-[38px]"
+          className="reveal-up grid grid-cols-[220px_1fr_330px] gap-[46px] border-b border-[var(--site-border)] py-[54px] max-[800px]:grid-cols-1 max-[800px]:gap-[38px]"
         >
           <div data-reveal className="reveal-up reveal-delay-1">
-            <span className="mb-5 block h-0.5 w-[34px] bg-[#17483e]" />
+            <span className="mb-5 block h-0.5 w-[34px] bg-[var(--site-accent)]" />
             <h2 className="text-[29px] tracking-[-.03em]">人生轨迹</h2>
-            <p className="mt-2.5 text-[9px] leading-[1.7] tracking-[.24em] text-[#96a39f]">
+            <p className="mt-2.5 text-[9px] leading-[1.7] tracking-[.24em] text-[var(--site-subtle)]">
               SOME MOMENTS
               <br />
               IN MY LIFE
@@ -150,14 +154,14 @@ const Home = () => {
                 return (
                   <li
                     key={`${date}-${content}`}
-                    className="timeline-row relative grid grid-cols-[92px_1fr] gap-5 border-l border-[#cbd5d1] pb-[26px] pl-7 max-sm:grid-cols-[78px_1fr] max-sm:gap-3"
+                    className="timeline-row relative grid grid-cols-[92px_1fr] gap-5 border-l border-[var(--site-border)] pb-[26px] pl-7 max-sm:grid-cols-[78px_1fr] max-sm:gap-3"
                     style={{ '--row-index': index } as CSSProperties}
                   >
                     <span
-                      className={`absolute rounded-full ${isCurrent ? 'top-[3px] -left-2 h-[15px] w-[15px] bg-[#ef6c65] shadow-[0_0_0_5px_#f4f7f5]' : 'top-1.5 -left-[5px] h-[9px] w-[9px] bg-[#6f9188]'}`}
+                      className={`absolute rounded-full ${isCurrent ? 'timeline-current-dot top-[3px] -left-2 h-[15px] w-[15px] bg-[#ef6c65]' : 'top-1.5 -left-[5px] h-[9px] w-[9px] bg-[var(--site-muted)]'}`}
                     />
-                    <time className="text-xs text-[#465852]">{date}</time>
-                    <p className="text-xs leading-[1.55] text-[#596963]">{content}</p>
+                    <time className="text-xs text-[var(--site-foreground)]">{date}</time>
+                    <p className="text-xs leading-[1.55] text-[var(--site-muted)]">{content}</p>
                   </li>
                 )
               })}
@@ -190,15 +194,15 @@ const Home = () => {
 
         <section
           data-reveal
-          className="reveal-up grid grid-cols-[220px_1fr] gap-[46px] border-b border-[#d5ddda] py-[54px] max-[800px]:grid-cols-1 max-[800px]:gap-[38px]"
+          className="reveal-up grid grid-cols-[220px_1fr] gap-[46px] border-b border-[var(--site-border)] py-[54px] max-[800px]:grid-cols-1 max-[800px]:gap-[38px]"
         >
           <div data-reveal className="reveal-up reveal-delay-1">
-            <span className="mb-5 block h-0.5 w-[34px] bg-[#17483e]" />
+            <span className="mb-5 block h-0.5 w-[34px] bg-[var(--site-accent)]" />
             <h2 className="text-[29px] tracking-[-.03em]">技能与工具</h2>
-            <p className="mt-2.5 text-[9px] leading-[1.7] tracking-[.24em] text-[#96a39f]">
+            <p className="mt-2.5 text-[9px] leading-[1.7] tracking-[.24em] text-[var(--site-subtle)]">
               SKILLS &amp; TOOLS
             </p>
-            <span className="mt-8 block text-[13px] leading-[1.7] text-[#73817d]">
+            <span className="mt-8 block text-[13px] leading-[1.7] text-[var(--site-muted)]">
               持续学习，
               <br />
               用喜欢的工具创造有价值的东西。
@@ -215,9 +219,9 @@ const Home = () => {
                     <span>{skillName}</span>
                     <span>{proficiency}%</span>
                   </div>
-                  <div className="mt-[9px] h-1 bg-[#d7dfdc]">
+                  <div className="mt-[9px] h-1 bg-[var(--site-surface-soft)]">
                     <span
-                      className="skill-meter block h-full bg-[#0c4338]"
+                      className="skill-meter block h-full bg-[var(--site-accent)]"
                       style={{ '--skill-value': `${proficiency}%` } as CSSProperties}
                     />
                   </div>
@@ -264,14 +268,17 @@ const Home = () => {
             <Link
               key={href}
               href={href}
-              className={`destination-link flex min-h-[92px] items-center gap-5 border-[#d5ddda] px-9 max-[800px]:border-b max-[800px]:px-0 max-[800px]:py-6 ${index < 2 ? 'border-r max-[800px]:border-r-0' : ''} ${index === 0 ? 'pl-0' : ''}`}
+              className={`destination-link flex min-h-[92px] items-center gap-5 border-[var(--site-border)] px-9 max-[800px]:border-b max-[800px]:px-0 max-[800px]:py-6 ${index < 2 ? 'border-r max-[800px]:border-r-0' : ''} ${index === 0 ? 'pl-0' : ''}`}
             >
-              <DestinationIcon className="h-[42px] w-[42px] text-[#73958d]" strokeWidth={1.2} />
+              <DestinationIcon
+                className="h-[42px] w-[42px] text-[var(--site-accent)]"
+                strokeWidth={1.2}
+              />
               <span>
                 <strong className="flex items-center gap-3 text-[17px]">
                   {title} <ArrowRight className="h-[18px] w-[18px]" />
                 </strong>
-                <small className="mt-2 block text-[9px] tracking-[.14em] text-[#879590]">
+                <small className="mt-2 block text-[9px] tracking-[.14em] text-[var(--site-subtle)]">
                   {detail}
                 </small>
               </span>
