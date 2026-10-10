@@ -45,35 +45,36 @@ const Home = () => {
 
   return (
     <div className="bg-[var(--site-background)] text-[var(--site-foreground)] transition-colors duration-300">
-      <section className="home-hero relative h-[clamp(390px,54vh,540px)] min-h-[390px] w-full overflow-hidden max-sm:h-[430px] max-sm:min-h-[430px]">
+      <section className="home-hero relative h-[clamp(390px,54vh,540px)] min-h-[390px] w-full overflow-hidden max-[800px]:h-auto max-[800px]:min-h-0">
         <div className="absolute inset-0 bg-[var(--hero-background)]">
           <div className="hero-scene-fallback absolute inset-0" aria-hidden="true" />
           <HeroArtScene />
         </div>
         <div className="hero-overlay absolute inset-0" />
-        <div className="relative mx-auto flex h-full w-full max-w-[1200px] items-center px-4 sm:px-6 max-sm:items-end max-sm:pb-[46px]">
-          <div className="w-[min(610px,100%)] text-[var(--hero-text)]">
+        <div className="relative mx-auto flex h-full w-full max-w-[1200px] min-w-0 items-center px-4 sm:px-6 max-[800px]:min-h-[430px] max-[800px]:items-end max-[800px]:px-[18px] max-[800px]:pt-[190px] max-[800px]:pb-[42px]">
+          <div className="hero-copy min-w-0 w-[min(610px,100%)] max-w-full text-[var(--hero-text)] max-[800px]:w-full max-[800px]:max-w-[320px]">
             <div className="hero-enter hero-enter-1 flex items-center gap-[14px]">
-              <Avatar size="lg">
+              <Avatar size="lg" className="shrink-0">
                 <Avatar.Image src={OssHost + 'web/images/avatar.jpg'} alt={AUTHOR_NAME} />
                 <Avatar.Fallback>NaN</Avatar.Fallback>
               </Avatar>
-              <div>
+              <div className="min-w-0">
                 <p className="mb-[2px] text-[11px] font-bold tracking-[.14em] text-[var(--hero-muted)]">
                   HELLO, I AM
                 </p>
-                <h1 className="text-[clamp(30px,4vw,48px)] leading-[1.12] font-bold">
+                <h1 className="max-w-full text-[clamp(30px,4vw,48px)] leading-[1.12] font-bold [overflow-wrap:anywhere] max-[800px]:text-[28px]">
                   {AUTHOR_NAME}
                 </h1>
               </div>
             </div>
-            <p className="hero-enter hero-enter-2 mt-7 text-[clamp(22px,3vw,34px)] leading-[1.35] font-semibold max-sm:mt-[22px]">
-              喜欢就是信仰，热爱会是力量
+            <p className="hero-enter hero-enter-2 mt-7 max-w-full text-[clamp(22px,3vw,34px)] leading-[1.35] font-semibold [overflow-wrap:anywhere] max-[800px]:mt-[22px] max-[800px]:text-[22px]">
+              <span className="max-[800px]:block">喜欢就是信仰，</span>
+              <span className="max-[800px]:block">热爱会是力量</span>
             </p>
-            <p className="hero-enter hero-enter-3 mt-[10px] text-[15px] text-[var(--hero-muted)] max-sm:text-sm">
+            <p className="hero-enter hero-enter-3 mt-[10px] max-w-full text-[15px] text-[var(--hero-muted)] [overflow-wrap:anywhere] max-[800px]:max-w-[18rem] max-[800px]:text-sm max-[800px]:leading-[1.65]">
               软件开发工程师，记录代码、项目与生活。
             </p>
-            <div className="hero-enter hero-enter-4 mt-[26px] flex items-center gap-[10px]">
+            <div className="hero-enter hero-enter-4 mt-[26px] flex max-w-full flex-wrap items-center gap-[10px] max-[360px]:gap-2">
               <Link
                 href={GITHUB_URL}
                 target="_blank"

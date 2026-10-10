@@ -766,22 +766,34 @@ a {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");
 }
 
-@media (max-width: 640px) {
+@media (max-width: 800px) {
+  .home-hero {
+    isolation: isolate;
+  }
+
+  .paper-landscape {
+    overflow: clip;
+  }
+
   .paper-landscape__svg {
-    top: -8%;
-    right: -22%;
-    width: 138%;
-    height: 72%;
-    opacity: 0.78;
+    top: -6%;
+    right: 0;
+    width: 150%;
+    height: 112%;
+    max-width: none;
+    overflow: hidden;
+    opacity: 0.86;
   }
 
   .hero-overlay {
-    background: linear-gradient(
-      0deg,
-      var(--hero-overlay-strong) 0%,
-      var(--hero-overlay-mid) 52%,
-      transparent 82%
-    );
+    background:
+      linear-gradient(
+        90deg,
+        var(--hero-overlay-strong) 0%,
+        var(--hero-overlay-mid) 48%,
+        transparent 88%
+      ),
+      linear-gradient(0deg, var(--hero-overlay-strong) 0%, transparent 54%);
   }
 }
 
